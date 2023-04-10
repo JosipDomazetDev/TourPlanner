@@ -2,7 +2,6 @@ package com.example.tourplanner;
 
 import com.example.tourplanner.ui.FXMLDependencyInjection;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -14,7 +13,7 @@ public class MainApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         Parent root =  FXMLDependencyInjection.load("main-view.fxml", Locale.ENGLISH);
-        Scene scene = new Scene(root, 320, 240);
+        Scene scene = new Scene(root, 1000, 600);
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();

@@ -15,14 +15,20 @@ public final class ControllerFactory {
     }
 
     private final MainViewModel mainViewModel;
+    private final MenuViewModel menuViewModel;
 
     public ControllerFactory() {
         this.mainViewModel = new MainViewModel();
+        this.menuViewModel = new MenuViewModel();
     }
 
     public Object create(Class<?> controllerClass) {
         if (controllerClass == MainController.class) {
             return new MainController(mainViewModel);
+        }
+
+        if (controllerClass == MenuController.class) {
+            return new MenuController(menuViewModel);
         }
 
         throw new IllegalArgumentException("Unknown: " + controllerClass);
