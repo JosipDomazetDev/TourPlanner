@@ -40,12 +40,12 @@
                             </font>
                         </Text>
                         <Region HBox.hgrow="ALWAYS"/>
-                        <Button maxHeight="-Infinity" mnemonicParsing="false" text="+"/>
+                        <Button onMouseClicked="#onAddTour" maxHeight="-Infinity" mnemonicParsing="false" text="+"/>
                         <Button mnemonicParsing="false" text="-"/>
                         <Button mnemonicParsing="false" text="..."/>
                     </children>
                 </HBox>
-                <ListView prefHeight="200.0" prefWidth="200.0">
+                <ListView fx:id="toursListView" prefHeight="200.0" prefWidth="200.0">
                     <VBox.margin>
                         <Insets top="8.0"/>
                     </VBox.margin>
