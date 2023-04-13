@@ -31,6 +31,11 @@ public final class ControllerFactory {
             return new MenuController(menuViewModel);
         }
 
+
+        if (controllerClass == CreateTourController.class) {
+            return new CreateTourController(mainViewModel);
+        }
+
         throw new IllegalArgumentException("Unknown: " + controllerClass);
     }
 }

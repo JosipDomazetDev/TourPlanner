@@ -12,7 +12,7 @@ public class Tour {
     String to;
     String transportType;
     // Retrieved by API
-    Float tourDistance;
+    double tourDistance;
     String estimatedTime;
     // Image
     String routeInformation;
@@ -21,13 +21,13 @@ public class Tour {
         this.name = name;
     }
 
-    public Tour(String name, String tourDescription, String from, String to, String transportType, Float TourDistance, String estimatedTime) {
+    public Tour(String name, String tourDescription, String from, String to, String transportType, double tourDistance, String estimatedTime) {
         this.name = name;
         this.tourDescription = tourDescription;
         this.from = from;
         this.to = to;
         this.transportType = transportType;
-        this.tourDistance = TourDistance;
+        this.tourDistance = tourDistance;
         this.estimatedTime = estimatedTime;
     }
 

@@ -1,7 +1,6 @@
 package com.example.tourplanner.viewmodel;
 
 import com.example.tourplanner.data.model.Tour;
-import javafx.beans.property.Property;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -28,7 +27,7 @@ public class MainViewModel {
         return new SimpleObjectProperty<>(getTours());
     }
 
-    public void addNewTour() {
-        tours.add(new Tour("Bob"));
+    public boolean addNewTour(String name, String description, String from, String to, String transportType, double distance, String time) {
+        return tours.add(new Tour(name, description, from, to, transportType, distance, time));
     }
 }

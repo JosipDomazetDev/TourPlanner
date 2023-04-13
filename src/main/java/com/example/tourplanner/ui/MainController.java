@@ -4,11 +4,16 @@ import com.example.tourplanner.data.model.Tour;
 import com.example.tourplanner.viewmodel.MainViewModel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -46,6 +51,15 @@ public class MainController implements Initializable {
 
 
     public void onAddTour(MouseEvent mouseEvent) {
-        mainViewModel.addNewTour();
+            try {
+                Stage stage = new Stage();
+                Parent root = FXMLDependencyInjection.load("create-tour.fxml", Locale.ENGLISH);
+                Scene scene = new Scene(root);
+                stage.setTitle("Create Tour");
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
     }
 }
