@@ -1,6 +1,7 @@
 package com.example.tourplanner.viewmodel;
 
 import com.example.tourplanner.data.model.Tour;
+import com.example.tourplanner.data.model.TourLog;
 import com.example.tourplanner.data.model.repository.Repository;
 import com.example.tourplanner.data.model.repository.TourRepository;
 import javafx.beans.property.SimpleObjectProperty;

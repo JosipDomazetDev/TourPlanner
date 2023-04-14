@@ -4,10 +4,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
-@Table(name = "tours")
+@Table(name = "tour")
 public class Tour {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +27,10 @@ public class Tour {
     String estimatedTime;
     // Image
     String routeInformation;
+
+
+    @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL)
+    private List<TourLog> tourLogs;
 
     public Tour(String name) {
         this.name = name;
