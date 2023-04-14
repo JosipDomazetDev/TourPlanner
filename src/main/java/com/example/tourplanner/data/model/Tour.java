@@ -1,14 +1,23 @@
 package com.example.tourplanner.data.model;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Entity
+@Table(name = "tours")
 public class Tour {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long id;
+
     String name;
     String tourDescription;
+    @Column(name = "from_place")
     String from;
+    @Column(name = "to_place")
     String to;
     String transportType;
     // Retrieved by API
@@ -29,6 +38,10 @@ public class Tour {
         this.transportType = transportType;
         this.tourDistance = tourDistance;
         this.estimatedTime = estimatedTime;
+    }
+
+    public Tour() {
+
     }
 
 
