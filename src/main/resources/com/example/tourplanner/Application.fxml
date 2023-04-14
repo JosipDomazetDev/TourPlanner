@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane fx:id="layout" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.fhtw.swen2.tutorial.presentation.view.ApplicationView">
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+         <menus>
+            <Menu mnemonicParsing="false" text="%menu.file.title">
+               <items>
+                  <MenuItem fx:id="miPreferences" mnemonicParsing="false" text="%menu.file.preferences" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem fx:id="miQuit" mnemonicParsing="false" onAction="#onFileClose" text="%menu.file.quit" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="%menu.help.title">
+               <items>
+                  <MenuItem fx:id="miAbout" mnemonicParsing="false" onAction="#onHelpAbout" text="%menu.help.about" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+        <tabs>
+          <Tab text="%tab.demo.title">
+               <content>
+                  <SplitPane disable="true" dividerPositions="0.265">
+                    <items>
+                        <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                           <children>
+                               <fx:include source="NewPerson.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                        </AnchorPane>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="319.0" prefWidth="542.0">
+                           <children>
+                               <fx:include source="Search.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                           </children>
+                          <children>
+                              <fx:include source="PersonList.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0" />
+                              <VBox layoutX="26.0" layoutY="59.0" prefHeight="200.0" prefWidth="531.0" />
+                          </children>
+                      </AnchorPane>
+                    </items>
+                  </SplitPane>
+               </content>
+          </Tab>
+            <Tab text="%tab.logs.title">
+               <content>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </center>
+   <bottom>
+      <ToolBar maxHeight="20.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="20.0" BorderPane.alignment="CENTER">
+         <items>
+            <Label fx:id="tbMonitorStatus" />
+            <Label text="%tab.monitor.status" />
+            <Separator orientation="VERTICAL" />
+         </items>
+      </ToolBar>
+   </bottom>
+</BorderPane>

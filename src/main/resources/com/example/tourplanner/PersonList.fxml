@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="at.fhtw.swen2.tutorial.presentation.view.PersonListView"
+            prefHeight="400.0" prefWidth="600.0">
+    <children>
+        <VBox fx:id="dataContainer"
+              AnchorPane.leftAnchor="10.0"
+              AnchorPane.rightAnchor="10.0"
+              AnchorPane.topAnchor="50.0">
+
+        </VBox>
+    </children>
+
+</AnchorPane>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="200.0" prefWidth="200.0"
+      spacing="8.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="at.fhtw.swen2.tutorial.presentation.view.NewPersonView">
+
+   <children>
+      <Label text="%tab.demo.title">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Separator prefWidth="200.0" />
+      <Text text="new Person"/>
+      <TextField fx:id="nameTextField"/>
+      <Button fx:id="submitButton" onAction="#submitButtonAction" text="insert"/>
+      <Separator prefWidth="200.0" />
+      <Text fx:id="feedbackText" />
+   </children>
+   <padding>
+      <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+   </padding>
+</VBox>
