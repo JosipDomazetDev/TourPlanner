@@ -7,7 +7,7 @@ import jakarta.persistence.Persistence;
 
 import java.util.ArrayList;
 
-public class TourRepository {
+public class TourRepository implements Repository<Tour> {
 
     EntityManager entityManager;
 
@@ -16,10 +16,29 @@ public class TourRepository {
         entityManager = entityManagerFactory.createEntityManager();
     }
 
+    @Override
     public void save(Tour tour) {
         entityManager.getTransaction().begin();
         entityManager.persist(tour);
         entityManager.getTransaction().commit();
     }
 
+    @Override
+    public void update(Tour tour) {
+        entityManager.getTransaction().begin();
+        entityManager.merge(tour);
+        entityManager.getTransaction().commit();
+    }
+
+    @Override
+    public void delete(Tour tour) {
+        entityManager.getTransaction().begin();
+        entityManager.remove(tour);
+        entityManager.getTransaction().commit();
+    }
+
+    @Override
+    public ArrayList<Tour> load() {
+        return new ArrayList<>(entityManager.createQuery("SELECT t FROM Tour t", Tour.class).getResultList());
+    }
 }
