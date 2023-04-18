@@ -44,11 +44,15 @@ public class MainController implements Initializable {
           // Empty
         } else {
             toursListView.getSelectionModel().select(0);
-            // Select in viewmodel afterwards
-            // TODO
+            mainViewModel.setSelectedTour(toursListView.getSelectionModel().getSelectedItem());
         }
     }
 
+    @FXML
+    private void onTourClick(MouseEvent event) {
+        Tour selectedTour = toursListView.getSelectionModel().getSelectedItem();
+        mainViewModel.setSelectedTour(selectedTour);
+    }
 
     public void onAddTour(MouseEvent mouseEvent) {
             try {

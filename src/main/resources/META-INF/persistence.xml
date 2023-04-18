@@ -5,6 +5,7 @@
              version="2.2">
     <persistence-unit name="tour" transaction-type="RESOURCE_LOCAL">
         <class>com.example.tourplanner.data.model.Tour</class>
+        <class>com.example.tourplanner.data.model.TourLog</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5001/tourplanner"/>

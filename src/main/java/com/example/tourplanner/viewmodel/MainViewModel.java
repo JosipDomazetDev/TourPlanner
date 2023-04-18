@@ -4,9 +4,7 @@ import com.example.tourplanner.data.model.Tour;
 import com.example.tourplanner.data.model.TourLog;
 import com.example.tourplanner.data.model.repository.Repository;
 import com.example.tourplanner.data.model.repository.TourRepository;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lombok.Getter;
@@ -19,9 +17,10 @@ public class MainViewModel {
     private final StringProperty title = new SimpleStringProperty();
     private final ObservableList<Tour> tours = FXCollections.observableArrayList();
     private final Repository<Tour> tourRepository = new TourRepository();
+    private final TourDetailViewModel tourDetailViewModel;
 
-
-    public MainViewModel() {
+    public MainViewModel(TourDetailViewModel tourDetailViewModel) {
+        this.tourDetailViewModel = tourDetailViewModel;
         initialize();
     }
 
@@ -42,5 +41,10 @@ public class MainViewModel {
     private void initialize() {
         ArrayList<Tour> tours1 = tourRepository.load();
         tours.addAll(tours1);
+    }
+
+    public void setSelectedTour(Tour selectedTour) {
+        tourDetailViewModel.setSelectedTour(selectedTour);
+        System.out.println(tourDetailViewModel.getSelectedTour());
     }
 }

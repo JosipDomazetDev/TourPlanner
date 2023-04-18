@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.tourplanner.ui.TourDetailController"
+      prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+
+    <children>
+        <SplitPane orientation="VERTICAL">
+            <items>
+                <VBox>
+                    <children>
+                        <TabPane>
+                            <tabs>
+                                <Tab closable="false" text="General">
+                                    <content>
+                                        <ScrollPane>
+                                            <HBox>
+                                                <VBox>
+
+                                                    <VBox>
+                                                        <Label text="Name:"/>
+                                                        <TextField fx:id="nameTourDetailTextField"/>
+                                                    </VBox>
+
+                                                    <VBox>
+                                                        <Label text="Tour Description:"/>
+                                                        <TextField fx:id="tourDescriptionTourDetailTextField"/>
+                                                    </VBox>
+
+                                                    <VBox>
+                                                        <Label text="From:"/>
+                                                        <TextField fx:id="fromTourDetailTextField"/>
+                                                    </VBox>
+
+                                                    <VBox>
+                                                        <Label text="To:"/>
+                                                        <TextField fx:id="toTourDetailTextField"/>
+                                                    </VBox>
+
+                                                    <VBox>
+                                                        <Label text="Transport Type:"/>
+                                                        <TextField fx:id="transportTypeTourDetailTextField"/>
+                                                    </VBox>
+
+                                                    <VBox>
+                                                        <Label text="Tour Distance:"/>
+                                                        <TextField fx:id="tourDistanceTourDetailTextField"/>
+                                                    </VBox>
+
+                                                    <VBox>
+                                                        <Label text="Estimated Time:"/>
+                                                        <TextField fx:id="estimatedTimeTourDetailTextField"/>
+                                                    </VBox>
+
+                                                    <VBox>
+                                                        <Label text="Route Information:"/>
+                                                        <TextField fx:id="routeInformationTourDetailTextField"/>
+                                                    </VBox>
+                                                </VBox>
+                                                <VBox>
+                                                    <Button onMouseClicked="#onUpdateDetail" text="Update"/>
+                                                </VBox>
+                                            </HBox>
+                                        </ScrollPane>
+                                    </content>
+                                </Tab>
+                                <Tab closable="false" text="Route">
+                                    <content>
+                                        <ScrollPane>
+                                            <StackPane>
+                                                <ImageView>
+                                                    <image>
+                                                        <Image url="https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg"/>
+                                                    </image>
+                                                </ImageView>
+                                            </StackPane>
+                                        </ScrollPane>
+                                    </content>
+                                </Tab>
+                                <Tab closable="false" text="Misc">
+                                    <content>
+                                        <ScrollPane>
+                                            <!-- Content for Tab 3 -->
+                                            <Label text="This is the content for Tab 3"/>
+                                        </ScrollPane>
+                                    </content>
+                                </Tab>
+                            </tabs>
+                        </TabPane>
+
+                        <Separator prefWidth="200.0">
+                            <VBox.margin>
+                                <Insets top="20.0"/>
+                            </VBox.margin>
+                        </Separator>
+                        <VBox>
+                            <children>
+                                <HBox>
+                                    <children>
+                                        <Text fill="#0e94c9" strokeType="OUTSIDE" strokeWidth="0.0"
+                                              text="Tour Logs" textOrigin="CENTER" HBox.hgrow="ALWAYS">
+                                            <font>
+                                                <Font name="Arial Bold" size="19.0"/>
+                                            </font>
+                                            <HBox.margin>
+                                                <Insets right="8.0"/>
+                                            </HBox.margin>
+                                        </Text>
+                                        <Region HBox.hgrow="ALWAYS"/>
+                                        <HBox>
+                                            <children>
+                                                <Button mnemonicParsing="false" text="+"/>
+                                                <Button mnemonicParsing="false" text="-"/>
+                                                <Button mnemonicParsing="false" text="..."/>
+                                            </children>
+                                        </HBox>
+                                    </children>
+                                    <VBox.margin>
+                                        <Insets top="8.0"/>
+                                    </VBox.margin>
+                                </HBox>
+                                <TableView prefHeight="258.0">
+                                    <columns>
+                                        <TableColumn prefWidth="75.0" text="Date"/>
+                                        <TableColumn prefWidth="75.0" text="Duration"/>
+                                        <TableColumn prefWidth="75.0" text="Distance"/>
+                                    </columns>
+                                    <VBox.margin>
+                                        <Insets top="8.0"/>
+                                    </VBox.margin>
+                                </TableView>
+                            </children>
+                            <VBox.margin>
+                                <Insets left="4.0" right="4.0"/>
+                            </VBox.margin>
+                        </VBox>
+                    </children>
+                </VBox>
+            </items>
+        </SplitPane>
+    </children>
+</VBox>
+

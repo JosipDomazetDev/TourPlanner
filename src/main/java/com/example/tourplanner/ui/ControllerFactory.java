@@ -1,6 +1,5 @@
 package com.example.tourplanner.ui;
 
-import com.example.tourplanner.ui.MainController;
 import com.example.tourplanner.viewmodel.*;
 
 public final class ControllerFactory {
@@ -16,9 +15,12 @@ public final class ControllerFactory {
 
     private final MainViewModel mainViewModel;
     private final MenuViewModel menuViewModel;
+    private final TourDetailViewModel tourDetailViewModel;
 
     public ControllerFactory() {
-        this.mainViewModel = new MainViewModel();
+        this.tourDetailViewModel = new TourDetailViewModel();
+        this.mainViewModel = new MainViewModel(tourDetailViewModel);
+
         this.menuViewModel = new MenuViewModel();
     }
 
@@ -34,6 +36,10 @@ public final class ControllerFactory {
 
         if (controllerClass == CreateTourController.class) {
             return new CreateTourController(mainViewModel);
+        }
+
+        if (controllerClass == TourDetailController.class) {
+            return new TourDetailController(tourDetailViewModel);
         }
 
         throw new IllegalArgumentException("Unknown: " + controllerClass);
