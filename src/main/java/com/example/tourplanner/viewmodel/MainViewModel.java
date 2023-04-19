@@ -1,31 +1,32 @@
 package com.example.tourplanner.viewmodel;
 
 import com.example.tourplanner.data.model.Tour;
-import com.example.tourplanner.data.model.TourLog;
 import com.example.tourplanner.data.model.repository.Repository;
 import com.example.tourplanner.data.model.repository.TourRepository;
-import javafx.beans.property.*;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lombok.Getter;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 @Getter
 public class MainViewModel {
     private final StringProperty title = new SimpleStringProperty();
     private final ObservableList<Tour> tours = FXCollections.observableArrayList();
-    private final Repository<Tour> tourRepository = new TourRepository();
+    private final Repository<Tour> tourRepository = TourRepository.getInstance();
     private final TourDetailViewModel tourDetailViewModel;
 
     public MainViewModel(TourDetailViewModel tourDetailViewModel) {
         this.tourDetailViewModel = tourDetailViewModel;
         initialize();
-    }
 
-    public void doSomething() {
-        title.set(new Random().nextInt(50) + "");
+        tourDetailViewModel.setOnTourUpdated(() -> {
+            tours.add(new Tour());
+            tours.remove(tours.size() - 1);
+        });
     }
 
     public SimpleObjectProperty<ObservableList<Tour>> getProperty() {

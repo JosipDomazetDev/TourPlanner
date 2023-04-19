@@ -2,6 +2,7 @@ package com.example.tourplanner.ui;
 
 import com.example.tourplanner.data.model.Tour;
 import com.example.tourplanner.viewmodel.MainViewModel;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -31,11 +32,6 @@ public class MainController implements Initializable {
         this.mainViewModel = mainViewModel;
     }
 
-    @FXML
-    protected void onHelloButtonClick() {
-        mainViewModel.doSomething();
-    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         toursListView.itemsProperty().bindBidirectional(mainViewModel.getProperty());
@@ -46,6 +42,12 @@ public class MainController implements Initializable {
             toursListView.getSelectionModel().select(0);
             mainViewModel.setSelectedTour(toursListView.getSelectionModel().getSelectedItem());
         }
+
+        mainViewModel.getTours().addListener((ListChangeListener<Tour>) c -> {
+            // Refresh the ListView when the list changes
+            // This is needed for the tour update to be reflected immediately
+            toursListView.refresh();
+        });
     }
 
     @FXML

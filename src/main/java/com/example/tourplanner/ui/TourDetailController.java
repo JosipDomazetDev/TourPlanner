@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import lombok.Setter;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -53,7 +54,17 @@ public class TourDetailController implements Initializable {
         routeInformationTourDetailTextField.textProperty().bind(tourDetailViewModel.getRouteInformation());
     }
 
-    public void onUpdateDetail(MouseEvent mouseEvent) {
 
+    public void onUpdateDetail(MouseEvent mouseEvent) {
+        String name = tourDetailViewModel.getName().get();
+        String tourDescription = tourDetailViewModel.getTourDescription().get();
+        String from = tourDetailViewModel.getFrom().get();
+        String to = tourDetailViewModel.getTo().get();
+        String transportType = tourDetailViewModel.getTransportType().get();
+        String tourDistance = tourDetailViewModel.getTourDistance().get();
+        String estimatedTime = tourDetailViewModel.getEstimatedTime().get();
+        String routeInformation = tourDetailViewModel.getRouteInformation().get();
+
+        tourDetailViewModel.updateTour(name, tourDescription, from, to, transportType, tourDistance, estimatedTime, routeInformation);
     }
 }

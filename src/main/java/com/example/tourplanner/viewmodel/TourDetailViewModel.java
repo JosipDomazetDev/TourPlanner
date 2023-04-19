@@ -4,6 +4,7 @@ import com.example.tourplanner.data.model.Tour;
 import com.example.tourplanner.data.model.TourLog;
 import com.example.tourplanner.data.model.repository.Repository;
 import com.example.tourplanner.data.model.repository.TourLogRepository;
+import com.example.tourplanner.data.model.repository.TourRepository;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import lombok.Getter;
@@ -12,8 +13,9 @@ import lombok.Setter;
 @Getter
 public class TourDetailViewModel {
     private final Repository<TourLog> tourLogRepository = new TourLogRepository();
-
-
+    private final Repository<Tour> tourRepository = TourRepository.getInstance();
+    @Setter
+    private Runnable onTourUpdated;
     private Tour selectedTour;
 
 
@@ -58,5 +60,19 @@ public class TourDetailViewModel {
     private void initialize() {
 //        ArrayList<TourLog> tourLogs = tourLogRepository.load();
 //        tourLogs.addAll(tourLogs);
+    }
+
+    public void updateTour(String name, String tourDescription, String from, String to, String transportType, String tourDistance, String estimatedTime, String routeInformation) {
+        selectedTour.setName(name);
+        selectedTour.setTourDescription(tourDescription);
+        selectedTour.setFrom(from);
+        selectedTour.setTo(to);
+        selectedTour.setTransportType(transportType);
+        selectedTour.setTourDistance(Double.parseDouble(tourDistance));
+        selectedTour.setEstimatedTime(estimatedTime);
+        selectedTour.setRouteInformation(routeInformation);
+
+        tourRepository.update(selectedTour);
+        onTourUpdated.run();
     }
 }

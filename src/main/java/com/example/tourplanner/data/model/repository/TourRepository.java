@@ -10,6 +10,14 @@ import java.util.ArrayList;
 public class TourRepository implements Repository<Tour> {
 
     EntityManager entityManager;
+    private static TourRepository instance;
+
+    public static synchronized TourRepository getInstance() {
+        if (instance == null) {
+            instance = new TourRepository();
+        }
+        return instance;
+    }
 
     public TourRepository() {
         EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("tour");
