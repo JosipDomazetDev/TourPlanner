@@ -1,13 +1,25 @@
 package com.example.tourplanner.ui;
 
+import com.example.tourplanner.data.model.TourLog;
 import com.example.tourplanner.viewmodel.TourDetailViewModel;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
-import lombok.Setter;
+import javafx.util.converter.DateStringConverter;
+import javafx.util.converter.DoubleStringConverter;
+import javafx.util.converter.IntegerStringConverter;
 
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class TourDetailController implements Initializable {
@@ -37,6 +49,18 @@ public class TourDetailController implements Initializable {
     @FXML
     private TextField routeInformationTourDetailTextField;
 
+    @FXML
+    TableView<TourLog> logTable;
+    @FXML
+    private TableColumn<TourLog, Date> columnDateTime;
+    @FXML
+    private TableColumn<TourLog, String> columnComment;
+    @FXML
+    private TableColumn<TourLog, Double> columnTotalTime;
+    @FXML
+    private TableColumn<TourLog, Integer> columnDifficulty;
+    @FXML
+    private TableColumn<TourLog, Integer> columnRating;
 
     public TourDetailController(TourDetailViewModel tourDetailViewModel) {
         this.tourDetailViewModel = tourDetailViewModel;
@@ -52,6 +76,41 @@ public class TourDetailController implements Initializable {
         tourDistanceTourDetailTextField.textProperty().bind(tourDetailViewModel.getTourDistance());
         estimatedTimeTourDetailTextField.textProperty().bind(tourDetailViewModel.getEstimatedTime());
         routeInformationTourDetailTextField.textProperty().bind(tourDetailViewModel.getRouteInformation());
+
+
+        ObservableList<TourLog> data_table = FXCollections.observableArrayList();
+
+        data_table.add(new TourLog(new Date(), "comment 1", 1, 1.0, 1, tourDetailViewModel.getSelectedTour()));
+
+        columnDateTime.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
+        columnComment.setCellValueFactory(new PropertyValueFactory<>("comment"));
+        columnTotalTime.setCellValueFactory(new PropertyValueFactory<>("totalTime"));
+        columnDifficulty.setCellValueFactory(new PropertyValueFactory<>("difficulty"));
+        columnRating.setCellValueFactory(new PropertyValueFactory<>("rating"));
+        logTable.setItems(data_table);
+
+        makeTableEditable();
+    }
+
+    private void makeTableEditable() {
+        columnDateTime.setCellFactory(TextFieldTableCell.forTableColumn(new DateStringConverter()));
+        columnDateTime.setOnEditCommit(e -> {
+            e.getTableView().getItems().get(e.getTablePosition().getRow()).setDateTime(e.getNewValue());
+        });
+
+        columnComment.setCellFactory(TextFieldTableCell.forTableColumn());
+        columnComment.setOnEditCommit(e -> e.getTableView().getItems().get(e.getTablePosition().getRow()).setComment(e.getNewValue()));
+
+        columnTotalTime.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        columnTotalTime.setOnEditCommit(e -> e.getTableView().getItems().get(e.getTablePosition().getRow()).setTotalTime(e.getNewValue()));
+
+        columnDifficulty.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        columnDifficulty.setOnEditCommit(e -> e.getTableView().getItems().get(e.getTablePosition().getRow()).setDifficulty((e.getNewValue())));
+
+        columnRating.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        columnRating.setOnEditCommit(e -> e.getTableView().getItems().get(e.getTablePosition().getRow()).setRating(e.getNewValue()));
+
+        logTable.setEditable(true);
     }
 
 

@@ -46,9 +46,7 @@ public class Tour {
         this.estimatedTime = estimatedTime;
     }
 
-    public Tour() {
-
-    }
+    public Tour() {}
 
 
     @Override

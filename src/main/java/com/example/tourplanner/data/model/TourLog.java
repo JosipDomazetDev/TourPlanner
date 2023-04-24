@@ -27,4 +27,15 @@ public class TourLog {
     @JoinColumn(name = "tour_id", nullable = false)
     private Tour tour;
 
+    public TourLog(Date dateTime, String comment, int difficulty, double totalTime, int rating, Tour tour) {
+        this.dateTime = dateTime;
+        this.comment = comment;
+        this.difficulty = difficulty;
+        this.totalTime = totalTime;
+        this.rating = rating;
+        this.tour = tour;
+    }
+
+    public TourLog() {
+    }
 }
