@@ -34,6 +34,8 @@ public class TourLog {
         this.totalTime = totalTime;
         this.rating = rating;
         this.tour = tour;
+
+        tour.getTourLogs().add(this);
     }
 
     public TourLog() {

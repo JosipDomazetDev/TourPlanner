@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -30,7 +31,7 @@ public class Tour {
 
 
     @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL)
-    private List<TourLog> tourLogs;
+    private List<TourLog> tourLogs = new ArrayList<>();
 
     public Tour(String name) {
         this.name = name;

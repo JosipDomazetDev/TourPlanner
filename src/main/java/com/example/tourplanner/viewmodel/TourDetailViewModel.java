@@ -7,8 +7,12 @@ import com.example.tourplanner.data.model.repository.TourLogRepository;
 import com.example.tourplanner.data.model.repository.TourRepository;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.Date;
 
 @Getter
 public class TourDetailViewModel {
@@ -16,8 +20,6 @@ public class TourDetailViewModel {
     private final Repository<Tour> tourRepository = TourRepository.getInstance();
     @Setter
     private Runnable onTourUpdated;
-    private Tour selectedTour;
-
 
     private final StringProperty name = new SimpleStringProperty();
     private final StringProperty tourDescription = new SimpleStringProperty();
@@ -28,14 +30,23 @@ public class TourDetailViewModel {
     private final StringProperty estimatedTime = new SimpleStringProperty();
     private final StringProperty routeInformation = new SimpleStringProperty();
 
+    private Tour selectedTour;
+    ObservableList<TourLog> tourLogs = FXCollections.observableArrayList();
+
     public TourDetailViewModel() {
-        initialize();
+
     }
 
 
     public void setSelectedTour(Tour selectedTour) {
         this.selectedTour = selectedTour;
         setFields();
+        refreshTourLogs();
+    }
+
+    private void refreshTourLogs() {
+        tourLogs.clear();
+        tourLogs.addAll(selectedTour.getTourLogs());
     }
 
     public void setFields() {
@@ -49,17 +60,11 @@ public class TourDetailViewModel {
         routeInformation.setValue(selectedTour.getRouteInformation());
     }
 
-    public boolean addNewTourLog(String name, String description, String from, String to, String transportType, double distance, String time) {
-//        TourLog tourLog = new TourLog(name, description, from, to, transportType, distance, time);
-//        tourLogRepository.save(tourLog);
-//
-//        return selectedTour.getTourLogs().add(tourLog);
-        return false;
-    }
+    public void addNewTourLog() {
+        TourLog tourLog = new TourLog(new Date(), "", 0, 0, 0, selectedTour);
+        tourLogRepository.save(tourLog);
 
-    private void initialize() {
-//        ArrayList<TourLog> tourLogs = tourLogRepository.load();
-//        tourLogs.addAll(tourLogs);
+        refreshTourLogs();
     }
 
     public void updateTour(String name, String tourDescription, String from, String to, String transportType, String tourDistance, String estimatedTime, String routeInformation) {
@@ -74,5 +79,9 @@ public class TourDetailViewModel {
 
         tourRepository.update(selectedTour);
         onTourUpdated.run();
+    }
+
+    public void updateTourLog(TourLog tourLog) {
+        tourLogRepository.update(tourLog);
     }
 }

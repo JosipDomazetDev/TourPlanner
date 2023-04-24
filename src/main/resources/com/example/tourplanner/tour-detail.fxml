@@ -119,7 +119,7 @@
                                         <Region HBox.hgrow="ALWAYS"/>
                                         <HBox>
                                             <children>
-                                                <Button mnemonicParsing="false" text="+"/>
+                                                <Button mnemonicParsing="false" text="+" onMouseClicked="#onCreateTourLogClick"/>
                                                 <Button mnemonicParsing="false" text="-"/>
                                                 <Button mnemonicParsing="false" text="..."/>
                                             </children>
