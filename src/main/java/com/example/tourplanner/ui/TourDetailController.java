@@ -94,36 +94,36 @@ public class TourDetailController implements Initializable {
 
         columnDateTime.setCellFactory(TextFieldTableCell.forTableColumn(new DateStringConverter()));
         columnDateTime.setOnEditCommit(e -> {
-            modifyTour(e.getTableView().getItems().get(e.getTablePosition().getRow()), () -> {
-                e.getTableView().getItems().get(e.getTablePosition().getRow()).setDateTime(e.getNewValue());
+            modifyTour(e.getRowValue(), () -> {
+                e.getRowValue().setDateTime(e.getNewValue());
             });
         });
 
         columnComment.setCellFactory(TextFieldTableCell.forTableColumn());
         columnComment.setOnEditCommit(e -> {
-            modifyTour(e.getTableView().getItems().get(e.getTablePosition().getRow()), () -> {
-                e.getTableView().getItems().get(e.getTablePosition().getRow()).setComment(e.getNewValue());
+            modifyTour(e.getRowValue(), () -> {
+                e.getRowValue().setComment(e.getNewValue());
             });
         });
 
         columnTotalTime.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
         columnTotalTime.setOnEditCommit(e -> {
-            modifyTour(e.getTableView().getItems().get(e.getTablePosition().getRow()), () -> {
-                e.getTableView().getItems().get(e.getTablePosition().getRow()).setTotalTime(e.getNewValue());
+            modifyTour(e.getRowValue(), () -> {
+                e.getRowValue().setTotalTime(e.getNewValue());
             });
         });
 
         columnDifficulty.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         columnDifficulty.setOnEditCommit(e -> {
-            modifyTour(e.getTableView().getItems().get(e.getTablePosition().getRow()), () -> {
-                e.getTableView().getItems().get(e.getTablePosition().getRow()).setDifficulty((e.getNewValue()));
+            modifyTour(e.getRowValue(), () -> {
+                e.getRowValue().setDifficulty((e.getNewValue()));
             });
         });
 
         columnRating.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         columnRating.setOnEditCommit(e -> {
-            modifyTour(e.getTableView().getItems().get(e.getTablePosition().getRow()), () -> {
-                e.getTableView().getItems().get(e.getTablePosition().getRow()).setRating(e.getNewValue());
+            modifyTour(e.getRowValue(), () -> {
+                e.getRowValue().setRating(e.getNewValue());
             });
         });
 
