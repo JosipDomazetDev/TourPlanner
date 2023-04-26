@@ -13,13 +13,13 @@ import lombok.Getter;
 import java.util.ArrayList;
 
 @Getter
-public class MainViewModel {
+public class ToursViewModel {
     private final StringProperty title = new SimpleStringProperty();
     private final ObservableList<Tour> tours = FXCollections.observableArrayList();
     private final Repository<Tour> tourRepository = TourRepository.getInstance();
     private final TourDetailViewModel tourDetailViewModel;
 
-    public MainViewModel(TourDetailViewModel tourDetailViewModel) {
+    public ToursViewModel(TourDetailViewModel tourDetailViewModel) {
         this.tourDetailViewModel = tourDetailViewModel;
         initialize();
 

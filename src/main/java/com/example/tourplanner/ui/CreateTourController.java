@@ -1,6 +1,6 @@
 package com.example.tourplanner.ui;
 
-import com.example.tourplanner.viewmodel.MainViewModel;
+import com.example.tourplanner.viewmodel.ToursViewModel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
 
 public class CreateTourController implements Initializable {
 
-    private final MainViewModel mainViewModel;
+    private final ToursViewModel toursViewModel;
 
     @FXML
     private TextField tourName;
@@ -37,8 +37,8 @@ public class CreateTourController implements Initializable {
 
 
 
-    public CreateTourController(MainViewModel mainViewModel) {
-        this.mainViewModel = mainViewModel;
+    public CreateTourController(ToursViewModel toursViewModel) {
+        this.toursViewModel = toursViewModel;
     }
 
 
@@ -56,7 +56,7 @@ public class CreateTourController implements Initializable {
         double distance = Double.parseDouble(tourDistance.getText());
         String time = estimatedTime.getText();
 
-        if (mainViewModel.addNewTour(name, description, from, to, transportType, distance, time)) {
+        if (toursViewModel.addNewTour(name, description, from, to, transportType, distance, time)) {
             Stage window = (Stage) (tourName.getScene().getWindow());
             window.close();
         }

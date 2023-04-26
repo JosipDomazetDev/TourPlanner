@@ -13,20 +13,20 @@ public final class ControllerFactory {
         return instance;
     }
 
-    private final MainViewModel mainViewModel;
+    private final ToursViewModel toursViewModel;
     private final MenuViewModel menuViewModel;
     private final TourDetailViewModel tourDetailViewModel;
 
     public ControllerFactory() {
         this.tourDetailViewModel = new TourDetailViewModel();
-        this.mainViewModel = new MainViewModel(tourDetailViewModel);
+        this.toursViewModel = new ToursViewModel(tourDetailViewModel);
 
         this.menuViewModel = new MenuViewModel();
     }
 
     public Object create(Class<?> controllerClass) {
-        if (controllerClass == MainController.class) {
-            return new MainController(mainViewModel);
+        if (controllerClass == ToursController.class) {
+            return new ToursController(toursViewModel);
         }
 
         if (controllerClass == MenuController.class) {
@@ -35,7 +35,7 @@ public final class ControllerFactory {
 
 
         if (controllerClass == CreateTourController.class) {
-            return new CreateTourController(mainViewModel);
+            return new CreateTourController(toursViewModel);
         }
 
         if (controllerClass == TourDetailController.class) {

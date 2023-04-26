@@ -1,49 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
-            prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.tourplanner.ui.MainController">
+            prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
     <left>
     </left>
 
     <left>
-        <VBox prefHeight="200.0" prefWidth="250.0" BorderPane.alignment="CENTER">
-            <children>
-                <TextField fx:id="searchTextField2" promptText="Search">
-                    <VBox.margin>
-                        <Insets bottom="8.0"/>
-                    </VBox.margin>
-                </TextField>
-                <HBox prefWidth="200.0">
-                    <children>
-                        <Text fill="#0e94c9" strokeType="OUTSIDE" strokeWidth="0.0" text="Tours" textAlignment="CENTER"
-                              textOrigin="CENTER">
-                            <font>
-                                <Font name="Arial Bold" size="19.0"/>
-                            </font>
-                        </Text>
-                        <Region HBox.hgrow="ALWAYS"/>
-                        <Button maxHeight="-Infinity" mnemonicParsing="false" onMouseClicked="#onAddTour" text="+"/>
-                    </children>
-                </HBox>
-                <ListView fx:id="toursListView" onMouseClicked="#onTourClick" prefHeight="200.0" prefWidth="200.0">
-                    <VBox.margin>
-                        <Insets top="8.0"/>
-                    </VBox.margin>
-                </ListView>
-            </children>
-            <padding>
-                <Insets right="10.0"/>
-            </padding>
-        </VBox>
+        <fx:include source="tours-list.fxml"/>
     </left>
     <top>
         <fx:include source="menu-header.fxml"/>

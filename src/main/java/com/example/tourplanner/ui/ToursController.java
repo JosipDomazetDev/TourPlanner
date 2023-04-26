@@ -1,7 +1,7 @@
 package com.example.tourplanner.ui;
 
 import com.example.tourplanner.data.model.Tour;
-import com.example.tourplanner.viewmodel.MainViewModel;
+import com.example.tourplanner.viewmodel.ToursViewModel;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,33 +17,30 @@ import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class MainController implements Initializable {
-    @FXML
-    private Label welcomeText;
-
+public class ToursController implements Initializable {
     @FXML
     public ListView<Tour> toursListView;
 
 
-    private final MainViewModel mainViewModel;
+    private final ToursViewModel toursViewModel;
 
 
-    public MainController(MainViewModel mainViewModel) {
-        this.mainViewModel = mainViewModel;
+    public ToursController(ToursViewModel toursViewModel) {
+        this.toursViewModel = toursViewModel;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        toursListView.itemsProperty().bindBidirectional(mainViewModel.getProperty());
+        toursListView.itemsProperty().bindBidirectional(toursViewModel.getProperty());
 
         if (toursListView.getItems().isEmpty()) {
           // Empty
         } else {
             toursListView.getSelectionModel().select(0);
-            mainViewModel.setSelectedTour(toursListView.getSelectionModel().getSelectedItem());
+            toursViewModel.setSelectedTour(toursListView.getSelectionModel().getSelectedItem());
         }
 
-        mainViewModel.getTours().addListener((ListChangeListener<Tour>) c -> {
+        toursViewModel.getTours().addListener((ListChangeListener<Tour>) c -> {
             // Refresh the ListView when the list changes
             // This is needed for the tour update to be reflected immediately
             toursListView.refresh();
@@ -53,7 +50,7 @@ public class MainController implements Initializable {
     @FXML
     private void onTourClick(MouseEvent event) {
         Tour selectedTour = toursListView.getSelectionModel().getSelectedItem();
-        mainViewModel.setSelectedTour(selectedTour);
+        toursViewModel.setSelectedTour(selectedTour);
     }
 
     public void onAddTour(MouseEvent mouseEvent) {
