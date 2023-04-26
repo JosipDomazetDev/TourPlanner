@@ -12,9 +12,8 @@ import javafx.collections.ObservableList;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.function.Consumer;
 
 @Getter
 public class TourDetailViewModel {
@@ -126,5 +125,34 @@ public class TourDetailViewModel {
         selectedTour.getTourLogs().remove(tourLog);
         tourLogRepository.delete(tourLog);
         refreshTourLogs();
+    }
+
+    public <R> void updateTourLog(R newValue, Consumer<R> updateMethod) {
+        if (newValue == null) {
+            return;
+        }
+
+        updateMethod.accept(newValue);
+        tourRepository.update(selectedTour);
+    }
+
+    public void setDateTime(TourLog tourLog, Date newValue) {
+        updateTourLog(newValue, tourLog::setDateTime);
+    }
+
+    public void setComment(TourLog tourLog, String newValue) {
+        updateTourLog(newValue, tourLog::setComment);
+    }
+
+    public void setTotalTime(TourLog tourLog, Double newValue) {
+        updateTourLog(newValue, tourLog::setTotalTime);
+    }
+
+    public void setDifficulty(TourLog tourLog, Integer newValue) {
+        updateTourLog(newValue, tourLog::setDifficulty);
+    }
+
+    public void setRating(TourLog tourLog, Integer newValue) {
+        updateTourLog(newValue, tourLog::setRating);
     }
 }

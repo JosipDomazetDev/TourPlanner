@@ -15,4 +15,6 @@ module com.example.tourplanner {
     opens com.example.tourplanner to javafx.fxml, org.hibernate.orm.core ;
     exports com.example.tourplanner.ui.components;
     opens com.example.tourplanner.ui.components to javafx.fxml;
+    exports com.example.tourplanner.ui.components.converter;
+    opens com.example.tourplanner.ui.components.converter to javafx.fxml;
 }

@@ -69,10 +69,12 @@
                                                     </VBox>
                                                 </VBox>
                                                 <VBox>
-                                                    <Button onMouseClicked="#onUpdateDetail" fx:id="updateDetailButton" text="Update"/>
+                                                    <Button onMouseClicked="#onUpdateDetail" fx:id="updateDetailButton"
+                                                            text="Update"/>
                                                 </VBox>
                                                 <VBox>
-                                                    <Button onMouseClicked="#onDeleteDetail" fx:id="deleteDetailButton" text="Delete"/>
+                                                    <Button onMouseClicked="#onDeleteDetail" fx:id="deleteDetailButton"
+                                                            text="Delete"/>
                                                 </VBox>
                                             </HBox>
                                         </ScrollPane>
@@ -123,7 +125,8 @@
                                         <Region HBox.hgrow="ALWAYS"/>
                                         <HBox>
                                             <children>
-                                                <Button mnemonicParsing="false" text="+" onMouseClicked="#onCreateTourLogClick"/>
+                                                <Button mnemonicParsing="false" text="+"
+                                                        onMouseClicked="#onCreateTourLogClick"/>
                                             </children>
                                         </HBox>
                                     </children>
@@ -141,12 +144,12 @@
                                         </TableColumn>
                                         <TableColumn text="Comment" fx:id="columnComment">
                                             <cellValueFactory>
-                                                <PropertyValueFactory property="comment" />
+                                                <PropertyValueFactory property="comment"/>
                                             </cellValueFactory>
                                         </TableColumn>
                                         <TableColumn text="Duration" fx:id="columnTotalTime"/>
-                                        <TableColumn text="Difficulty" fx:id="columnDifficulty"/>
-                                        <TableColumn text="Rating" fx:id="columnRating"/>
+                                        <TableColumn fx:id="columnDifficulty"/>
+                                        <TableColumn fx:id="columnRating"/>
                                     </columns>
                                     <VBox.margin>
                                         <Insets top="8.0"/>

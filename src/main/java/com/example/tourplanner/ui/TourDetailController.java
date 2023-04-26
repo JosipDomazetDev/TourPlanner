@@ -1,7 +1,10 @@
 package com.example.tourplanner.ui;
 
 import com.example.tourplanner.data.model.TourLog;
-import com.example.tourplanner.ui.components.ButtonCellFactory;
+import com.example.tourplanner.ui.components.*;
+import com.example.tourplanner.ui.components.converter.CustomDateStringConverter;
+import com.example.tourplanner.ui.components.converter.CustomDoubleStringConverter;
+import com.example.tourplanner.ui.components.converter.CustomIntegerStringConverter;
 import com.example.tourplanner.viewmodel.TourDetailViewModel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -9,9 +12,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
-import javafx.util.converter.DateStringConverter;
-import javafx.util.converter.DoubleStringConverter;
-import javafx.util.converter.IntegerStringConverter;
 
 import java.net.URL;
 import java.util.Date;
@@ -77,8 +77,17 @@ public class TourDetailController implements Initializable {
         columnDateTime.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
         columnComment.setCellValueFactory(new PropertyValueFactory<>("comment"));
         columnTotalTime.setCellValueFactory(new PropertyValueFactory<>("totalTime"));
+
         columnDifficulty.setCellValueFactory(new PropertyValueFactory<>("difficulty"));
+        Label diff = new Label("Difficulty");
+        diff.setTooltip(new Tooltip("scale from 1 to 5 (1 = easy, 5 = hard)"));
+        columnDifficulty.setGraphic(diff);
+
         columnRating.setCellValueFactory(new PropertyValueFactory<>("rating"));
+        Label rat = new Label("Rating");
+        rat.setTooltip(new Tooltip("scale from 1 to 5 (1 = worst, 5 = best)"));
+        columnRating.setGraphic(rat);
+
         logTable.setItems(tourDetailViewModel.getTourLogs());
 
         TableColumn<TourLog, Void> buttonColumn = new TableColumn<>("Delete");
@@ -89,46 +98,38 @@ public class TourDetailController implements Initializable {
     }
 
 
-    public void modifyTour(TourLog tourLog, Runnable runnable) {
-        runnable.run();
-        tourDetailViewModel.updateTourLog(tourLog);
-    }
-
-
     private void makeTableEditable() {
-        columnDateTime.setCellFactory(TextFieldTableCell.forTableColumn(new DateStringConverter()));
+        columnDateTime.setCellFactory(TextFieldTableCell.forTableColumn(new CustomDateStringConverter("dd.MM.yyyy HH:mm")));
         columnDateTime.setOnEditCommit(e -> {
-            modifyTour(e.getRowValue(), () -> {
-                e.getRowValue().setDateTime(e.getNewValue());
-            });
+            tourDetailViewModel.setDateTime(e.getRowValue(), e.getNewValue());
+            logTable.refresh();
         });
 
         columnComment.setCellFactory(TextFieldTableCell.forTableColumn());
         columnComment.setOnEditCommit(e -> {
-            modifyTour(e.getRowValue(), () -> {
-                e.getRowValue().setComment(e.getNewValue());
-            });
+            tourDetailViewModel.setComment(e.getRowValue(), e.getNewValue());
+            logTable.refresh();
         });
 
-        columnTotalTime.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+
+        columnTotalTime.setCellFactory(TextFieldTableCell.forTableColumn(new CustomDoubleStringConverter()));
         columnTotalTime.setOnEditCommit(e -> {
-            modifyTour(e.getRowValue(), () -> {
-                e.getRowValue().setTotalTime(e.getNewValue());
-            });
+            tourDetailViewModel.setTotalTime(e.getRowValue(), e.getNewValue());
+            logTable.refresh();
         });
 
-        columnDifficulty.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        int lowerBound = 1;
+        int upperBound = 5;
+        columnDifficulty.setCellFactory(TextFieldTableCell.forTableColumn((new CustomIntegerStringConverter(lowerBound, upperBound))));
         columnDifficulty.setOnEditCommit(e -> {
-            modifyTour(e.getRowValue(), () -> {
-                e.getRowValue().setDifficulty((e.getNewValue()));
-            });
+            tourDetailViewModel.setDifficulty(e.getRowValue(), e.getNewValue());
+            logTable.refresh();
         });
 
-        columnRating.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        columnRating.setCellFactory(TextFieldTableCell.forTableColumn(new CustomIntegerStringConverter(lowerBound, upperBound)));
         columnRating.setOnEditCommit(e -> {
-            modifyTour(e.getRowValue(), () -> {
-                e.getRowValue().setRating(e.getNewValue());
-            });
+            tourDetailViewModel.setRating(e.getRowValue(), e.getNewValue());
+            logTable.refresh();
         });
 
         logTable.setEditable(true);
