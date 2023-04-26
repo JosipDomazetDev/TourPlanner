@@ -34,7 +34,7 @@ public class ToursController implements Initializable {
         toursListView.itemsProperty().bindBidirectional(toursViewModel.getProperty());
 
         if (toursListView.getItems().isEmpty()) {
-          // Empty
+            // Empty
         } else {
             toursListView.getSelectionModel().select(0);
             toursViewModel.setSelectedTour(toursListView.getSelectionModel().getSelectedItem());
@@ -54,15 +54,27 @@ public class ToursController implements Initializable {
     }
 
     public void onAddTour(MouseEvent mouseEvent) {
-            try {
-                Stage stage = new Stage();
-                Parent root = FXMLDependencyInjection.load("create-tour.fxml", Locale.ENGLISH);
-                Scene scene = new Scene(root);
-                stage.setTitle("Create Tour");
-                stage.setScene(scene);
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        try {
+            Stage stage = new Stage();
+            Parent root = FXMLDependencyInjection.load("create-tour.fxml", Locale.ENGLISH);
+            Scene scene = new Scene(root);
+            stage.setTitle("Create Tour");
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    // TODO CADE HIER FÜR DICH
+    public void printSummaryReport(MouseEvent mouseEvent) {
+        System.out.println(toursViewModel.getTours());
+        // KA OBS BESSER IST ES IM CONTROLLER ODER VIEWMODEL ZU MACHEN
+    }
+
+    public void printTourReport(MouseEvent mouseEvent) {
+        System.out.println(toursViewModel.getTourDetailViewModel().getSelectedTour());
+        // KA OBS BESSER IST ES IM CONTROLLER ODER VIEWMODEL ZU MACHEN
     }
 }
