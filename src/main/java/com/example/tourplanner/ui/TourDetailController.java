@@ -1,12 +1,11 @@
 package com.example.tourplanner.ui;
 
 import com.example.tourplanner.data.model.TourLog;
+import com.example.tourplanner.ui.components.ButtonCellFactory;
 import com.example.tourplanner.viewmodel.TourDetailViewModel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseEvent;
@@ -63,6 +62,7 @@ public class TourDetailController implements Initializable {
         this.tourDetailViewModel = tourDetailViewModel;
     }
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         nameTourDetailTextField.textProperty().bindBidirectional(tourDetailViewModel.getName());
@@ -81,8 +81,13 @@ public class TourDetailController implements Initializable {
         columnRating.setCellValueFactory(new PropertyValueFactory<>("rating"));
         logTable.setItems(tourDetailViewModel.getTourLogs());
 
+        TableColumn<TourLog, Void> buttonColumn = new TableColumn<>("Delete");
+        buttonColumn.setCellFactory(new ButtonCellFactory(tourDetailViewModel::deleteTourLog));
+        logTable.getColumns().add(buttonColumn);
+
         makeTableEditable();
     }
+
 
     public void modifyTour(TourLog tourLog, Runnable runnable) {
         runnable.run();
@@ -91,7 +96,6 @@ public class TourDetailController implements Initializable {
 
 
     private void makeTableEditable() {
-
         columnDateTime.setCellFactory(TextFieldTableCell.forTableColumn(new DateStringConverter()));
         columnDateTime.setOnEditCommit(e -> {
             modifyTour(e.getRowValue(), () -> {
@@ -146,5 +150,9 @@ public class TourDetailController implements Initializable {
 
     public void onCreateTourLogClick(MouseEvent mouseEvent) {
         tourDetailViewModel.addNewTourLog();
+    }
+
+    public void onDeleteDetail(MouseEvent mouseEvent) {
+        tourDetailViewModel.deleteTour();
     }
 }

@@ -24,7 +24,6 @@ public class TourLog {
     private int rating;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tour_id", nullable = false)
     private Tour tour;
 
     public TourLog(Date dateTime, String comment, int difficulty, double totalTime, int rating, Tour tour) {

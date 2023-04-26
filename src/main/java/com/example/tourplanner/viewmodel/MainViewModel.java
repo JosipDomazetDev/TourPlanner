@@ -27,6 +27,16 @@ public class MainViewModel {
             tours.add(new Tour());
             tours.remove(tours.size() - 1);
         });
+
+        tourDetailViewModel.setOnTourDeleted(() -> {
+            tours.remove(tourDetailViewModel.getSelectedTour());
+
+            if (tours.size() > 0) {
+                setSelectedTour(tours.get(0));
+            } else {
+                setSelectedTour(null);
+            }
+        });
     }
 
     public SimpleObjectProperty<ObservableList<Tour>> getProperty() {
@@ -46,6 +56,5 @@ public class MainViewModel {
 
     public void setSelectedTour(Tour selectedTour) {
         tourDetailViewModel.setSelectedTour(selectedTour);
-        System.out.println(tourDetailViewModel.getSelectedTour());
     }
 }

@@ -10,11 +10,17 @@ import java.util.ArrayList;
 
 public class TourLogRepository implements Repository<TourLog> {
 
-    EntityManager entityManager;
+    EntityManager entityManager = EntityManagerProvider.getInstance();
+    private static TourLogRepository instance;
+
+    public static synchronized TourLogRepository getInstance() {
+        if (instance == null) {
+            instance = new TourLogRepository();
+        }
+        return instance;
+    }
 
     public TourLogRepository() {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("tour");
-        entityManager = entityManagerFactory.createEntityManager();
     }
 
     @Override

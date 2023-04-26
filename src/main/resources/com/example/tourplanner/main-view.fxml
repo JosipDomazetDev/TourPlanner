@@ -32,8 +32,6 @@
                         </Text>
                         <Region HBox.hgrow="ALWAYS"/>
                         <Button maxHeight="-Infinity" mnemonicParsing="false" onMouseClicked="#onAddTour" text="+"/>
-                        <Button mnemonicParsing="false" text="-"/>
-                        <Button mnemonicParsing="false" text="..."/>
                     </children>
                 </HBox>
                 <ListView fx:id="toursListView" onMouseClicked="#onTourClick" prefHeight="200.0" prefWidth="200.0">

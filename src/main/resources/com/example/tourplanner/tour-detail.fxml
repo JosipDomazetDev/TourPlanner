@@ -11,6 +11,7 @@
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
+      fx:id="tourDetailVBox"
       fx:controller="com.example.tourplanner.ui.TourDetailController"
       prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
 
@@ -68,7 +69,10 @@
                                                     </VBox>
                                                 </VBox>
                                                 <VBox>
-                                                    <Button onMouseClicked="#onUpdateDetail" text="Update"/>
+                                                    <Button onMouseClicked="#onUpdateDetail" fx:id="updateDetailButton" text="Update"/>
+                                                </VBox>
+                                                <VBox>
+                                                    <Button onMouseClicked="#onDeleteDetail" fx:id="deleteDetailButton" text="Delete"/>
                                                 </VBox>
                                             </HBox>
                                         </ScrollPane>
@@ -120,8 +124,6 @@
                                         <HBox>
                                             <children>
                                                 <Button mnemonicParsing="false" text="+" onMouseClicked="#onCreateTourLogClick"/>
-                                                <Button mnemonicParsing="false" text="-"/>
-                                                <Button mnemonicParsing="false" text="..."/>
                                             </children>
                                         </HBox>
                                     </children>
