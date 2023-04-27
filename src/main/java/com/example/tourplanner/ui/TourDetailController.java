@@ -8,11 +8,14 @@ import com.example.tourplanner.ui.components.converter.CustomIntegerStringConver
 import com.example.tourplanner.viewmodel.TourDetailViewModel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.Date;
@@ -65,7 +68,8 @@ public class TourDetailController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        imageView.imageProperty().bindBidirectional(tourDetailViewModel.getImageProperty());
+        initializeImageView();
+
         nameTourDetailTextField.textProperty().bindBidirectional(tourDetailViewModel.getName());
         tourDescriptionTourDetailTextField.textProperty().bindBidirectional(tourDetailViewModel.getTourDescription());
         fromTourDetailTextField.textProperty().bindBidirectional(tourDetailViewModel.getFrom());
@@ -93,6 +97,29 @@ public class TourDetailController implements Initializable {
         logTable.getColumns().add(buttonColumn);
 
         makeTableEditable();
+    }
+
+    private void initializeImageView() {
+        imageView.imageProperty().bindBidirectional(tourDetailViewModel.getImageProperty());
+        imageView.setOnMouseClicked(event -> {
+            Stage previewStage = new Stage();
+            previewStage.setTitle("Image Preview");
+
+            ImageView previewImageView = new ImageView();
+            previewImageView.setImage(imageView.getImage());
+
+            previewImageView.setFitWidth(650);
+            previewImageView.setFitHeight(650);
+
+            VBox previewBox = new VBox(previewImageView);
+            previewBox.setStyle("-fx-background-color: black; -fx-alignment: center;");
+
+            Scene previewScene = new Scene(previewBox);
+            previewStage.setScene(previewScene);
+
+            // Show the preview window
+            previewStage.show();
+        });
     }
 
 
