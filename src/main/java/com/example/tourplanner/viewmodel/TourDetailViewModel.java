@@ -5,13 +5,17 @@ import com.example.tourplanner.data.model.TourLog;
 import com.example.tourplanner.data.model.repository.Repository;
 import com.example.tourplanner.data.model.repository.TourLogRepository;
 import com.example.tourplanner.data.model.repository.TourRepository;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.image.Image;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.File;
 import java.util.Date;
 import java.util.function.Consumer;
 
@@ -32,6 +36,7 @@ public class TourDetailViewModel {
     private final StringProperty tourDistance = new SimpleStringProperty();
     private final StringProperty estimatedTime = new SimpleStringProperty();
     private final StringProperty routeInformation = new SimpleStringProperty();
+    private ObjectProperty<Image> imageProperty = new SimpleObjectProperty<>();
 
     private Tour selectedTour;
     ObservableList<TourLog> tourLogs = FXCollections.observableArrayList();
@@ -75,8 +80,10 @@ public class TourDetailViewModel {
         to.setValue(selectedTour.getTo());
         transportType.setValue(selectedTour.getTransportType());
         tourDistance.setValue(selectedTour.getTourDistance() + "");
-        estimatedTime.setValue(selectedTour.getEstimatedTime());
+        estimatedTime.setValue(selectedTour.getEstimatedTime() + " min");
         routeInformation.setValue(selectedTour.getRouteInformation());
+        imageProperty.set(new Image("file:" + selectedTour.getRouteInformation()));
+
 
         refreshTourLogs();
     }
@@ -90,7 +97,7 @@ public class TourDetailViewModel {
         refreshTourLogs();
     }
 
-    public void updateTour(String name, String tourDescription, String from, String to, String transportType, String tourDistance, String estimatedTime, String routeInformation) {
+    public void updateTour(String name, String tourDescription, String from, String to, String transportType) {
         if (selectedTour == null) return;
 
         selectedTour.setName(name);
@@ -98,18 +105,9 @@ public class TourDetailViewModel {
         selectedTour.setFrom(from);
         selectedTour.setTo(to);
         selectedTour.setTransportType(transportType);
-        selectedTour.setTourDistance(Double.parseDouble(tourDistance));
-        selectedTour.setEstimatedTime(estimatedTime);
-        selectedTour.setRouteInformation(routeInformation);
 
         tourRepository.update(selectedTour);
         onTourUpdated.run();
-    }
-
-    public void updateTourLog(TourLog tourLog) {
-        if (selectedTour == null) return;
-
-        tourLogRepository.update(tourLog);
     }
 
     public void deleteTour() {

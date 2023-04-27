@@ -30,7 +30,7 @@
                         </font>
                     </Text>
                     <Region HBox.hgrow="ALWAYS"/>
-                    <Button mnemonicParsing="false" onMouseClicked="#onAddTour" text="+"/>
+                    <Button onMouseClicked="#onAddTour" text="+"/>
                 </children>
             </HBox>
             <ListView fx:id="toursListView" onMouseClicked="#onTourClick" prefHeight="200.0" prefWidth="200.0">

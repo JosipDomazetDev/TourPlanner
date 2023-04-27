@@ -62,11 +62,6 @@
                                                         <Label text="Estimated Time:"/>
                                                         <TextField fx:id="estimatedTimeTourDetailTextField"/>
                                                     </VBox>
-
-                                                    <VBox>
-                                                        <Label text="Route Information:"/>
-                                                        <TextField fx:id="routeInformationTourDetailTextField"/>
-                                                    </VBox>
                                                 </VBox>
                                                 <VBox>
                                                     <Button onMouseClicked="#onUpdateDetail" fx:id="updateDetailButton"
@@ -84,11 +79,7 @@
                                     <content>
                                         <ScrollPane>
                                             <StackPane>
-                                                <ImageView>
-                                                    <image>
-                                                        <Image url="https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg"/>
-                                                    </image>
-                                                </ImageView>
+                                                <ImageView fx:id="imageView"/>
                                             </StackPane>
                                         </ScrollPane>
                                     </content>

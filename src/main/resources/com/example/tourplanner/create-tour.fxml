@@ -5,36 +5,47 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox prefHeight="300" prefWidth="400" spacing="10" styleClass="root" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tourplanner.ui.CreateTourController">
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ProgressIndicator?>
+<VBox prefHeight="500" prefWidth="500" spacing="10" styleClass="root" xmlns="http://javafx.com/javafx/19"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tourplanner.ui.CreateTourController">
 
-    <Label styleClass="heading" text="Tour Information" />
+    <Label styleClass="heading" text="Tour Information">
+        <font>
+            <Font name="System Bold" size="16.0"/>
+        </font>
+    </Label>
+    <Label styleClass="heading" text="Error Message" visible="false" fx:id="errorLabel" textFill="#ba0e0e">
+        <font>
+            <Font name="System Bold Italic" size="12.0"/>
+        </font>
+    </Label>
 
 
-        <Label text="Tour Name" />
-        <TextField fx:id="tourName" />
+    <Label text="Tour Name"/>
+    <TextField fx:id="tourName"/>
 
-        <Label text="Tour Description" />
-        <TextField fx:id="tourDescription" />
+    <Label text="Tour Description"/>
+    <TextField fx:id="tourDescription"/>
 
-        <Label text="From" />
-        <TextField fx:id="from" />
+    <Label text="From"/>
+    <TextField fx:id="from"/>
 
-        <Label text="To" />
-        <TextField fx:id="to" />
+    <Label text="To"/>
+    <TextField fx:id="to"/>
 
-        <Label text="Transport Type" />
-        <TextField fx:id="transportType" />
+    <Label text="Transport Type"/>
+    <TextField fx:id="transportType"/>
 
-        <Label text="Tour Distance" />
-        <TextField fx:id="tourDistance" />
 
-        <Label text="Estimated Time" />
-        <TextField fx:id="estimatedTime" />
-   <Button mnemonicParsing="false" text="Create" onMouseClicked="#onCreateTourClick" />
-   <padding>
-      <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-   </padding>
+    <ProgressIndicator fx:id="progressIndicator" visible="false"/>
 
+    <Button mnemonicParsing="false" text="Create" onMouseClicked="#onCreateTourClick" />
+
+    <padding>
+        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+    </padding>
 
 </VBox>

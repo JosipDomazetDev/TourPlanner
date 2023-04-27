@@ -3,9 +3,10 @@ package com.example.tourplanner.viewmodel;
 import com.example.tourplanner.data.model.Tour;
 import com.example.tourplanner.data.model.repository.Repository;
 import com.example.tourplanner.data.model.repository.TourRepository;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import com.example.tourplanner.data.model.repository.api.MapAPIFetcher;
+import com.example.tourplanner.data.model.repository.api.MapQuestAPIFetcher;
+import javafx.application.Platform;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lombok.Getter;
@@ -18,6 +19,10 @@ public class ToursViewModel {
     private final ObservableList<Tour> tours = FXCollections.observableArrayList();
     private final Repository<Tour> tourRepository = TourRepository.getInstance();
     private final TourDetailViewModel tourDetailViewModel;
+    private final StringProperty errorMsg = new SimpleStringProperty();
+    private final BooleanProperty isError = new SimpleBooleanProperty();
+    private final BooleanProperty isLoading = new SimpleBooleanProperty();
+
 
     public ToursViewModel(TourDetailViewModel tourDetailViewModel) {
         this.tourDetailViewModel = tourDetailViewModel;
@@ -43,10 +48,45 @@ public class ToursViewModel {
         return new SimpleObjectProperty<>(getTours());
     }
 
-    public boolean addNewTour(String name, String description, String from, String to, String transportType, double distance, String time) {
-        Tour tour = new Tour(name, description, from, to, transportType, distance, time);
-        tourRepository.save(tour);
-        return tours.add(tour);
+    public void addNewTour(String name, String description, String from, String to, String transportType, Runnable onApiCompletion) {
+        setLoading();
+
+        Tour tour = new Tour(name, description, from, to, transportType);
+        MapAPIFetcher mapFetcher = new MapQuestAPIFetcher(tour, "f4C8FH0Z0LV31BV3yrdp95rNF3XNbQvg");
+        new Thread(mapFetcher).start();
+
+
+        mapFetcher.setOnFailure(() -> {
+            setError("Error while fetching data from MapQuest API.");
+        });
+
+        mapFetcher.setOnSuccess(() -> {
+            setSuccess();
+            tours.add(tour);
+            tourRepository.save(tour);
+
+            if (onApiCompletion != null) {
+                onApiCompletion.run();
+            }
+        });
+    }
+
+    public void setError(String msg) {
+        isLoading.setValue(false);
+        isError.setValue(true);
+        errorMsg.setValue(msg);
+    }
+
+    public void setLoading() {
+        isLoading.setValue(true);
+        isError.setValue(false);
+        errorMsg.setValue("");
+    }
+
+    public void setSuccess() {
+        isLoading.setValue(false);
+        isError.setValue(false);
+        errorMsg.setValue("");
     }
 
     private void initialize() {

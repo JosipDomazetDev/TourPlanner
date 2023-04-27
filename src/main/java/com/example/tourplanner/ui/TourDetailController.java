@@ -1,7 +1,7 @@
 package com.example.tourplanner.ui;
 
 import com.example.tourplanner.data.model.TourLog;
-import com.example.tourplanner.ui.components.*;
+import com.example.tourplanner.ui.components.ButtonCellFactory;
 import com.example.tourplanner.ui.components.converter.CustomDateStringConverter;
 import com.example.tourplanner.ui.components.converter.CustomDoubleStringConverter;
 import com.example.tourplanner.ui.components.converter.CustomIntegerStringConverter;
@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
@@ -43,9 +44,6 @@ public class TourDetailController implements Initializable {
     private TextField estimatedTimeTourDetailTextField;
 
     @FXML
-    private TextField routeInformationTourDetailTextField;
-
-    @FXML
     TableView<TourLog> logTable;
     @FXML
     private TableColumn<TourLog, Date> columnDateTime;
@@ -58,13 +56,16 @@ public class TourDetailController implements Initializable {
     @FXML
     private TableColumn<TourLog, Integer> columnRating;
 
+    @FXML
+    private ImageView imageView;
+
     public TourDetailController(TourDetailViewModel tourDetailViewModel) {
         this.tourDetailViewModel = tourDetailViewModel;
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        imageView.imageProperty().bindBidirectional(tourDetailViewModel.getImageProperty());
         nameTourDetailTextField.textProperty().bindBidirectional(tourDetailViewModel.getName());
         tourDescriptionTourDetailTextField.textProperty().bindBidirectional(tourDetailViewModel.getTourDescription());
         fromTourDetailTextField.textProperty().bindBidirectional(tourDetailViewModel.getFrom());
@@ -72,7 +73,6 @@ public class TourDetailController implements Initializable {
         transportTypeTourDetailTextField.textProperty().bindBidirectional(tourDetailViewModel.getTransportType());
         tourDistanceTourDetailTextField.textProperty().bind(tourDetailViewModel.getTourDistance());
         estimatedTimeTourDetailTextField.textProperty().bind(tourDetailViewModel.getEstimatedTime());
-        routeInformationTourDetailTextField.textProperty().bind(tourDetailViewModel.getRouteInformation());
 
         columnDateTime.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
         columnComment.setCellValueFactory(new PropertyValueFactory<>("comment"));
@@ -87,8 +87,6 @@ public class TourDetailController implements Initializable {
         Label rat = new Label("Rating");
         rat.setTooltip(new Tooltip("scale from 1 to 5 (1 = worst, 5 = best)"));
         columnRating.setGraphic(rat);
-
-        logTable.setItems(tourDetailViewModel.getTourLogs());
 
         TableColumn<TourLog, Void> buttonColumn = new TableColumn<>("Delete");
         buttonColumn.setCellFactory(new ButtonCellFactory(tourDetailViewModel::deleteTourLog));
@@ -133,6 +131,7 @@ public class TourDetailController implements Initializable {
         });
 
         logTable.setEditable(true);
+        logTable.setItems(tourDetailViewModel.getTourLogs());
     }
 
 
@@ -142,11 +141,8 @@ public class TourDetailController implements Initializable {
         String from = tourDetailViewModel.getFrom().get();
         String to = tourDetailViewModel.getTo().get();
         String transportType = tourDetailViewModel.getTransportType().get();
-        String tourDistance = tourDetailViewModel.getTourDistance().get();
-        String estimatedTime = tourDetailViewModel.getEstimatedTime().get();
-        String routeInformation = tourDetailViewModel.getRouteInformation().get();
 
-        tourDetailViewModel.updateTour(name, tourDescription, from, to, transportType, tourDistance, estimatedTime, routeInformation);
+        tourDetailViewModel.updateTour(name, tourDescription, from, to, transportType);
     }
 
     public void onCreateTourLogClick(MouseEvent mouseEvent) {

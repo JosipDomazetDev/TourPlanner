@@ -3,6 +3,8 @@ package com.example.tourplanner.ui;
 import com.example.tourplanner.viewmodel.ToursViewModel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -30,11 +32,10 @@ public class CreateTourController implements Initializable {
     private TextField transportType;
 
     @FXML
-    private TextField tourDistance;
+    private Label errorLabel;
 
     @FXML
-    private TextField estimatedTime;
-
+    private ProgressIndicator progressIndicator;
 
 
     public CreateTourController(ToursViewModel toursViewModel) {
@@ -44,6 +45,10 @@ public class CreateTourController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        errorLabel.textProperty().bindBidirectional(toursViewModel.getErrorMsg());
+        errorLabel.visibleProperty().bindBidirectional(toursViewModel.getIsError());
+        progressIndicator.visibleProperty().bindBidirectional(toursViewModel.getIsLoading());
+        toursViewModel.setSuccess();
     }
 
 
@@ -53,12 +58,24 @@ public class CreateTourController implements Initializable {
         String from = this.from.getText();
         String to = this.to.getText();
         String transportType = this.transportType.getText();
-        double distance = Double.parseDouble(tourDistance.getText());
-        String time = estimatedTime.getText();
 
-        if (toursViewModel.addNewTour(name, description, from, to, transportType, distance, time)) {
+        if (name.isEmpty() || description.isEmpty() || from.isEmpty() || to.isEmpty() || transportType.isEmpty()) {
+            showError("Please fill out all fields!");
+            return;
+        }
+
+        if (!transportType.equals("fastest") && !transportType.equals("shortest") && !transportType.equals("pedestrian") && !transportType.equals("bicycle")) {
+            showError("Transport type must be either \"fastest\", \"shortest\", \"pedestrian\" or \"bicycle\"!");
+            return;
+        }
+
+        toursViewModel.addNewTour(name, description, from, to, transportType, () -> {
             Stage window = (Stage) (tourName.getScene().getWindow());
             window.close();
-        }
+        });
+    }
+
+    private void showError(String msg) {
+        toursViewModel.setError(msg);
     }
 }

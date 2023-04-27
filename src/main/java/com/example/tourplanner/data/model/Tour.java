@@ -27,9 +27,9 @@ public class Tour {
     String transportType;
     // Retrieved by API
     double tourDistance;
-    String estimatedTime;
+    Integer estimatedTime;
     // Image
-    String routeInformation;
+    String routeInformation = "";
 
 
     @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL)
@@ -39,17 +39,15 @@ public class Tour {
         this.name = name;
     }
 
-    public Tour(String name, String tourDescription, String from, String to, String transportType, double tourDistance, String estimatedTime) {
+    public Tour() {}
+
+    public Tour(String name, String description, String from, String to, String transportType) {
         this.name = name;
-        this.tourDescription = tourDescription;
+        this.tourDescription = description;
         this.from = from;
         this.to = to;
         this.transportType = transportType;
-        this.tourDistance = tourDistance;
-        this.estimatedTime = estimatedTime;
     }
-
-    public Tour() {}
 
 
     @Override

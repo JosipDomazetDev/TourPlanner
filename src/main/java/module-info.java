@@ -4,17 +4,21 @@ module com.example.tourplanner {
     requires lombok;
     requires jakarta.persistence;
     requires org.hibernate.orm.core;
+    requires org.apache.httpcomponents.httpclient;
+    requires com.fasterxml.jackson.databind;
 
     exports com.example.tourplanner;
     exports com.example.tourplanner.data.model;
     exports com.example.tourplanner.ui;
     exports com.example.tourplanner.viewmodel;
+    exports com.example.tourplanner.ui.components;
+    exports com.example.tourplanner.ui.components.converter;
+    exports com.example.tourplanner.data.model.repository.api;
+    exports com.example.tourplanner.data.model.repository;
 
     opens com.example.tourplanner.ui to javafx.fxml;
     opens com.example.tourplanner.data.model;
-    opens com.example.tourplanner to javafx.fxml, org.hibernate.orm.core ;
-    exports com.example.tourplanner.ui.components;
+    opens com.example.tourplanner to javafx.fxml, org.hibernate.orm.core;
     opens com.example.tourplanner.ui.components to javafx.fxml;
-    exports com.example.tourplanner.ui.components.converter;
     opens com.example.tourplanner.ui.components.converter to javafx.fxml;
 }
