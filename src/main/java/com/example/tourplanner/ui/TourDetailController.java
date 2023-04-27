@@ -169,6 +169,7 @@ public class TourDetailController implements Initializable {
         String to = tourDetailViewModel.getTo().get();
         String transportType = tourDetailViewModel.getTransportType().get();
 
+
         tourDetailViewModel.updateTour(name, tourDescription, from, to, transportType);
     }
 

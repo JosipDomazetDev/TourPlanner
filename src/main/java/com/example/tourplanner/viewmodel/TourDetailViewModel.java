@@ -5,6 +5,9 @@ import com.example.tourplanner.data.model.TourLog;
 import com.example.tourplanner.data.model.repository.Repository;
 import com.example.tourplanner.data.model.repository.TourLogRepository;
 import com.example.tourplanner.data.model.repository.TourRepository;
+import com.example.tourplanner.data.model.repository.api.MapAPIFetcher;
+import com.example.tourplanner.data.model.repository.api.MapQuestAPIFetcher;
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -15,7 +18,6 @@ import javafx.scene.image.Image;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.File;
 import java.util.Date;
 import java.util.function.Consumer;
 
@@ -35,8 +37,7 @@ public class TourDetailViewModel {
     private final StringProperty transportType = new SimpleStringProperty();
     private final StringProperty tourDistance = new SimpleStringProperty();
     private final StringProperty estimatedTime = new SimpleStringProperty();
-    private final StringProperty routeInformation = new SimpleStringProperty();
-    private ObjectProperty<Image> imageProperty = new SimpleObjectProperty<>();
+    private final ObjectProperty<Image> imageProperty = new SimpleObjectProperty<>();
 
     private Tour selectedTour;
     ObservableList<TourLog> tourLogs = FXCollections.observableArrayList();
@@ -58,7 +59,7 @@ public class TourDetailViewModel {
         transportType.setValue("");
         tourDistance.setValue("");
         estimatedTime.setValue("");
-        routeInformation.setValue("");
+        imageProperty.set(null);
 
         tourLogs.clear();
     }
@@ -81,7 +82,6 @@ public class TourDetailViewModel {
         transportType.setValue(selectedTour.getTransportType());
         tourDistance.setValue(selectedTour.getTourDistance() + "");
         estimatedTime.setValue(selectedTour.getEstimatedTime() + " min");
-        routeInformation.setValue(selectedTour.getRouteInformation());
         imageProperty.set(new Image("file:" + selectedTour.getRouteInformation()));
 
 
@@ -100,14 +100,27 @@ public class TourDetailViewModel {
     public void updateTour(String name, String tourDescription, String from, String to, String transportType) {
         if (selectedTour == null) return;
 
+        // TODO, sollten wir dann eig alles logs löschen?
+        // TODO, input validation transport type
+
         selectedTour.setName(name);
         selectedTour.setTourDescription(tourDescription);
         selectedTour.setFrom(from);
         selectedTour.setTo(to);
         selectedTour.setTransportType(transportType);
 
-        tourRepository.update(selectedTour);
-        onTourUpdated.run();
+
+        MapAPIFetcher mapFetcher = new MapQuestAPIFetcher(selectedTour, "f4C8FH0Z0LV31BV3yrdp95rNF3XNbQvg");
+        new Thread(mapFetcher).start();
+
+        mapFetcher.setOnFailure(() -> {
+        });
+
+        mapFetcher.setOnSuccess(() -> {
+            tourRepository.update(selectedTour);
+            Platform.runLater(this::setFields);
+            onTourUpdated.run();
+        });
     }
 
     public void deleteTour() {
