@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -37,7 +38,8 @@ public class Tour {
         this.name = name;
     }
 
-    public Tour() {}
+    public Tour() {
+    }
 
     public Tour(String name, String description, String from, String to, String transportType) {
         this.name = name;
@@ -51,5 +53,17 @@ public class Tour {
     @Override
     public String toString() {
         return name;
+    }
+
+    // write a method toSearchString that generates a searching string for me that ocntains all fields
+    public String toSearchString() {
+        return name + " " +
+                tourDescription + " " +
+                from + " " +
+                to + " " +
+                transportType + " " +
+                tourDistance + " " +
+                estimatedTime + " " +
+                tourLogs.stream().map(TourLog::toSearchString).collect(Collectors.joining()).toLowerCase();
     }
 }

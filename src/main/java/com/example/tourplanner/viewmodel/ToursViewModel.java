@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 import lombok.Getter;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 @Getter
 public class ToursViewModel {
@@ -70,6 +71,21 @@ public class ToursViewModel {
                 onApiCompletion.run();
             }
         });
+    }
+
+
+    public void performSearch(String searchTerm) {
+        ArrayList<Tour> toursFromDb = tourRepository.load();
+        if (searchTerm == null || searchTerm.isEmpty()) {
+            tours.setAll(toursFromDb);
+        } else {
+            tours.setAll(
+                    toursFromDb
+                            .stream()
+                            .filter(tour -> tour.toSearchString().contains(searchTerm.toLowerCase()))
+                            .toList());
+            tourDetailViewModel.setSelectedTour(null);
+        }
     }
 
     public void setError(String msg) {

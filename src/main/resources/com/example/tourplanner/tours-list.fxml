@@ -16,7 +16,7 @@
             fx:controller="com.example.tourplanner.ui.ToursController">
     <VBox prefWidth="250.0" BorderPane.alignment="CENTER">
         <children>
-            <TextField fx:id="searchTextField2" promptText="Search">
+            <TextField fx:id="searchTextField" promptText="Search">
                 <VBox.margin>
                     <Insets bottom="8.0"/>
                 </VBox.margin>

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -38,5 +39,16 @@ public class TourLog {
     }
 
     public TourLog() {
+    }
+
+    public String toSearchString() {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+        String formattedDateTime = formatter.format(dateTime);
+
+        return formattedDateTime + " " +
+                comment + " " +
+                difficulty + " " +
+                totalTime + " " +
+                rating;
     }
 }

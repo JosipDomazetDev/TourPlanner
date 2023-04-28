@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -21,6 +22,8 @@ public class ToursController implements Initializable {
     @FXML
     public ListView<Tour> toursListView;
 
+    @FXML
+    public TextField searchTextField;
 
     private final ToursViewModel toursViewModel;
 
@@ -44,6 +47,10 @@ public class ToursController implements Initializable {
             // Refresh the ListView when the list changes
             // This is needed for the tour update to be reflected immediately
             toursListView.refresh();
+        });
+
+        searchTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            toursViewModel.performSearch(newValue);
         });
     }
 

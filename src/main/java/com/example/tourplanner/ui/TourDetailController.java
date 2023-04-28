@@ -7,6 +7,8 @@ import com.example.tourplanner.ui.components.converter.CustomDoubleStringConvert
 import com.example.tourplanner.ui.components.converter.CustomIntegerStringConverter;
 import com.example.tourplanner.viewmodel.TourDetailViewModel;
 import javafx.application.Platform;
+import javafx.beans.binding.Binding;
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -63,6 +65,12 @@ public class TourDetailController implements Initializable {
     @FXML
     private ImageView imageView;
 
+    @FXML
+    private VBox detailVbox;
+
+    @FXML
+    private VBox nothingSelectedVbox;
+
     public TourDetailController(TourDetailViewModel tourDetailViewModel) {
         this.tourDetailViewModel = tourDetailViewModel;
     }
@@ -78,6 +86,10 @@ public class TourDetailController implements Initializable {
         transportTypeTourDetailTextField.textProperty().bindBidirectional(tourDetailViewModel.getTransportType());
         tourDistanceTourDetailTextField.textProperty().bind(tourDetailViewModel.getTourDistance());
         estimatedTimeTourDetailTextField.textProperty().bind(tourDetailViewModel.getEstimatedTime());
+
+        detailVbox.visibleProperty().bindBidirectional(tourDetailViewModel.getIsVisible());
+        nothingSelectedVbox.visibleProperty().bind(Bindings.not(tourDetailViewModel.getIsVisible()));
+        nothingSelectedVbox.managedProperty().bind(Bindings.not(tourDetailViewModel.getIsVisible()));
 
         columnDateTime.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
         columnComment.setCellValueFactory(new PropertyValueFactory<>("comment"));

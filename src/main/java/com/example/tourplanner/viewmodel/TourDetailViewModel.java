@@ -9,10 +9,7 @@ import com.example.tourplanner.data.model.repository.TourRepository;
 import com.example.tourplanner.data.model.repository.api.MapAPIFetcher;
 import com.example.tourplanner.data.model.repository.api.MapQuestAPIFetcher;
 import javafx.application.Platform;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
@@ -39,7 +36,7 @@ public class TourDetailViewModel {
     private final StringProperty tourDistance = new SimpleStringProperty();
     private final StringProperty estimatedTime = new SimpleStringProperty();
     private final ObjectProperty<Image> imageProperty = new SimpleObjectProperty<>();
-
+    private final SimpleBooleanProperty isVisible = new SimpleBooleanProperty(true);
     private Tour selectedTour;
     ObservableList<TourLog> tourLogs = FXCollections.observableArrayList();
 
@@ -73,8 +70,10 @@ public class TourDetailViewModel {
     public void setFields() {
         if (selectedTour == null) {
             clearViewModel();
+            isVisible.set(false);
             return;
         }
+        isVisible.set(true);
 
         name.setValue(selectedTour.getName());
         tourDescription.setValue(selectedTour.getTourDescription());
@@ -169,4 +168,5 @@ public class TourDetailViewModel {
     public void setRating(TourLog tourLog, Integer newValue) {
         updateTourLog(newValue, tourLog::setRating);
     }
+
 }
