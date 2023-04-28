@@ -1,5 +1,6 @@
 package com.example.tourplanner.viewmodel;
 
+import com.example.tourplanner.configuration.ConfigurationReader;
 import com.example.tourplanner.data.model.Tour;
 import com.example.tourplanner.data.model.TourLog;
 import com.example.tourplanner.data.model.repository.Repository;
@@ -97,7 +98,7 @@ public class TourDetailViewModel {
         refreshTourLogs();
     }
 
-    public void updateTour(String name, String tourDescription, String from, String to, String transportType) {
+    public void updateTour(String name, String tourDescription, String from, String to, String transportType, Runnable onFailure) {
         if (selectedTour == null) return;
 
         // TODO, sollten wir dann eig alles logs löschen?
@@ -110,10 +111,12 @@ public class TourDetailViewModel {
         selectedTour.setTransportType(transportType);
 
 
-        MapAPIFetcher mapFetcher = new MapQuestAPIFetcher(selectedTour, "f4C8FH0Z0LV31BV3yrdp95rNF3XNbQvg");
+        MapAPIFetcher mapFetcher = new MapQuestAPIFetcher(selectedTour, ConfigurationReader.getInstance().getApiKey());
         new Thread(mapFetcher).start();
 
         mapFetcher.setOnFailure(() -> {
+            Platform.runLater(onFailure);
+            Platform.runLater(this::setFields);
         });
 
         mapFetcher.setOnSuccess(() -> {

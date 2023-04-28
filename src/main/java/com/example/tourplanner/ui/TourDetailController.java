@@ -6,6 +6,7 @@ import com.example.tourplanner.ui.components.converter.CustomDateStringConverter
 import com.example.tourplanner.ui.components.converter.CustomDoubleStringConverter;
 import com.example.tourplanner.ui.components.converter.CustomIntegerStringConverter;
 import com.example.tourplanner.viewmodel.TourDetailViewModel;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -170,7 +171,12 @@ public class TourDetailController implements Initializable {
         String transportType = tourDetailViewModel.getTransportType().get();
 
 
-        tourDetailViewModel.updateTour(name, tourDescription, from, to, transportType);
+        tourDetailViewModel.updateTour(name, tourDescription, from, to, transportType, () -> {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Update Tour");
+            alert.setHeaderText("Error while fetching data from MapQuest API.");
+            alert.showAndWait();
+        });
     }
 
     public void onCreateTourLogClick(MouseEvent mouseEvent) {

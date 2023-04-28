@@ -3,6 +3,10 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+### Custom ###
+images
+config.properties
+
 ### IntelliJ IDEA ###
 .idea/modules.xml
 .idea/jarRepositories.xml
@@ -21,8 +25,6 @@ target/
 .settings
 .springBeans
 .sts4-cache
-
-images
 
 ### NetBeans ###
 /nbproject/private/

@@ -1,5 +1,6 @@
 package com.example.tourplanner.viewmodel;
 
+import com.example.tourplanner.configuration.ConfigurationReader;
 import com.example.tourplanner.data.model.Tour;
 import com.example.tourplanner.data.model.repository.Repository;
 import com.example.tourplanner.data.model.repository.TourRepository;
@@ -52,7 +53,7 @@ public class ToursViewModel {
         setLoading();
 
         Tour tour = new Tour(name, description, from, to, transportType);
-        MapAPIFetcher mapFetcher = new MapQuestAPIFetcher(tour, "f4C8FH0Z0LV31BV3yrdp95rNF3XNbQvg");
+        MapAPIFetcher mapFetcher = new MapQuestAPIFetcher(tour, ConfigurationReader.getInstance().getApiKey());
         new Thread(mapFetcher).start();
 
 
