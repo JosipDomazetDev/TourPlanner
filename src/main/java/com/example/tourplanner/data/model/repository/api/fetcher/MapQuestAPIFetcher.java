@@ -1,4 +1,4 @@
-package com.example.tourplanner.data.model.repository.api;
+package com.example.tourplanner.data.model.repository.api.fetcher;
 
 import com.example.tourplanner.data.model.Tour;
 

@@ -1,25 +1,24 @@
 package com.example.tourplanner.viewmodel;
 
-import com.example.tourplanner.configuration.ConfigurationReader;
 import com.example.tourplanner.data.model.Tour;
-import com.example.tourplanner.data.model.repository.Repository;
-import com.example.tourplanner.data.model.repository.TourRepository;
-import com.example.tourplanner.data.model.repository.api.MapAPIFetcher;
-import com.example.tourplanner.data.model.repository.api.MapQuestAPIFetcher;
-import javafx.application.Platform;
+import com.example.tourplanner.data.model.repository.api.MapQuestAPIRepository;
+import com.example.tourplanner.data.model.repository.api.MapRepository;
+import com.example.tourplanner.data.model.repository.data.DataRepository;
+import com.example.tourplanner.data.model.repository.data.TourDataRepository;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lombok.Getter;
 
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 @Getter
 public class ToursViewModel {
     private final StringProperty title = new SimpleStringProperty();
     private final ObservableList<Tour> tours = FXCollections.observableArrayList();
-    private final Repository<Tour> tourRepository = TourRepository.getInstance();
+    private final DataRepository<Tour> tourRepository = TourDataRepository.getInstance();
+    private final MapRepository<Tour> mapRepository = MapQuestAPIRepository.getInstance();
+
     private final TourDetailViewModel tourDetailViewModel;
     private final StringProperty errorMsg = new SimpleStringProperty();
     private final BooleanProperty isError = new SimpleBooleanProperty();
@@ -52,17 +51,9 @@ public class ToursViewModel {
 
     public void addNewTour(String name, String description, String from, String to, String transportType, Runnable onApiCompletion) {
         setLoading();
-
         Tour tour = new Tour(name, description, from, to, transportType);
-        MapAPIFetcher mapFetcher = new MapQuestAPIFetcher(tour, ConfigurationReader.getInstance().getApiKey());
-        new Thread(mapFetcher).start();
 
-
-        mapFetcher.setOnFailure(() -> {
-            setError("Error while fetching data from MapQuest API.");
-        });
-
-        mapFetcher.setOnSuccess(() -> {
+        mapRepository.fetchApi(tour, () -> setError("Error while fetching data from MapQuest API."), () -> {
             setSuccess();
             tours.add(tour);
             tourRepository.save(tour);

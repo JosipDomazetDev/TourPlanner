@@ -1,22 +1,18 @@
-package com.example.tourplanner.data.model.repository;
+package com.example.tourplanner.data.model.repository.data;
 
 import com.example.tourplanner.data.model.Tour;
-import com.example.tourplanner.data.model.TourLog;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class TourRepository implements Repository<Tour> {
+public class TourDataRepository implements DataRepository<Tour> {
 
     EntityManager entityManager = EntityManagerProvider.getInstance();
-    private static TourRepository instance;
+    private static TourDataRepository instance;
 
-    public static synchronized TourRepository getInstance() {
+    public static synchronized TourDataRepository getInstance() {
         if (instance == null) {
-            instance = new TourRepository();
+            instance = new TourDataRepository();
         }
         return instance;
     }

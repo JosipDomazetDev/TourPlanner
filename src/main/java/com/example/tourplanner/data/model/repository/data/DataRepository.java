@@ -1,8 +1,8 @@
-package com.example.tourplanner.data.model.repository;
+package com.example.tourplanner.data.model.repository.data;
 
 import java.util.ArrayList;
 
-public interface Repository<T> {
+public interface DataRepository<T> {
     void save(T element);
 
     void update(T element);

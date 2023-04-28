@@ -1,13 +1,12 @@
 package com.example.tourplanner.viewmodel;
 
-import com.example.tourplanner.configuration.ConfigurationReader;
 import com.example.tourplanner.data.model.Tour;
 import com.example.tourplanner.data.model.TourLog;
-import com.example.tourplanner.data.model.repository.Repository;
-import com.example.tourplanner.data.model.repository.TourLogRepository;
-import com.example.tourplanner.data.model.repository.TourRepository;
-import com.example.tourplanner.data.model.repository.api.MapAPIFetcher;
-import com.example.tourplanner.data.model.repository.api.MapQuestAPIFetcher;
+import com.example.tourplanner.data.model.repository.api.MapQuestAPIRepository;
+import com.example.tourplanner.data.model.repository.api.MapRepository;
+import com.example.tourplanner.data.model.repository.data.DataRepository;
+import com.example.tourplanner.data.model.repository.data.TourLogDataRepository;
+import com.example.tourplanner.data.model.repository.data.TourDataRepository;
 import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -21,8 +20,9 @@ import java.util.function.Consumer;
 
 @Getter
 public class TourDetailViewModel {
-    private final Repository<TourLog> tourLogRepository = TourLogRepository.getInstance();
-    private final Repository<Tour> tourRepository = TourRepository.getInstance();
+    private final DataRepository<TourLog> tourLogRepository = TourLogDataRepository.getInstance();
+    private final DataRepository<Tour> tourRepository = TourDataRepository.getInstance();
+    private final MapRepository<Tour> mapRepository = MapQuestAPIRepository.getInstance();
     @Setter
     private Runnable onTourUpdated;
     @Setter
@@ -109,16 +109,10 @@ public class TourDetailViewModel {
         selectedTour.setTo(to);
         selectedTour.setTransportType(transportType);
 
-
-        MapAPIFetcher mapFetcher = new MapQuestAPIFetcher(selectedTour, ConfigurationReader.getInstance().getApiKey());
-        new Thread(mapFetcher).start();
-
-        mapFetcher.setOnFailure(() -> {
+        mapRepository.fetchApi(selectedTour, () -> {
             Platform.runLater(onFailure);
             Platform.runLater(this::setFields);
-        });
-
-        mapFetcher.setOnSuccess(() -> {
+        }, () -> {
             tourRepository.update(selectedTour);
             Platform.runLater(this::setFields);
             onTourUpdated.run();
