@@ -14,6 +14,9 @@ public class MainApplication extends Application {
     public void start(Stage stage) throws IOException {
         Parent root =  FXMLDependencyInjection.load("main-view.fxml", Locale.ENGLISH);
         Scene scene = new Scene(root, 1000, 700);
+
+        System.setProperty("log4j.configurationFile", "./log4j2.xml");
+
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();

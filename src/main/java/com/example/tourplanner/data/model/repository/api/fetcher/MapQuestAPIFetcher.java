@@ -4,6 +4,7 @@ import com.example.tourplanner.data.model.Tour;
 
 import com.example.tourplanner.utils.ImageNameGenerator;
 import javafx.concurrent.Task;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.utils.URIBuilder;
 
 import java.io.File;
@@ -14,6 +15,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -22,6 +25,7 @@ public class MapQuestAPIFetcher extends Task<Void> implements MapAPIFetcher {
     private final Tour tour;
     private final ObjectMapper objectMapper;
     private Runnable onFailure;
+    private static final Logger logger = LogManager.getLogger(MapQuestAPIFetcher.class.getSimpleName());
 
     public MapQuestAPIFetcher(Tour tour, String apiKey) {
         this.tour = tour;
@@ -47,6 +51,7 @@ public class MapQuestAPIFetcher extends Task<Void> implements MapAPIFetcher {
             tour.setRouteInformation(imagePath);
         } catch (URISyntaxException | IOException e) {
             onFailure.run();
+            logger.error(e.toString());
             return null;
         }
 
@@ -63,6 +68,8 @@ public class MapQuestAPIFetcher extends Task<Void> implements MapAPIFetcher {
 
         HttpURLConnection connection = (HttpURLConnection) uri.toURL().openConnection();
         connection.setRequestMethod("GET");
+
+        logger.info("{} from {}", connection.getResponseCode(), uri.toString());
 
         if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
             cancel();
@@ -102,6 +109,8 @@ public class MapQuestAPIFetcher extends Task<Void> implements MapAPIFetcher {
             HttpURLConnection staticMapConnection = (HttpURLConnection) staticMapUri.toURL().openConnection();
             staticMapConnection.setRequestMethod("GET");
 
+            logger.info("{} from {}", staticMapConnection.getResponseCode(), staticMapUri.toString());
+
             if (staticMapConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
                 cancel();
             }
@@ -117,6 +126,8 @@ public class MapQuestAPIFetcher extends Task<Void> implements MapAPIFetcher {
         File directory = new File("./images/" + ImageNameGenerator.generateImageName() + ".jpg");
 
         if (directory.mkdirs()) {
+            logger.info("Created image {}", directory.getPath());
+
             Files.copy(staticMapStream, Paths.get(directory.getPath()), StandardCopyOption.REPLACE_EXISTING);
         }
 
