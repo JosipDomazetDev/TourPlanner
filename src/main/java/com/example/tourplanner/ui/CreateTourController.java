@@ -1,5 +1,6 @@
 package com.example.tourplanner.ui;
 
+import com.example.tourplanner.data.model.repository.data.EntityManagerProvider;
 import com.example.tourplanner.viewmodel.ToursViewModel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -8,6 +9,8 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.net.URL;
 import java.util.ResourceBundle;

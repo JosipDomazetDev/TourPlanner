@@ -41,6 +41,19 @@ public class TourLog {
     public TourLog() {
     }
 
+    @Override
+    public String toString() {
+        return "TourLog{" +
+                "id=" + id +
+                ", dateTime=" + dateTime +
+                ", comment='" + comment + '\'' +
+                ", difficulty=" + difficulty +
+                ", totalTime=" + totalTime +
+                ", rating=" + rating +
+                ", tour=" + tour.getId() +
+                '}';
+    }
+
     public String toSearchString() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm");
         String formattedDateTime = formatter.format(dateTime);

@@ -52,7 +52,18 @@ public class Tour {
 
     @Override
     public String toString() {
-        return name;
+        return "Tour{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", tourDescription='" + tourDescription + '\'' +
+                ", from='" + from + '\'' +
+                ", to='" + to + '\'' +
+                ", transportType='" + transportType + '\'' +
+                ", tourDistance=" + tourDistance +
+                ", estimatedTime=" + estimatedTime +
+                ", routeInformation='" + routeInformation + '\'' +
+                ", tourLogs=" + tourLogs +
+                '}';
     }
 
     // write a method toSearchString that generates a searching string for me that ocntains all fields

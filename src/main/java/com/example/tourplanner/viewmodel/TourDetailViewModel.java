@@ -14,6 +14,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Date;
 import java.util.function.Consumer;
@@ -39,12 +41,14 @@ public class TourDetailViewModel {
     private final SimpleBooleanProperty isVisible = new SimpleBooleanProperty(true);
     private Tour selectedTour;
     ObservableList<TourLog> tourLogs = FXCollections.observableArrayList();
+    private static final Logger logger = LogManager.getLogger(TourLogDataRepository.class.getSimpleName());
 
     public TourDetailViewModel() {
     }
 
 
     public void setSelectedTour(Tour selectedTour) {
+        logger.info("Selected tour: {}", selectedTour);
         this.selectedTour = selectedTour;
         setFields();
     }
