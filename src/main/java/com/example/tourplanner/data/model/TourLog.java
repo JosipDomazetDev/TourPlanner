@@ -54,6 +54,14 @@ public class TourLog {
                 '}';
     }
 
+    @PrePersist
+    @PreUpdate
+    @PreRemove
+    private void calculateDerivedFields() {
+        this.tour.calculateDerivedFields();
+    }
+
+
     public String toSearchString() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm");
         String formattedDateTime = formatter.format(dateTime);

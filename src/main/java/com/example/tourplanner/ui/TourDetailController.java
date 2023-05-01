@@ -44,10 +44,17 @@ public class TourDetailController implements Initializable {
     private TextField transportTypeTourDetailTextField;
 
     @FXML
-    private TextField tourDistanceTourDetailTextField;
+    private Label tourDistanceTourDetailTextField;
 
     @FXML
-    private TextField estimatedTimeTourDetailTextField;
+    private Label estimatedTimeTourDetailTextField;
+
+    @FXML
+    private Label popularityTourDetailTextField;
+
+    @FXML
+    private Label childFriendlinessTourDetailTextField;
+
 
     @FXML
     TableView<TourLog> logTable;
@@ -86,6 +93,8 @@ public class TourDetailController implements Initializable {
         transportTypeTourDetailTextField.textProperty().bindBidirectional(tourDetailViewModel.getTransportType());
         tourDistanceTourDetailTextField.textProperty().bind(tourDetailViewModel.getTourDistance());
         estimatedTimeTourDetailTextField.textProperty().bind(tourDetailViewModel.getEstimatedTime());
+        popularityTourDetailTextField.textProperty().bind(tourDetailViewModel.getPopularity());
+        childFriendlinessTourDetailTextField.textProperty().bind(tourDetailViewModel.getChildFriendliness());
 
         detailVbox.visibleProperty().bindBidirectional(tourDetailViewModel.getIsVisible());
         nothingSelectedVbox.visibleProperty().bind(Bindings.not(tourDetailViewModel.getIsVisible()));
@@ -93,7 +102,11 @@ public class TourDetailController implements Initializable {
 
         columnDateTime.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
         columnComment.setCellValueFactory(new PropertyValueFactory<>("comment"));
+
         columnTotalTime.setCellValueFactory(new PropertyValueFactory<>("totalTime"));
+        Label duration = new Label("Duration");
+        duration.setTooltip(new Tooltip("tour duration in minutes"));
+        columnTotalTime.setGraphic(duration);
 
         columnDifficulty.setCellValueFactory(new PropertyValueFactory<>("difficulty"));
         Label diff = new Label("Difficulty");
@@ -140,20 +153,17 @@ public class TourDetailController implements Initializable {
         columnDateTime.setCellFactory(TextFieldTableCell.forTableColumn(new CustomDateStringConverter("dd.MM.yyyy HH:mm")));
         columnDateTime.setOnEditCommit(e -> {
             tourDetailViewModel.setDateTime(e.getRowValue(), e.getNewValue());
-            logTable.refresh();
         });
 
         columnComment.setCellFactory(TextFieldTableCell.forTableColumn());
         columnComment.setOnEditCommit(e -> {
             tourDetailViewModel.setComment(e.getRowValue(), e.getNewValue());
-            logTable.refresh();
         });
 
 
         columnTotalTime.setCellFactory(TextFieldTableCell.forTableColumn(new CustomDoubleStringConverter()));
         columnTotalTime.setOnEditCommit(e -> {
             tourDetailViewModel.setTotalTime(e.getRowValue(), e.getNewValue());
-            logTable.refresh();
         });
 
         int lowerBound = 1;
@@ -161,13 +171,11 @@ public class TourDetailController implements Initializable {
         columnDifficulty.setCellFactory(TextFieldTableCell.forTableColumn((new CustomIntegerStringConverter(lowerBound, upperBound))));
         columnDifficulty.setOnEditCommit(e -> {
             tourDetailViewModel.setDifficulty(e.getRowValue(), e.getNewValue());
-            logTable.refresh();
         });
 
         columnRating.setCellFactory(TextFieldTableCell.forTableColumn(new CustomIntegerStringConverter(lowerBound, upperBound)));
         columnRating.setOnEditCommit(e -> {
             tourDetailViewModel.setRating(e.getRowValue(), e.getNewValue());
-            logTable.refresh();
         });
 
         logTable.setEditable(true);

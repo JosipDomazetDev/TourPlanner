@@ -37,6 +37,8 @@ public class TourDetailViewModel {
     private final StringProperty transportType = new SimpleStringProperty();
     private final StringProperty tourDistance = new SimpleStringProperty();
     private final StringProperty estimatedTime = new SimpleStringProperty();
+    private final StringProperty popularity = new SimpleStringProperty();
+    private final StringProperty childFriendliness = new SimpleStringProperty();
     private final ObjectProperty<Image> imageProperty = new SimpleObjectProperty<>();
     private final SimpleBooleanProperty isVisible = new SimpleBooleanProperty(true);
     private Tour selectedTour;
@@ -50,7 +52,7 @@ public class TourDetailViewModel {
     public void setSelectedTour(Tour selectedTour) {
         logger.info("Selected tour: {}", selectedTour);
         this.selectedTour = selectedTour;
-        setFields();
+        refresh();
     }
 
     private void clearViewModel() {
@@ -61,17 +63,15 @@ public class TourDetailViewModel {
         transportType.setValue("");
         tourDistance.setValue("");
         estimatedTime.setValue("");
+        popularity.setValue("");
+        childFriendliness.setValue("");
         imageProperty.set(null);
 
         tourLogs.clear();
     }
 
-    private void refreshTourLogs() {
-        tourLogs.clear();
-        tourLogs.addAll(selectedTour.getTourLogs());
-    }
 
-    public void setFields() {
+    public void refresh() {
         if (selectedTour == null) {
             clearViewModel();
             isVisible.set(false);
@@ -84,12 +84,14 @@ public class TourDetailViewModel {
         from.setValue(selectedTour.getFrom());
         to.setValue(selectedTour.getTo());
         transportType.setValue(selectedTour.getTransportType());
-        tourDistance.setValue(selectedTour.getTourDistance() + "");
+        tourDistance.setValue(selectedTour.getTourDistance() + " km");
         estimatedTime.setValue(selectedTour.getEstimatedTime() + " min");
+        popularity.setValue(selectedTour.getPopularity() + "%");
+        childFriendliness.setValue(selectedTour.getChildFriendliness() + "%");
         imageProperty.set(new Image("file:" + selectedTour.getRouteInformation()));
 
-
-        refreshTourLogs();
+        tourLogs.clear();
+        tourLogs.addAll(selectedTour.getTourLogs());
     }
 
     public void addNewTourLog() {
@@ -98,7 +100,7 @@ public class TourDetailViewModel {
         TourLog tourLog = new TourLog(new Date(), "", 0, 0, 0, selectedTour);
         tourLogRepository.save(tourLog);
 
-        refreshTourLogs();
+        refresh();
     }
 
     public void updateTour(String name, String tourDescription, String from, String to, String transportType, Runnable onFailure) {
@@ -114,11 +116,13 @@ public class TourDetailViewModel {
         selectedTour.setTransportType(transportType);
 
         mapRepository.fetchApi(selectedTour, () -> {
+            // Update anyway, even if the map fetch failed
+            tourRepository.update(selectedTour);
+            Platform.runLater(this::refresh);
             Platform.runLater(onFailure);
-            Platform.runLater(this::setFields);
         }, () -> {
             tourRepository.update(selectedTour);
-            Platform.runLater(this::setFields);
+            Platform.runLater(this::refresh);
             onTourUpdated.run();
         });
     }
@@ -135,7 +139,7 @@ public class TourDetailViewModel {
 
         selectedTour.getTourLogs().remove(tourLog);
         tourLogRepository.delete(tourLog);
-        refreshTourLogs();
+        refresh();
     }
 
     public <R> void updateTourLog(R newValue, Consumer<R> updateMethod) {
@@ -145,6 +149,7 @@ public class TourDetailViewModel {
 
         updateMethod.accept(newValue);
         tourRepository.update(selectedTour);
+        refresh();
     }
 
     public void setDateTime(TourLog tourLog, Date newValue) {
@@ -166,5 +171,4 @@ public class TourDetailViewModel {
     public void setRating(TourLog tourLog, Integer newValue) {
         updateTourLog(newValue, tourLog::setRating);
     }
-
 }

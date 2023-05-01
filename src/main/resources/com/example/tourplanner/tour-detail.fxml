@@ -100,12 +100,22 @@
 
                                                         <VBox>
                                                             <Label text="Tour Distance:"/>
-                                                            <TextField fx:id="tourDistanceTourDetailTextField"/>
+                                                            <Label fx:id="tourDistanceTourDetailTextField" disable="true"/>
                                                         </VBox>
 
                                                         <VBox>
                                                             <Label text="Estimated Time:"/>
-                                                            <TextField fx:id="estimatedTimeTourDetailTextField"/>
+                                                            <Label fx:id="estimatedTimeTourDetailTextField" disable="true"/>
+                                                        </VBox>
+
+                                                        <VBox>
+                                                            <Label text="Popularity:"/>
+                                                            <Label fx:id="popularityTourDetailTextField" disable="true"/>
+                                                        </VBox>
+
+                                                        <VBox>
+                                                            <Label text="Child friendliness:"/>
+                                                            <Label fx:id="childFriendlinessTourDetailTextField" disable="true"/>
                                                         </VBox>
                                                         <HBox.margin>
                                                             <Insets/>
@@ -190,7 +200,7 @@
                                                     <PropertyValueFactory property="comment"/>
                                                 </cellValueFactory>
                                             </TableColumn>
-                                            <TableColumn fx:id="columnTotalTime" text="Duration"/>
+                                            <TableColumn fx:id="columnTotalTime"/>
                                             <TableColumn fx:id="columnDifficulty"/>
                                             <TableColumn fx:id="columnRating"/>
                                         </columns>

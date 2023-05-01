@@ -44,7 +44,7 @@ public class MapQuestAPIFetcher extends Task<Void> implements MapAPIFetcher {
             MapQuestResponse mapQuestResponse = fetchRoute(tour.getFrom(), tour.getTo(), tour.getTransportType());
 
             double timeInMinutes = mapQuestResponse.estimatedTime() / 60.0;
-            tour.setTourDistance(mapQuestResponse.distance());
+            tour.setTourDistance((int) Math.round(mapQuestResponse.distance()));
             tour.setEstimatedTime((int) Math.round(timeInMinutes));
 
             String imagePath = fetchRouteImage(mapQuestResponse);
