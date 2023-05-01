@@ -23,9 +23,9 @@ import java.util.function.Consumer;
 
 @Getter
 public class TourDetailViewModel {
-    private final DataRepository<TourLog> tourLogRepository = TourLogDataRepository.getInstance();
-    private final DataRepository<Tour> tourRepository = TourDataRepository.getInstance();
-    private final MapRepository<Tour> mapRepository = MapQuestAPIRepository.getInstance();
+    private final DataRepository<TourLog> tourLogRepository;
+    private final DataRepository<Tour> tourRepository;
+    private final MapRepository<Tour> mapRepository;
     @Setter
     private Runnable onTourUpdated;
     @Setter
@@ -46,7 +46,10 @@ public class TourDetailViewModel {
     ObservableList<TourLog> tourLogs = FXCollections.observableArrayList();
     private static final Logger logger = LogManager.getLogger(TourLogDataRepository.class.getSimpleName());
 
-    public TourDetailViewModel() {
+    public TourDetailViewModel(DataRepository<Tour> tourRepository, DataRepository<TourLog> tourLogDataRepository, MapRepository<Tour> mapQuestAPIRepository) {
+        this.tourRepository = tourRepository;
+        this.tourLogRepository = tourLogDataRepository;
+        this.mapRepository = mapQuestAPIRepository;
     }
 
 

@@ -1,5 +1,12 @@
 package com.example.tourplanner.ui;
 
+import com.example.tourplanner.data.model.Tour;
+import com.example.tourplanner.data.model.TourLog;
+import com.example.tourplanner.data.repository.api.MapQuestAPIRepository;
+import com.example.tourplanner.data.repository.api.MapRepository;
+import com.example.tourplanner.data.repository.data.DataRepository;
+import com.example.tourplanner.data.repository.data.TourDataRepository;
+import com.example.tourplanner.data.repository.data.TourLogDataRepository;
 import com.example.tourplanner.viewmodel.*;
 
 public final class ControllerFactory {
@@ -18,8 +25,12 @@ public final class ControllerFactory {
     private final TourDetailViewModel tourDetailViewModel;
 
     public ControllerFactory() {
-        this.tourDetailViewModel = new TourDetailViewModel();
-        this.toursViewModel = new ToursViewModel(tourDetailViewModel);
+        DataRepository<Tour> tourRepository = new TourDataRepository();
+        DataRepository<TourLog> tourLogRepository = new TourLogDataRepository();
+        MapRepository<Tour> mapRepository = new MapQuestAPIRepository();
+
+        this.tourDetailViewModel = new TourDetailViewModel(tourRepository, tourLogRepository, mapRepository);
+        this.toursViewModel = new ToursViewModel(tourDetailViewModel, tourRepository, mapRepository);
 
         this.menuViewModel = new MenuViewModel();
     }

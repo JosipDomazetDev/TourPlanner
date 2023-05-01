@@ -7,7 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class EntityManagerProvider {
-    private static  EntityManager entityManager;
+    private static EntityManager entityManager;
     private static final Logger logger = LogManager.getLogger(EntityManagerProvider.class.getSimpleName());
 
     public static synchronized EntityManager getInstance() {

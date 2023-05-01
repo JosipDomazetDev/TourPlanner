@@ -10,15 +10,6 @@ import java.util.ArrayList;
 public class TourDataRepository implements DataRepository<Tour> {
     private static final Logger logger = LogManager.getLogger(TourDataRepository.class.getSimpleName());
     EntityManager entityManager = EntityManagerProvider.getInstance();
-    private static TourDataRepository instance;
-
-    public static synchronized TourDataRepository getInstance() {
-        if (instance == null) {
-            instance = new TourDataRepository();
-        }
-        return instance;
-    }
-
     @Override
     public void save(Tour tour) {
         entityManager.getTransaction().begin();

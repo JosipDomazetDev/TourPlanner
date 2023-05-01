@@ -5,7 +5,6 @@ import com.example.tourplanner.data.model.Tour;
 import com.example.tourplanner.data.repository.api.MapQuestAPIRepository;
 import com.example.tourplanner.data.repository.api.MapRepository;
 import com.example.tourplanner.data.repository.data.DataRepository;
-import com.example.tourplanner.data.repository.data.TourDataRepository;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,8 +16,8 @@ import java.util.ArrayList;
 public class ToursViewModel {
     private final StringProperty title = new SimpleStringProperty();
     private final ObservableList<Tour> tours = FXCollections.observableArrayList();
-    private final DataRepository<Tour> tourRepository = TourDataRepository.getInstance();
-    private final MapRepository<Tour> mapRepository = MapQuestAPIRepository.getInstance();
+    private final DataRepository<Tour> tourRepository;
+    private final MapRepository<Tour> mapRepository;
 
     private final TourDetailViewModel tourDetailViewModel;
     private final StringProperty errorMsg = new SimpleStringProperty();
@@ -26,7 +25,9 @@ public class ToursViewModel {
     private final BooleanProperty isLoading = new SimpleBooleanProperty();
 
 
-    public ToursViewModel(TourDetailViewModel tourDetailViewModel) {
+    public ToursViewModel(TourDetailViewModel tourDetailViewModel, DataRepository<Tour>  tourRepository, MapRepository<Tour> mapQuestAPIRepository)  {
+        this.tourRepository = tourRepository;
+        this.mapRepository = mapQuestAPIRepository;
         this.tourDetailViewModel = tourDetailViewModel;
         initialize();
 
