@@ -134,8 +134,8 @@ public class TourDetailController implements Initializable {
             ImageView previewImageView = new ImageView();
             previewImageView.setImage(imageView.getImage());
 
-            previewImageView.setFitWidth(650);
-            previewImageView.setFitHeight(650);
+            previewImageView.setFitWidth(750);
+            previewImageView.setFitHeight(600);
 
             VBox previewBox = new VBox(previewImageView);
             previewBox.setStyle("-fx-background-color: black; -fx-alignment: center;");
