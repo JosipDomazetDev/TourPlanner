@@ -1,10 +1,10 @@
 package com.example.tourplanner.viewmodel;
 
 import com.example.tourplanner.data.model.Tour;
-import com.example.tourplanner.data.model.repository.api.MapQuestAPIRepository;
-import com.example.tourplanner.data.model.repository.api.MapRepository;
-import com.example.tourplanner.data.model.repository.data.DataRepository;
-import com.example.tourplanner.data.model.repository.data.TourDataRepository;
+import com.example.tourplanner.data.repository.api.MapQuestAPIRepository;
+import com.example.tourplanner.data.repository.api.MapRepository;
+import com.example.tourplanner.data.repository.data.DataRepository;
+import com.example.tourplanner.data.repository.data.TourDataRepository;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

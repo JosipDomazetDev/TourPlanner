@@ -1,4 +1,4 @@
-package com.example.tourplanner.data.model.repository.data;
+package com.example.tourplanner.data.repository.data;
 
 import java.util.ArrayList;
 

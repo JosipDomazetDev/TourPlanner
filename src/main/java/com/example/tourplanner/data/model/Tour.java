@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,6 +60,10 @@ public class Tour {
     public void calculateDerivedFields() {
         calculatePopularity();
         calculateChildFriendliness();
+    }
+
+    public void setTransportType(String transportType){
+        this.transportType = transportType;
     }
 
     public void calculatePopularity() {
@@ -128,5 +133,12 @@ public class Tour {
                 childFriendliness + "% " +
                 popularity + "% " +
                 tourLogs.stream().map(TourLog::toSearchString).collect(Collectors.joining()).toLowerCase();
+    }
+
+
+    public static boolean checkIfTransportTypeIsValid(String transportType) {
+        String[] validTransportTypes = {"fastest", "shortest", "pedestrian", "bicycle"};
+
+        return Arrays.asList(validTransportTypes).contains(transportType.toLowerCase());
     }
 }

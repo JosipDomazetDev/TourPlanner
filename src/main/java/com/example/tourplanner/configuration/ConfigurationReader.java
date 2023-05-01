@@ -1,6 +1,5 @@
 package com.example.tourplanner.configuration;
 
-import com.example.tourplanner.data.model.repository.api.fetcher.MapQuestAPIFetcher;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

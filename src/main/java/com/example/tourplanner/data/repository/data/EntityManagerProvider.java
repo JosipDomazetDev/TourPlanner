@@ -1,6 +1,5 @@
-package com.example.tourplanner.data.model.repository.data;
+package com.example.tourplanner.data.repository.data;
 
-import com.example.tourplanner.configuration.ConfigurationReader;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;

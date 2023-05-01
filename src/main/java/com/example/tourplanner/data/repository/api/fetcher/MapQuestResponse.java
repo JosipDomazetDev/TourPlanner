@@ -1,4 +1,4 @@
-package com.example.tourplanner.data.model.repository.api.fetcher;
+package com.example.tourplanner.data.repository.api.fetcher;
 
 
 public record MapQuestResponse(double distance, int estimatedTime, String sessionId, double boundingBoxUL_Latitude,

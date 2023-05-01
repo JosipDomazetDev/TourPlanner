@@ -1,10 +1,9 @@
-package com.example.tourplanner.data.model.repository.api.fetcher;
+package com.example.tourplanner.data.repository.api.fetcher;
 
 import com.example.tourplanner.data.model.Tour;
 
 import com.example.tourplanner.utils.ImageNameGenerator;
 import javafx.concurrent.Task;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.http.client.utils.URIBuilder;
 
 import java.io.File;

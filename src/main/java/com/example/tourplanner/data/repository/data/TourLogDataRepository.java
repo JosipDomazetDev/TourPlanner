@@ -1,4 +1,4 @@
-package com.example.tourplanner.data.model.repository.data;
+package com.example.tourplanner.data.repository.data;
 
 import com.example.tourplanner.data.model.TourLog;
 import jakarta.persistence.EntityManager;

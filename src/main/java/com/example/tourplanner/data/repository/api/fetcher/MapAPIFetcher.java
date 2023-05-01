@@ -1,4 +1,4 @@
-package com.example.tourplanner.data.model.repository.api.fetcher;
+package com.example.tourplanner.data.repository.api.fetcher;
 
 public interface MapAPIFetcher extends Runnable {
     void setOnSuccess(Runnable runnable);

@@ -1,9 +1,9 @@
-package com.example.tourplanner.data.model.repository.api;
+package com.example.tourplanner.data.repository.api;
 
 import com.example.tourplanner.configuration.ConfigurationReader;
 import com.example.tourplanner.data.model.Tour;
-import com.example.tourplanner.data.model.repository.api.fetcher.MapAPIFetcher;
-import com.example.tourplanner.data.model.repository.api.fetcher.MapQuestAPIFetcher;
+import com.example.tourplanner.data.repository.api.fetcher.MapAPIFetcher;
+import com.example.tourplanner.data.repository.api.fetcher.MapQuestAPIFetcher;
 
 public class MapQuestAPIRepository implements MapRepository<Tour>{
     private static MapQuestAPIRepository instance;
