@@ -1,5 +1,6 @@
 package com.example.tourplanner.viewmodel;
 
+import com.example.tourplanner.data.exception.IllegalTransportTypeException;
 import com.example.tourplanner.data.model.Tour;
 import com.example.tourplanner.data.repository.api.MapQuestAPIRepository;
 import com.example.tourplanner.data.repository.api.MapRepository;
@@ -49,7 +50,7 @@ public class ToursViewModel {
         return new SimpleObjectProperty<>(getTours());
     }
 
-    public void addNewTour(String name, String description, String from, String to, String transportType, Runnable onApiCompletion) {
+    public void addNewTour(String name, String description, String from, String to, String transportType, Runnable onApiCompletion) throws IllegalTransportTypeException {
         setLoading();
         Tour tour = new Tour(name, description, from, to, transportType);
 

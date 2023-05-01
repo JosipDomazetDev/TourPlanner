@@ -1,5 +1,7 @@
 package com.example.tourplanner.ui;
 
+import com.example.tourplanner.data.exception.IllegalTransportTypeException;
+import com.example.tourplanner.data.model.Tour;
 import com.example.tourplanner.data.model.TourLog;
 import com.example.tourplanner.ui.components.ButtonCellFactory;
 import com.example.tourplanner.ui.components.converter.CustomDateStringConverter;
@@ -21,8 +23,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 
 public class TourDetailController implements Initializable {
@@ -191,12 +195,20 @@ public class TourDetailController implements Initializable {
         String transportType = tourDetailViewModel.getTransportType().get();
 
 
-        tourDetailViewModel.updateTour(name, tourDescription, from, to, transportType, () -> {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Update Tour");
-            alert.setHeaderText("Error while fetching data from MapQuest API.");
-            alert.showAndWait();
-        });
+        try {
+            tourDetailViewModel.updateTour(name, tourDescription, from, to, transportType, () -> {
+                createErrorPopup("Update Tour", "Error while updating tour.");
+            });
+        } catch (IllegalTransportTypeException e) {
+            createErrorPopup("Illegal Transport Type", "Illegal transport type. Please use one of the following: " + String.join(", ", Tour.validTransportTypes));
+        }
+    }
+
+    private static void createErrorPopup(String title, String text) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(text);
+        alert.showAndWait();
     }
 
     public void onCreateTourLogClick(MouseEvent mouseEvent) {

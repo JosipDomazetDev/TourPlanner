@@ -17,6 +17,7 @@ module com.example.tourplanner {
     exports com.example.tourplanner.data.repository.api;
     exports com.example.tourplanner.data.repository.data;
     exports com.example.tourplanner.data.repository.api.fetcher;
+    exports com.example.tourplanner.data.exception;
 
     opens com.example.tourplanner.ui to javafx.fxml;
     opens com.example.tourplanner.data.model;

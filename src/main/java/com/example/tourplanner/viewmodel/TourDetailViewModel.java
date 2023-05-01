@@ -1,5 +1,6 @@
 package com.example.tourplanner.viewmodel;
 
+import com.example.tourplanner.data.exception.IllegalTransportTypeException;
 import com.example.tourplanner.data.model.Tour;
 import com.example.tourplanner.data.model.TourLog;
 import com.example.tourplanner.data.repository.api.MapQuestAPIRepository;
@@ -103,7 +104,7 @@ public class TourDetailViewModel {
         refresh();
     }
 
-    public void updateTour(String name, String tourDescription, String from, String to, String transportType, Runnable onFailure) {
+    public void updateTour(String name, String tourDescription, String from, String to, String transportType, Runnable onFailure) throws IllegalTransportTypeException {
         if (selectedTour == null) return;
 
         // TODO, sollten wir dann eig alles logs löschen?

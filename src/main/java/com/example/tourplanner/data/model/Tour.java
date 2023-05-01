@@ -1,5 +1,6 @@
 package com.example.tourplanner.data.model;
 
+import com.example.tourplanner.data.exception.IllegalTransportTypeException;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -47,7 +48,11 @@ public class Tour {
     public Tour() {
     }
 
-    public Tour(String name, String description, String from, String to, String transportType) {
+    public Tour(String name, String description, String from, String to, String transportType) throws IllegalTransportTypeException{
+        if (!checkIfTransportTypeIsValid(transportType)) {
+            throw new IllegalTransportTypeException();
+        }
+
         this.name = name;
         this.tourDescription = description;
         this.from = from;
@@ -60,10 +65,6 @@ public class Tour {
     public void calculateDerivedFields() {
         calculatePopularity();
         calculateChildFriendliness();
-    }
-
-    public void setTransportType(String transportType){
-        this.transportType = transportType;
     }
 
     public void calculatePopularity() {
@@ -136,9 +137,18 @@ public class Tour {
     }
 
 
-    public static boolean checkIfTransportTypeIsValid(String transportType) {
-        String[] validTransportTypes = {"fastest", "shortest", "pedestrian", "bicycle"};
+    public static final String[] validTransportTypes = {"fastest", "shortest", "pedestrian", "bicycle"};
 
+    private static boolean checkIfTransportTypeIsValid(String transportType) {
         return Arrays.asList(validTransportTypes).contains(transportType.toLowerCase());
     }
+
+    public void setTransportType(String transportType) throws IllegalTransportTypeException {
+        if (!checkIfTransportTypeIsValid(transportType)) {
+            throw new IllegalTransportTypeException();
+        }
+
+        this.transportType = transportType;
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.example.tourplanner.ui;
 
+import com.example.tourplanner.data.exception.IllegalTransportTypeException;
 import com.example.tourplanner.data.model.Tour;
 import com.example.tourplanner.viewmodel.ToursViewModel;
 import javafx.fxml.FXML;
@@ -65,15 +66,14 @@ public class CreateTourController implements Initializable {
             return;
         }
 
-        if (!Tour.checkIfTransportTypeIsValid(transportType)) {
-            showError("Transport type must be either \"fastest\", \"shortest\", \"pedestrian\" or \"bicycle\"!");
-            return;
+        try {
+            toursViewModel.addNewTour(name, description, from, to, transportType, () -> {
+                Stage window = (Stage) (tourName.getScene().getWindow());
+                window.close();
+            });
+        } catch (IllegalTransportTypeException e) {
+            showError("Illegal transport type. Please use one of the following: " + String.join(", ", Tour.validTransportTypes));
         }
-
-        toursViewModel.addNewTour(name, description, from, to, transportType, () -> {
-            Stage window = (Stage) (tourName.getScene().getWindow());
-            window.close();
-        });
     }
 
     private void showError(String msg) {
