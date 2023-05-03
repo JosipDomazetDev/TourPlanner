@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import lombok.Getter;
+import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,7 +23,6 @@ public class TourLogViewModel {
     private static final Logger logger = LogManager.getLogger(TourLogViewModel.class.getSimpleName());
     private final DataRepository<TourLog> tourLogRepository;
     private Tour selectedTour;
-
 
     public TourLogViewModel(DataRepository<TourLog> tourLogDataRepository) {
         this.tourLogRepository = tourLogDataRepository;

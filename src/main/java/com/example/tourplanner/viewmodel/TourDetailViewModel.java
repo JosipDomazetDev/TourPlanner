@@ -5,6 +5,7 @@ import com.example.tourplanner.data.model.Tour;
 import com.example.tourplanner.data.model.TourLog;
 import com.example.tourplanner.data.repository.api.MapRepository;
 import com.example.tourplanner.data.repository.data.DataRepository;
+import com.example.tourplanner.utils.NullSafeRunner;
 import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.scene.image.Image;
@@ -12,6 +13,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.function.Consumer;
 
 @Getter
 public class TourDetailViewModel {
@@ -36,14 +39,19 @@ public class TourDetailViewModel {
     private final ObjectProperty<Image> imageProperty = new SimpleObjectProperty<>();
     private final SimpleBooleanProperty isVisible = new SimpleBooleanProperty(true);
     private Tour selectedTour;
-    private final TourLogViewModel tourLogViewModel;
 
+    @Setter
+    Consumer<Tour> onTourSelected;
+    @Setter
+    Runnable onClearViewModel;
+    @Setter
+    Runnable onRefresh;
 
     public TourDetailViewModel(DataRepository<Tour> tourRepository, DataRepository<TourLog> tourLogDataRepository, MapRepository<Tour> mapQuestAPIRepository, TourLogViewModel tourLogViewModel) {
         this.tourRepository = tourRepository;
         this.tourLogRepository = tourLogDataRepository;
         this.mapRepository = mapQuestAPIRepository;
-        this.tourLogViewModel = tourLogViewModel;
+
     }
 
 
@@ -51,7 +59,7 @@ public class TourDetailViewModel {
         logger.info("Selected tour: {}", selectedTour);
         this.selectedTour = selectedTour;
 
-        tourLogViewModel.setSelectedTour(selectedTour);
+        NullSafeRunner.accept(onTourSelected, selectedTour);
         refresh();
     }
 
@@ -67,7 +75,8 @@ public class TourDetailViewModel {
         childFriendliness.setValue("");
         imageProperty.set(null);
 
-        tourLogViewModel.clearViewModel();
+
+        NullSafeRunner.run(onClearViewModel);
     }
 
 
@@ -91,7 +100,7 @@ public class TourDetailViewModel {
         imageProperty.set(new Image("file:" + selectedTour.getRouteInformation()));
 
 
-        tourLogViewModel.refresh();
+        NullSafeRunner.run(onRefresh);
     }
 
 

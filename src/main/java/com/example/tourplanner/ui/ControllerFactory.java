@@ -20,6 +20,7 @@ public final class ControllerFactory {
         return instance;
     }
 
+    private final MainViewModel mainViewModel;
     private final ToursViewModel toursViewModel;
     private final MenuViewModel menuViewModel;
     private final TourDetailViewModel tourDetailViewModel;
@@ -36,6 +37,8 @@ public final class ControllerFactory {
         this.toursViewModel = new ToursViewModel(tourDetailViewModel, tourRepository, mapRepository);
 
         this.menuViewModel = new MenuViewModel();
+
+        this.mainViewModel = new MainViewModel(toursViewModel, menuViewModel, tourDetailViewModel, tourLogViewModel);
     }
 
     public Object create(Class<?> controllerClass) {
