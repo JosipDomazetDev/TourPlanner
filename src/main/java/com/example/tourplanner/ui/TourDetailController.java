@@ -61,19 +61,6 @@ public class TourDetailController implements Initializable {
 
 
     @FXML
-    TableView<TourLog> logTable;
-    @FXML
-    private TableColumn<TourLog, Date> columnDateTime;
-    @FXML
-    private TableColumn<TourLog, String> columnComment;
-    @FXML
-    private TableColumn<TourLog, Double> columnTotalTime;
-    @FXML
-    private TableColumn<TourLog, Integer> columnDifficulty;
-    @FXML
-    private TableColumn<TourLog, Integer> columnRating;
-
-    @FXML
     private ImageView imageView;
 
     @FXML
@@ -103,30 +90,6 @@ public class TourDetailController implements Initializable {
         detailVbox.visibleProperty().bindBidirectional(tourDetailViewModel.getIsVisible());
         nothingSelectedVbox.visibleProperty().bind(Bindings.not(tourDetailViewModel.getIsVisible()));
         nothingSelectedVbox.managedProperty().bind(Bindings.not(tourDetailViewModel.getIsVisible()));
-
-        columnDateTime.setCellValueFactory(new PropertyValueFactory<>("dateTime"));
-        columnComment.setCellValueFactory(new PropertyValueFactory<>("comment"));
-
-        columnTotalTime.setCellValueFactory(new PropertyValueFactory<>("totalTime"));
-        Label duration = new Label("Duration");
-        duration.setTooltip(new Tooltip("tour duration in minutes"));
-        columnTotalTime.setGraphic(duration);
-
-        columnDifficulty.setCellValueFactory(new PropertyValueFactory<>("difficulty"));
-        Label diff = new Label("Difficulty");
-        diff.setTooltip(new Tooltip("scale from 1 to 5 (1 = easy, 5 = hard)"));
-        columnDifficulty.setGraphic(diff);
-
-        columnRating.setCellValueFactory(new PropertyValueFactory<>("rating"));
-        Label rat = new Label("Rating");
-        rat.setTooltip(new Tooltip("scale from 1 to 5 (1 = worst, 5 = best)"));
-        columnRating.setGraphic(rat);
-
-        TableColumn<TourLog, Void> buttonColumn = new TableColumn<>("Delete");
-        buttonColumn.setCellFactory(new ButtonCellFactory(tourDetailViewModel::deleteTourLog));
-        logTable.getColumns().add(buttonColumn);
-
-        makeTableEditable();
     }
 
     private void initializeImageView() {
@@ -153,38 +116,6 @@ public class TourDetailController implements Initializable {
     }
 
 
-    private void makeTableEditable() {
-        columnDateTime.setCellFactory(TextFieldTableCell.forTableColumn(new CustomDateStringConverter("dd.MM.yyyy HH:mm")));
-        columnDateTime.setOnEditCommit(e -> {
-            tourDetailViewModel.setDateTime(e.getRowValue(), e.getNewValue());
-        });
-
-        columnComment.setCellFactory(TextFieldTableCell.forTableColumn());
-        columnComment.setOnEditCommit(e -> {
-            tourDetailViewModel.setComment(e.getRowValue(), e.getNewValue());
-        });
-
-
-        columnTotalTime.setCellFactory(TextFieldTableCell.forTableColumn(new CustomDoubleStringConverter()));
-        columnTotalTime.setOnEditCommit(e -> {
-            tourDetailViewModel.setTotalTime(e.getRowValue(), e.getNewValue());
-        });
-
-        int lowerBound = 1;
-        int upperBound = 5;
-        columnDifficulty.setCellFactory(TextFieldTableCell.forTableColumn((new CustomIntegerStringConverter(lowerBound, upperBound))));
-        columnDifficulty.setOnEditCommit(e -> {
-            tourDetailViewModel.setDifficulty(e.getRowValue(), e.getNewValue());
-        });
-
-        columnRating.setCellFactory(TextFieldTableCell.forTableColumn(new CustomIntegerStringConverter(lowerBound, upperBound)));
-        columnRating.setOnEditCommit(e -> {
-            tourDetailViewModel.setRating(e.getRowValue(), e.getNewValue());
-        });
-
-        logTable.setEditable(true);
-        logTable.setItems(tourDetailViewModel.getTourLogs());
-    }
 
 
     public void onUpdateDetail(MouseEvent mouseEvent) {
@@ -211,9 +142,6 @@ public class TourDetailController implements Initializable {
         alert.showAndWait();
     }
 
-    public void onCreateTourLogClick(MouseEvent mouseEvent) {
-        tourDetailViewModel.addNewTourLog();
-    }
 
     public void onDeleteDetail(MouseEvent mouseEvent) {
         tourDetailViewModel.deleteTour();

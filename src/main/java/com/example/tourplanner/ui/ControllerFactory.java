@@ -23,13 +23,16 @@ public final class ControllerFactory {
     private final ToursViewModel toursViewModel;
     private final MenuViewModel menuViewModel;
     private final TourDetailViewModel tourDetailViewModel;
+    private final TourLogViewModel tourLogViewModel;
 
     public ControllerFactory() {
         DataRepository<Tour> tourRepository = new TourDataRepository();
         DataRepository<TourLog> tourLogRepository = new TourLogDataRepository();
         MapRepository<Tour> mapRepository = new MapQuestAPIRepository();
+        this.tourLogViewModel = new TourLogViewModel(tourLogRepository);
 
-        this.tourDetailViewModel = new TourDetailViewModel(tourRepository, tourLogRepository, mapRepository);
+        this.tourDetailViewModel = new TourDetailViewModel(tourRepository, tourLogRepository, mapRepository, tourLogViewModel);
+
         this.toursViewModel = new ToursViewModel(tourDetailViewModel, tourRepository, mapRepository);
 
         this.menuViewModel = new MenuViewModel();
@@ -52,6 +55,11 @@ public final class ControllerFactory {
         if (controllerClass == TourDetailController.class) {
             return new TourDetailController(tourDetailViewModel);
         }
+
+        if (controllerClass == TourLogController.class) {
+            return new TourLogController(tourLogViewModel);
+        }
+
 
         throw new IllegalArgumentException("Unknown: " + controllerClass);
     }

@@ -3,26 +3,19 @@ package com.example.tourplanner.viewmodel;
 import com.example.tourplanner.data.exception.IllegalTransportTypeException;
 import com.example.tourplanner.data.model.Tour;
 import com.example.tourplanner.data.model.TourLog;
-import com.example.tourplanner.data.repository.api.MapQuestAPIRepository;
 import com.example.tourplanner.data.repository.api.MapRepository;
 import com.example.tourplanner.data.repository.data.DataRepository;
-import com.example.tourplanner.data.repository.data.TourLogDataRepository;
-import com.example.tourplanner.data.repository.data.TourDataRepository;
 import javafx.application.Platform;
 import javafx.beans.property.*;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.image.Image;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.Date;
-import java.util.function.Consumer;
-
 @Getter
 public class TourDetailViewModel {
+    private static final Logger logger = LogManager.getLogger(TourDetailViewModel.class.getSimpleName());
     private final DataRepository<TourLog> tourLogRepository;
     private final DataRepository<Tour> tourRepository;
     private final MapRepository<Tour> mapRepository;
@@ -43,19 +36,22 @@ public class TourDetailViewModel {
     private final ObjectProperty<Image> imageProperty = new SimpleObjectProperty<>();
     private final SimpleBooleanProperty isVisible = new SimpleBooleanProperty(true);
     private Tour selectedTour;
-    ObservableList<TourLog> tourLogs = FXCollections.observableArrayList();
-    private static final Logger logger = LogManager.getLogger(TourLogDataRepository.class.getSimpleName());
+    private final TourLogViewModel tourLogViewModel;
 
-    public TourDetailViewModel(DataRepository<Tour> tourRepository, DataRepository<TourLog> tourLogDataRepository, MapRepository<Tour> mapQuestAPIRepository) {
+
+    public TourDetailViewModel(DataRepository<Tour> tourRepository, DataRepository<TourLog> tourLogDataRepository, MapRepository<Tour> mapQuestAPIRepository, TourLogViewModel tourLogViewModel) {
         this.tourRepository = tourRepository;
         this.tourLogRepository = tourLogDataRepository;
         this.mapRepository = mapQuestAPIRepository;
+        this.tourLogViewModel = tourLogViewModel;
     }
 
 
     public void setSelectedTour(Tour selectedTour) {
         logger.info("Selected tour: {}", selectedTour);
         this.selectedTour = selectedTour;
+
+        tourLogViewModel.setSelectedTour(selectedTour);
         refresh();
     }
 
@@ -71,7 +67,7 @@ public class TourDetailViewModel {
         childFriendliness.setValue("");
         imageProperty.set(null);
 
-        tourLogs.clear();
+        tourLogViewModel.clearViewModel();
     }
 
 
@@ -94,18 +90,10 @@ public class TourDetailViewModel {
         childFriendliness.setValue(selectedTour.getChildFriendliness() + "%");
         imageProperty.set(new Image("file:" + selectedTour.getRouteInformation()));
 
-        tourLogs.clear();
-        tourLogs.addAll(selectedTour.getTourLogs());
+
+        tourLogViewModel.refresh();
     }
 
-    public void addNewTourLog() {
-        if (selectedTour == null) return;
-
-        TourLog tourLog = new TourLog(new Date(), "", 0, 0, 0, selectedTour);
-        tourLogRepository.save(tourLog);
-
-        refresh();
-    }
 
     public void updateTour(String name, String tourDescription, String from, String to, String transportType, Runnable onFailure) throws IllegalTransportTypeException {
         if (selectedTour == null) return;
@@ -136,43 +124,5 @@ public class TourDetailViewModel {
 
         tourRepository.delete(selectedTour);
         onTourDeleted.run();
-    }
-
-    public void deleteTourLog(TourLog tourLog) {
-        if (selectedTour == null) return;
-
-        selectedTour.getTourLogs().remove(tourLog);
-        tourLogRepository.delete(tourLog);
-        refresh();
-    }
-
-    public <R> void updateTourLog(R newValue, Consumer<R> updateMethod) {
-        if (newValue == null) {
-            return;
-        }
-
-        updateMethod.accept(newValue);
-        tourRepository.update(selectedTour);
-        refresh();
-    }
-
-    public void setDateTime(TourLog tourLog, Date newValue) {
-        updateTourLog(newValue, tourLog::setDateTime);
-    }
-
-    public void setComment(TourLog tourLog, String newValue) {
-        updateTourLog(newValue, tourLog::setComment);
-    }
-
-    public void setTotalTime(TourLog tourLog, Double newValue) {
-        updateTourLog(newValue, tourLog::setTotalTime);
-    }
-
-    public void setDifficulty(TourLog tourLog, Integer newValue) {
-        updateTourLog(newValue, tourLog::setDifficulty);
-    }
-
-    public void setRating(TourLog tourLog, Integer newValue) {
-        updateTourLog(newValue, tourLog::setRating);
     }
 }
