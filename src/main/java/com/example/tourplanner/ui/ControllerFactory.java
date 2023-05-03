@@ -30,12 +30,10 @@ public final class ControllerFactory {
         DataRepository<Tour> tourRepository = new TourDataRepository();
         DataRepository<TourLog> tourLogRepository = new TourLogDataRepository();
         MapRepository<Tour> mapRepository = new MapQuestAPIRepository();
+
+        this.toursViewModel = new ToursViewModel(tourRepository, mapRepository);
+        this.tourDetailViewModel = new TourDetailViewModel(tourRepository, mapRepository);
         this.tourLogViewModel = new TourLogViewModel(tourLogRepository);
-
-        this.tourDetailViewModel = new TourDetailViewModel(tourRepository, tourLogRepository, mapRepository, tourLogViewModel);
-
-        this.toursViewModel = new ToursViewModel(tourDetailViewModel, tourRepository, mapRepository);
-
         this.menuViewModel = new MenuViewModel();
 
         this.mainViewModel = new MainViewModel(toursViewModel, menuViewModel, tourDetailViewModel, tourLogViewModel);

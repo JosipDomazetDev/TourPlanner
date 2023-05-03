@@ -86,7 +86,8 @@ public class ToursController implements Initializable {
     }
 
     public void printTourReport(MouseEvent mouseEvent) {
-        System.out.println(toursViewModel.getTourDetailViewModel().getSelectedTour());
+        Tour selectedTour = toursListView.getSelectionModel().getSelectedItem();
+        System.out.println(selectedTour);
         // KA OBS BESSER IST ES IM CONTROLLER ODER VIEWMODEL ZU MACHEN
     }
 }

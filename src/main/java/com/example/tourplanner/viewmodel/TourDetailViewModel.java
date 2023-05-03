@@ -2,7 +2,6 @@ package com.example.tourplanner.viewmodel;
 
 import com.example.tourplanner.data.exception.IllegalTransportTypeException;
 import com.example.tourplanner.data.model.Tour;
-import com.example.tourplanner.data.model.TourLog;
 import com.example.tourplanner.data.repository.api.MapRepository;
 import com.example.tourplanner.data.repository.data.DataRepository;
 import com.example.tourplanner.utils.NullSafeRunner;
@@ -19,13 +18,8 @@ import java.util.function.Consumer;
 @Getter
 public class TourDetailViewModel {
     private static final Logger logger = LogManager.getLogger(TourDetailViewModel.class.getSimpleName());
-    private final DataRepository<TourLog> tourLogRepository;
     private final DataRepository<Tour> tourRepository;
     private final MapRepository<Tour> mapRepository;
-    @Setter
-    private Runnable onTourUpdated;
-    @Setter
-    private Runnable onTourDeleted;
 
     private final StringProperty name = new SimpleStringProperty();
     private final StringProperty tourDescription = new SimpleStringProperty();
@@ -41,17 +35,13 @@ public class TourDetailViewModel {
     private Tour selectedTour;
 
     @Setter
-    Consumer<Tour> onTourSelected;
+    private Runnable onTourUpdated;
     @Setter
-    Runnable onClearViewModel;
-    @Setter
-    Runnable onRefresh;
+    private Consumer<Tour> onTourDeleted;
 
-    public TourDetailViewModel(DataRepository<Tour> tourRepository, DataRepository<TourLog> tourLogDataRepository, MapRepository<Tour> mapQuestAPIRepository, TourLogViewModel tourLogViewModel) {
+    public TourDetailViewModel(DataRepository<Tour> tourRepository, MapRepository<Tour> mapQuestAPIRepository) {
         this.tourRepository = tourRepository;
-        this.tourLogRepository = tourLogDataRepository;
         this.mapRepository = mapQuestAPIRepository;
-
     }
 
 
@@ -59,7 +49,6 @@ public class TourDetailViewModel {
         logger.info("Selected tour: {}", selectedTour);
         this.selectedTour = selectedTour;
 
-        NullSafeRunner.accept(onTourSelected, selectedTour);
         refresh();
     }
 
@@ -74,9 +63,6 @@ public class TourDetailViewModel {
         popularity.setValue("");
         childFriendliness.setValue("");
         imageProperty.set(null);
-
-
-        NullSafeRunner.run(onClearViewModel);
     }
 
 
@@ -98,9 +84,6 @@ public class TourDetailViewModel {
         popularity.setValue(selectedTour.getPopularity() + "%");
         childFriendliness.setValue(selectedTour.getChildFriendliness() + "%");
         imageProperty.set(new Image("file:" + selectedTour.getRouteInformation()));
-
-
-        NullSafeRunner.run(onRefresh);
     }
 
 
@@ -124,7 +107,8 @@ public class TourDetailViewModel {
         }, () -> {
             tourRepository.update(selectedTour);
             Platform.runLater(this::refresh);
-            onTourUpdated.run();
+
+            NullSafeRunner.run(onTourUpdated);
         });
     }
 
@@ -132,6 +116,6 @@ public class TourDetailViewModel {
         if (selectedTour == null) return;
 
         tourRepository.delete(selectedTour);
-        onTourDeleted.run();
+        NullSafeRunner.accept(onTourDeleted, selectedTour);
     }
 }

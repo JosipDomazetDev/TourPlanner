@@ -12,8 +12,21 @@ public class MainViewModel {
         this.tourDetailViewModel = tourDetailViewModel;
         this.tourLogViewModel = tourLogViewModel;
 
-        tourDetailViewModel.setOnTourSelected(tourLogViewModel::setSelectedTour);
-        tourDetailViewModel.setOnClearViewModel(tourLogViewModel::clearViewModel);
-        tourDetailViewModel.setOnRefresh(tourLogViewModel::refresh);
+
+        toursViewModel.setOnTourSelected(tour -> {
+            tourDetailViewModel.setSelectedTour(tour);
+            tourLogViewModel.setSelectedTour(tour);
+        });
+
+        // Manually select first tour or nothing
+        // calling this in the initialize method won't work because the VMS are not wired at that point
+        toursViewModel.selectFirstTourOrNothing();
+
+        // TourDetailViewModel -> ToursViewModel
+        tourDetailViewModel.setOnTourUpdated(toursViewModel::refresh);
+        tourDetailViewModel.setOnTourDeleted(toursViewModel::deleteTourFromList);
+
+        // TourLogViewModel -> TourDetailViewModel (refresh for computed tour properties)
+        tourLogViewModel.setOnRefresh(tourDetailViewModel::refresh);
     }
 }

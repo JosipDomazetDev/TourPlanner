@@ -2,12 +2,10 @@ package com.example.tourplanner.viewmodel;
 
 import com.example.tourplanner.data.model.Tour;
 import com.example.tourplanner.data.model.TourLog;
-import com.example.tourplanner.data.repository.api.MapRepository;
 import com.example.tourplanner.data.repository.data.DataRepository;
-import com.example.tourplanner.data.repository.data.TourLogDataRepository;
+import com.example.tourplanner.utils.NullSafeRunner;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.image.Image;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
@@ -23,6 +21,9 @@ public class TourLogViewModel {
     private static final Logger logger = LogManager.getLogger(TourLogViewModel.class.getSimpleName());
     private final DataRepository<TourLog> tourLogRepository;
     private Tour selectedTour;
+    @Setter
+    private Runnable onRefresh;
+
 
     public TourLogViewModel(DataRepository<TourLog> tourLogDataRepository) {
         this.tourLogRepository = tourLogDataRepository;
@@ -42,6 +43,7 @@ public class TourLogViewModel {
 
         tourLogs.clear();
         tourLogs.addAll(selectedTour.getTourLogs());
+        NullSafeRunner.run(onRefresh);
     }
 
 
@@ -50,6 +52,7 @@ public class TourLogViewModel {
 
         selectedTour.getTourLogs().remove(tourLog);
         tourLogRepository.delete(tourLog);
+
         refresh();
     }
 
@@ -60,6 +63,7 @@ public class TourLogViewModel {
 
         updateMethod.accept(newValue);
         tourLogRepository.update(tourLog);
+
         refresh();
     }
 

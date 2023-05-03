@@ -2,15 +2,17 @@ package com.example.tourplanner.viewmodel;
 
 import com.example.tourplanner.data.exception.IllegalTransportTypeException;
 import com.example.tourplanner.data.model.Tour;
-import com.example.tourplanner.data.repository.api.MapQuestAPIRepository;
 import com.example.tourplanner.data.repository.api.MapRepository;
 import com.example.tourplanner.data.repository.data.DataRepository;
+import com.example.tourplanner.utils.NullSafeRunner;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.function.Consumer;
 
 @Getter
 public class ToursViewModel {
@@ -19,30 +21,30 @@ public class ToursViewModel {
     private final DataRepository<Tour> tourRepository;
     private final MapRepository<Tour> mapRepository;
 
-    private final TourDetailViewModel tourDetailViewModel;
     private final StringProperty errorMsg = new SimpleStringProperty();
     private final BooleanProperty isError = new SimpleBooleanProperty();
     private final BooleanProperty isLoading = new SimpleBooleanProperty();
 
+    @Setter
+    private Consumer<Tour> onTourSelected;
 
-    public ToursViewModel(TourDetailViewModel tourDetailViewModel, DataRepository<Tour>  tourRepository, MapRepository<Tour> mapQuestAPIRepository)  {
+    public ToursViewModel(DataRepository<Tour> tourRepository, MapRepository<Tour> mapQuestAPIRepository) {
         this.tourRepository = tourRepository;
         this.mapRepository = mapQuestAPIRepository;
-        this.tourDetailViewModel = tourDetailViewModel;
         initialize();
-
-        tourDetailViewModel.setOnTourUpdated(() -> {
-            tours.add(new Tour());
-            tours.remove(tours.size() - 1);
-        });
-
-        tourDetailViewModel.setOnTourDeleted(() -> {
-            tours.remove(tourDetailViewModel.getSelectedTour());
-            selectFirstTourOrNothing();
-        });
     }
 
-    private void selectFirstTourOrNothing() {
+    public void deleteTourFromList(Tour deletedTour) {
+        tours.remove(deletedTour);
+        selectFirstTourOrNothing();
+    }
+
+    public void refresh() {
+        tours.add(new Tour());
+        tours.remove(tours.size() - 1);
+    }
+
+    public void selectFirstTourOrNothing() {
         if (tours.size() > 0) {
             setSelectedTour(tours.get(0));
         } else {
@@ -80,7 +82,7 @@ public class ToursViewModel {
                             .stream()
                             .filter(tour -> tour.toSearchString().contains(searchTerm.toLowerCase()))
                             .toList());
-            tourDetailViewModel.setSelectedTour(null);
+            setSelectedTour(null);
         }
     }
 
@@ -105,10 +107,9 @@ public class ToursViewModel {
     private void initialize() {
         ArrayList<Tour> tours1 = tourRepository.load();
         tours.addAll(tours1);
-        selectFirstTourOrNothing();
     }
 
     public void setSelectedTour(Tour selectedTour) {
-        tourDetailViewModel.setSelectedTour(selectedTour);
+        NullSafeRunner.accept(onTourSelected, selectedTour);
     }
 }
