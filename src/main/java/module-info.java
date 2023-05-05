@@ -25,4 +25,7 @@ module com.example.tourplanner {
     opens com.example.tourplanner.ui.components to javafx.fxml;
     opens com.example.tourplanner.ui.components.converter to javafx.fxml;
     opens com.example.tourplanner.data.exception;
+    exports com.example.tourplanner.ui.di;
+    opens com.example.tourplanner.ui.di to javafx.fxml;
+    exports com.example.tourplanner.data.repository.fs;
 }

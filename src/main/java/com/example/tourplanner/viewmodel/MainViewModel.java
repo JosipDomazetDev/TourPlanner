@@ -28,5 +28,8 @@ public class MainViewModel {
 
         // TourLogViewModel -> TourDetailViewModel (refresh for computed tour properties)
         tourLogViewModel.setOnRefresh(tourDetailViewModel::refresh);
+
+        // MenuViewModel -> ToursViewModel
+        menuViewModel.setOnImported(toursViewModel::load);
     }
 }

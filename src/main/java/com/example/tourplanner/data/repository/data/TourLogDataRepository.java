@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 
 public class TourLogDataRepository implements DataRepository<TourLog> {
-    EntityManager entityManager = EntityManagerProvider.getInstance();
+    private final EntityManager entityManager = EntityManagerProvider.getInstance();
     private static final Logger logger = LogManager.getLogger(TourLogDataRepository.class.getSimpleName());
 
     public TourLogDataRepository() {
@@ -44,6 +44,6 @@ public class TourLogDataRepository implements DataRepository<TourLog> {
     @Override
     public ArrayList<TourLog> load() {
         logger.info("Loaded tourLogs");
-        return new ArrayList<>(entityManager.createQuery("SELECT t FROM TourLog t", TourLog.class).getResultList());
+        return new ArrayList<>(entityManager.createQuery("SELECT t FROM TourLog t ORDER BY t.id", TourLog.class).getResultList());
     }
 }

@@ -31,7 +31,7 @@ public class ToursViewModel {
     public ToursViewModel(DataRepository<Tour> tourRepository, MapRepository<Tour> mapQuestAPIRepository) {
         this.tourRepository = tourRepository;
         this.mapRepository = mapQuestAPIRepository;
-        initialize();
+        load();
     }
 
     public void deleteTourFromList(Tour deletedTour) {
@@ -104,7 +104,8 @@ public class ToursViewModel {
         errorMsg.setValue("");
     }
 
-    private void initialize() {
+    public void load() {
+        tours.clear();
         ArrayList<Tour> tours1 = tourRepository.load();
         tours.addAll(tours1);
     }

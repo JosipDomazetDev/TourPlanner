@@ -1,12 +1,16 @@
-package com.example.tourplanner.ui;
+package com.example.tourplanner.ui.di;
 
 import com.example.tourplanner.data.model.Tour;
 import com.example.tourplanner.data.model.TourLog;
 import com.example.tourplanner.data.repository.api.MapQuestAPIRepository;
 import com.example.tourplanner.data.repository.api.MapRepository;
 import com.example.tourplanner.data.repository.data.DataRepository;
+import com.example.tourplanner.data.repository.data.MassDataRepository;
 import com.example.tourplanner.data.repository.data.TourDataRepository;
 import com.example.tourplanner.data.repository.data.TourLogDataRepository;
+import com.example.tourplanner.data.repository.fs.FileRepository;
+import com.example.tourplanner.data.repository.fs.JSONFileRepository;
+import com.example.tourplanner.ui.*;
 import com.example.tourplanner.viewmodel.*;
 
 public final class ControllerFactory {
@@ -27,14 +31,15 @@ public final class ControllerFactory {
     private final TourLogViewModel tourLogViewModel;
 
     public ControllerFactory() {
-        DataRepository<Tour> tourRepository = new TourDataRepository();
+        MassDataRepository<Tour> tourRepository = new TourDataRepository();
         DataRepository<TourLog> tourLogRepository = new TourLogDataRepository();
         MapRepository<Tour> mapRepository = new MapQuestAPIRepository();
+        FileRepository<Tour> fileRepository = new JSONFileRepository();
 
         this.toursViewModel = new ToursViewModel(tourRepository, mapRepository);
         this.tourDetailViewModel = new TourDetailViewModel(tourRepository, mapRepository);
         this.tourLogViewModel = new TourLogViewModel(tourLogRepository);
-        this.menuViewModel = new MenuViewModel();
+        this.menuViewModel = new MenuViewModel(tourRepository, fileRepository);
 
         this.mainViewModel = new MainViewModel(toursViewModel, menuViewModel, tourDetailViewModel, tourLogViewModel);
     }

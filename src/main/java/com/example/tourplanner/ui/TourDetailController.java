@@ -7,6 +7,7 @@ import com.example.tourplanner.ui.components.ButtonCellFactory;
 import com.example.tourplanner.ui.components.converter.CustomDateStringConverter;
 import com.example.tourplanner.ui.components.converter.CustomDoubleStringConverter;
 import com.example.tourplanner.ui.components.converter.CustomIntegerStringConverter;
+import com.example.tourplanner.utils.PopupUtility;
 import com.example.tourplanner.viewmodel.TourDetailViewModel;
 import javafx.application.Platform;
 import javafx.beans.binding.Binding;
@@ -116,8 +117,6 @@ public class TourDetailController implements Initializable {
     }
 
 
-
-
     public void onUpdateDetail(MouseEvent mouseEvent) {
         String name = tourDetailViewModel.getName().get();
         String tourDescription = tourDetailViewModel.getTourDescription().get();
@@ -128,18 +127,11 @@ public class TourDetailController implements Initializable {
 
         try {
             tourDetailViewModel.updateTour(name, tourDescription, from, to, transportType, () -> {
-                createErrorPopup("Update Tour", "Error while updating tour.");
+                PopupUtility.createErrorPopup("Update Tour", "Error while updating tour.");
             });
         } catch (IllegalTransportTypeException e) {
-            createErrorPopup("Illegal Transport Type", "Illegal transport type. Please use one of the following: " + String.join(", ", Tour.validTransportTypes));
+            PopupUtility.createErrorPopup("Illegal Transport Type", "Illegal transport type. Please use one of the following: " + String.join(", ", Tour.validTransportTypes));
         }
-    }
-
-    private static void createErrorPopup(String title, String text) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle(title);
-        alert.setHeaderText(text);
-        alert.showAndWait();
     }
 
 

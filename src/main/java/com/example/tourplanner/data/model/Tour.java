@@ -48,7 +48,16 @@ public class Tour {
     public Tour() {
     }
 
-    public Tour(String name, String description, String from, String to, String transportType) throws IllegalTransportTypeException{
+    public Tour(String name, String description, Double tourDistance, String from, String to, String transportType, int estimatedTime, String routeInformation, int popularity, int childFriendliness) throws IllegalTransportTypeException {
+        this(name, description, from, to, transportType);
+        this.tourDistance = tourDistance;
+        this.estimatedTime = estimatedTime;
+        this.routeInformation = routeInformation;
+        this.popularity = popularity;
+        this.childFriendliness = childFriendliness;
+    }
+
+    public Tour(String name, String description, String from, String to, String transportType) throws IllegalTransportTypeException {
         if (!checkIfTransportTypeIsValid(transportType)) {
             throw new IllegalTransportTypeException();
         }
