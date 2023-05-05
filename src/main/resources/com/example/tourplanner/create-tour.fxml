@@ -37,7 +37,7 @@
     <TextField fx:id="to"/>
 
     <Label text="Transport Type"/>
-    <TextField fx:id="transportType"/>
+    <fx:include source="transport-selection.fxml" fx:id="transportType"/>
 
 
     <ProgressIndicator fx:id="progressIndicator" visible="false"/>

@@ -56,7 +56,7 @@ public class MenuViewModel {
             e.printStackTrace();
             onError.run();
 
-            logger.error("Export failed!", e);
+            logger.error("Import failed!", e);
         }
 
     }

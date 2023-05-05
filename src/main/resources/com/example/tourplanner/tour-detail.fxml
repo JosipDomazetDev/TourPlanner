@@ -84,7 +84,7 @@
 
                                     <VBox>
                                         <Label text="Transport Type:"/>
-                                        <TextField fx:id="transportTypeTourDetailTextField"/>
+                                        <fx:include source="transport-selection.fxml" fx:id="transportType"/>
                                     </VBox>
 
                                     <VBox>

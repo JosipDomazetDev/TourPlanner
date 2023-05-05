@@ -5,6 +5,7 @@ import com.example.tourplanner.data.model.Tour;
 import com.example.tourplanner.viewmodel.ToursViewModel;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
@@ -31,7 +32,7 @@ public class CreateTourController implements Initializable {
     private TextField to;
 
     @FXML
-    private TextField transportType;
+    private ChoiceBox<String> transportType;
 
     @FXML
     private Label errorLabel;
@@ -59,7 +60,7 @@ public class CreateTourController implements Initializable {
         String description = tourDescription.getText();
         String from = this.from.getText();
         String to = this.to.getText();
-        String transportType = this.transportType.getText();
+        String transportType = this.transportType.getValue();
 
         if (name.isEmpty() || description.isEmpty() || from.isEmpty() || to.isEmpty() || transportType.isEmpty()) {
             showError("Please fill out all fields!");

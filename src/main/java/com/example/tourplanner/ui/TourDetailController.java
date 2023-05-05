@@ -2,32 +2,20 @@ package com.example.tourplanner.ui;
 
 import com.example.tourplanner.data.exception.IllegalTransportTypeException;
 import com.example.tourplanner.data.model.Tour;
-import com.example.tourplanner.data.model.TourLog;
-import com.example.tourplanner.ui.components.ButtonCellFactory;
-import com.example.tourplanner.ui.components.converter.CustomDateStringConverter;
-import com.example.tourplanner.ui.components.converter.CustomDoubleStringConverter;
-import com.example.tourplanner.ui.components.converter.CustomIntegerStringConverter;
 import com.example.tourplanner.utils.PopupUtility;
 import com.example.tourplanner.viewmodel.TourDetailViewModel;
-import javafx.application.Platform;
-import javafx.beans.binding.Binding;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 
 public class TourDetailController implements Initializable {
@@ -46,7 +34,7 @@ public class TourDetailController implements Initializable {
     private TextField toTourDetailTextField;
 
     @FXML
-    private TextField transportTypeTourDetailTextField;
+    private ChoiceBox<String> transportType;
 
     @FXML
     private Label tourDistanceTourDetailTextField;
@@ -82,7 +70,7 @@ public class TourDetailController implements Initializable {
         tourDescriptionTourDetailTextField.textProperty().bindBidirectional(tourDetailViewModel.getTourDescription());
         fromTourDetailTextField.textProperty().bindBidirectional(tourDetailViewModel.getFrom());
         toTourDetailTextField.textProperty().bindBidirectional(tourDetailViewModel.getTo());
-        transportTypeTourDetailTextField.textProperty().bindBidirectional(tourDetailViewModel.getTransportType());
+        transportType.valueProperty().bindBidirectional(tourDetailViewModel.getTransportType());
         tourDistanceTourDetailTextField.textProperty().bind(tourDetailViewModel.getTourDistance());
         estimatedTimeTourDetailTextField.textProperty().bind(tourDetailViewModel.getEstimatedTime());
         popularityTourDetailTextField.textProperty().bind(tourDetailViewModel.getPopularity());
