@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
 <?import javafx.collections.FXCollections?>
-
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.layout.HBox?>
+<?import java.lang.*?>
 <ChoiceBox xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml" fx:id="transportType" HBox.hgrow="ALWAYS" maxWidth="Infinity">
     <items>
         <FXCollections fx:factory="observableArrayList">
-            <String fx:value="Bicycle"/>
-            <String fx:value="Walk"/>
-            <String fx:value="Fastest"/>
-            <String fx:value="Shortest"/>
+            <String fx:value="Map"/>
+            <String fx:value="Hybrid"/>
+            <String fx:value="Satellite"/>
+            <String fx:value="Light"/>
+            <String fx:value="Dark"/>
         </FXCollections>
     </items>
     <value>
-        <String fx:value="Bicycle"/>
+        <String fx:value="Satellite"/>
     </value>
 </ChoiceBox>

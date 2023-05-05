@@ -26,6 +26,7 @@ public class TourDetailViewModel {
     private final StringProperty from = new SimpleStringProperty();
     private final StringProperty to = new SimpleStringProperty();
     private final StringProperty transportType = new SimpleStringProperty();
+    private final StringProperty mapType = new SimpleStringProperty();
     private final StringProperty tourDistance = new SimpleStringProperty();
     private final StringProperty estimatedTime = new SimpleStringProperty();
     private final StringProperty popularity = new SimpleStringProperty();
@@ -58,6 +59,7 @@ public class TourDetailViewModel {
         from.setValue("");
         to.setValue("");
         transportType.setValue("");
+        mapType.setValue("");
         tourDistance.setValue("");
         estimatedTime.setValue("");
         popularity.setValue("");
@@ -79,6 +81,7 @@ public class TourDetailViewModel {
         from.setValue(selectedTour.getFrom());
         to.setValue(selectedTour.getTo());
         transportType.setValue(selectedTour.getTransportType());
+        mapType.setValue(selectedTour.getMapType());
         tourDistance.setValue(selectedTour.getTourDistance() + " km");
         estimatedTime.setValue(selectedTour.getEstimatedTime() + " min");
         popularity.setValue(selectedTour.getPopularity() + "%");
@@ -87,17 +90,23 @@ public class TourDetailViewModel {
     }
 
 
-    public void updateTour(String name, String tourDescription, String from, String to, String transportType, Runnable onFailure) throws IllegalTransportTypeException {
+    public void updateTour(Runnable onFailure) throws IllegalTransportTypeException {
         if (selectedTour == null) return;
 
-        // TODO, sollten wir dann eig alles logs löschen?
-        // TODO, input validation transport type
+        String name = getName().get();
+        String tourDescription = getTourDescription().get();
+        String from = getFrom().get();
+        String to = getTo().get();
+        String transportType = getTransportType().get();
+        String mapType = getMapType().get();
+
 
         selectedTour.setName(name);
         selectedTour.setTourDescription(tourDescription);
         selectedTour.setFrom(from);
         selectedTour.setTo(to);
         selectedTour.setTransportType(transportType);
+        selectedTour.setMapType(mapType);
 
         mapRepository.fetchApi(selectedTour, () -> {
             // Update anyway, even if the map fetch failed

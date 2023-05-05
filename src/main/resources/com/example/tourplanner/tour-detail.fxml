@@ -17,6 +17,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.control.ScrollPane?>
 <VBox prefHeight="500" prefWidth="500" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/19"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tourplanner.ui.TourDetailController">
 
@@ -34,99 +35,105 @@
                         </VBox>
 
                         <VBox fx:id="detailVbox">
-                            <HBox>
-                                <VBox HBox.hgrow="ALWAYS">
-                                    <HBox>
-                                        <children>
-                                            <Button fx:id="updateDetailButton" onMouseClicked="#onUpdateDetail"
-                                                    text="Update">
-                                                <padding>
-                                                    <Insets bottom="12.0" left="12.0" right="12.0" top="12.0"/>
-                                                </padding>
-                                                <HBox.margin>
-                                                    <Insets right="8.0"/>
-                                                </HBox.margin>
-                                            </Button>
-                                            <Button fx:id="deleteDetailButton" onMouseClicked="#onDeleteDetail"
-                                                    text="Delete">
-                                                <padding>
-                                                    <Insets bottom="12.0" left="12.0" right="12.0" top="12.0"/>
-                                                </padding>
-                                                <HBox.margin>
-                                                    <Insets left="8.0"/>
-                                                </HBox.margin>
-                                            </Button>
-                                        </children>
-                                        <VBox.margin>
-                                            <Insets/>
-                                        </VBox.margin>
-                                    </HBox>
-
+                            <ScrollPane>
+                                <HBox>
                                     <VBox>
-                                        <Label text="Name:"/>
-                                        <TextField fx:id="nameTourDetailTextField"/>
-                                    </VBox>
-
-                                    <VBox>
-                                        <Label text="Tour Description:"/>
-                                        <TextField fx:id="tourDescriptionTourDetailTextField"/>
-                                    </VBox>
-
-                                    <VBox>
-                                        <Label text="From:"/>
-                                        <TextField fx:id="fromTourDetailTextField"/>
-                                    </VBox>
-
-                                    <VBox>
-                                        <Label text="To:"/>
-                                        <TextField fx:id="toTourDetailTextField"/>
-                                    </VBox>
-
-                                    <VBox>
-                                        <Label text="Transport Type:"/>
-                                        <fx:include source="transport-selection.fxml" fx:id="transportType"/>
-                                    </VBox>
-
-                                    <VBox>
-                                        <Label text="Tour Distance:"/>
-                                        <Label fx:id="tourDistanceTourDetailTextField" disable="true"/>
-                                    </VBox>
-
-                                    <VBox>
-                                        <Label text="Estimated Time:"/>
-                                        <Label fx:id="estimatedTimeTourDetailTextField" disable="true"/>
-                                    </VBox>
-
-                                    <VBox>
-                                        <Label text="Popularity:"/>
-                                        <Label fx:id="popularityTourDetailTextField" disable="true"/>
-                                    </VBox>
-
-                                    <VBox>
-                                        <Label text="Child friendliness:"/>
-                                        <Label fx:id="childFriendlinessTourDetailTextField" disable="true"/>
-                                    </VBox>
-                                    <HBox.margin>
-                                        <Insets/>
-                                    </HBox.margin>
-                                    <padding>
-                                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
-                                    </padding>
-                                </VBox>
-                                <VBox alignment="CENTER_RIGHT" HBox.hgrow="NEVER">
-                                    <children>
-                                        <ImageView fx:id="imageView">
+                                        <HBox>
+                                            <children>
+                                                <Button fx:id="updateDetailButton" onMouseClicked="#onUpdateDetail"
+                                                        text="Update">
+                                                    <padding>
+                                                        <Insets bottom="12.0" left="12.0" right="12.0" top="12.0"/>
+                                                    </padding>
+                                                    <HBox.margin>
+                                                        <Insets right="8.0"/>
+                                                    </HBox.margin>
+                                                </Button>
+                                                <Button fx:id="deleteDetailButton" onMouseClicked="#onDeleteDetail"
+                                                        text="Delete">
+                                                    <padding>
+                                                        <Insets bottom="12.0" left="12.0" right="12.0" top="12.0"/>
+                                                    </padding>
+                                                    <HBox.margin>
+                                                        <Insets left="8.0"/>
+                                                    </HBox.margin>
+                                                </Button>
+                                            </children>
                                             <VBox.margin>
-                                                <Insets top="8.0"/>
+                                                <Insets/>
                                             </VBox.margin>
-                                        </ImageView>
-                                    </children>
-                                    <HBox.margin>
-                                        <Insets left="24.0" right="24.0"/>
-                                    </HBox.margin>
-                                </VBox>
-                            </HBox>
+                                        </HBox>
 
+                                        <VBox>
+                                            <Label text="Name:"/>
+                                            <TextField fx:id="nameTourDetailTextField"/>
+                                        </VBox>
+
+                                        <VBox>
+                                            <Label text="Tour Description:"/>
+                                            <TextField fx:id="tourDescriptionTourDetailTextField"/>
+                                        </VBox>
+
+                                        <VBox>
+                                            <Label text="From:"/>
+                                            <TextField fx:id="fromTourDetailTextField"/>
+                                        </VBox>
+
+                                        <VBox>
+                                            <Label text="To:"/>
+                                            <TextField fx:id="toTourDetailTextField"/>
+                                        </VBox>
+
+                                        <VBox>
+                                            <Label text="Transport Type:"/>
+                                            <fx:include source="transport-selection.fxml" fx:id="transportType"/>
+                                        </VBox>
+
+                                        <VBox>
+                                            <Label text="Map Type:"/>
+                                            <fx:include source="maptype-selection.fxml" fx:id="mapType"/>
+                                        </VBox>
+
+                                        <VBox>
+                                            <Label text="Tour Distance:"/>
+                                            <Label fx:id="tourDistanceTourDetailTextField" disable="true"/>
+                                        </VBox>
+
+                                        <VBox>
+                                            <Label text="Estimated Time:"/>
+                                            <Label fx:id="estimatedTimeTourDetailTextField" disable="true"/>
+                                        </VBox>
+
+                                        <VBox>
+                                            <Label text="Popularity:"/>
+                                            <Label fx:id="popularityTourDetailTextField" disable="true"/>
+                                        </VBox>
+
+                                        <VBox>
+                                            <Label text="Child friendliness:"/>
+                                            <Label fx:id="childFriendlinessTourDetailTextField" disable="true"/>
+                                        </VBox>
+                                        <HBox.margin>
+                                            <Insets/>
+                                        </HBox.margin>
+                                        <padding>
+                                            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                        </padding>
+                                    </VBox>
+                                    <VBox alignment="CENTER_RIGHT" HBox.hgrow="NEVER">
+                                        <children>
+                                            <ImageView fx:id="imageView">
+                                                <VBox.margin>
+                                                    <Insets top="8.0"/>
+                                                </VBox.margin>
+                                            </ImageView>
+                                        </children>
+                                        <HBox.margin>
+                                            <Insets left="24.0" right="24.0"/>
+                                        </HBox.margin>
+                                    </VBox>
+                                </HBox>
+                            </ScrollPane>
 
                             <Separator prefWidth="200.0">
                                 <VBox.margin>

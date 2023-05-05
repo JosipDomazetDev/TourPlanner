@@ -9,7 +9,7 @@
 
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ProgressIndicator?>
-<VBox prefHeight="500" prefWidth="500" spacing="10" styleClass="root" xmlns="http://javafx.com/javafx/19"
+<VBox prefHeight="550" prefWidth="500" spacing="10" styleClass="root" xmlns="http://javafx.com/javafx/19"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tourplanner.ui.CreateTourController">
 
     <Label styleClass="heading" text="Tour Information">
@@ -39,6 +39,8 @@
     <Label text="Transport Type"/>
     <fx:include source="transport-selection.fxml" fx:id="transportType"/>
 
+    <Label text="Map Type"/>
+    <fx:include source="maptype-selection.fxml" fx:id="mapType"/>
 
     <ProgressIndicator fx:id="progressIndicator" visible="false"/>
 

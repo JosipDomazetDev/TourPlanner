@@ -37,6 +37,9 @@ public class TourDetailController implements Initializable {
     private ChoiceBox<String> transportType;
 
     @FXML
+    private ChoiceBox<String> mapType;
+
+    @FXML
     private Label tourDistanceTourDetailTextField;
 
     @FXML
@@ -71,6 +74,7 @@ public class TourDetailController implements Initializable {
         fromTourDetailTextField.textProperty().bindBidirectional(tourDetailViewModel.getFrom());
         toTourDetailTextField.textProperty().bindBidirectional(tourDetailViewModel.getTo());
         transportType.valueProperty().bindBidirectional(tourDetailViewModel.getTransportType());
+        mapType.valueProperty().bindBidirectional(tourDetailViewModel.getMapType());
         tourDistanceTourDetailTextField.textProperty().bind(tourDetailViewModel.getTourDistance());
         estimatedTimeTourDetailTextField.textProperty().bind(tourDetailViewModel.getEstimatedTime());
         popularityTourDetailTextField.textProperty().bind(tourDetailViewModel.getPopularity());
@@ -106,15 +110,8 @@ public class TourDetailController implements Initializable {
 
 
     public void onUpdateDetail(MouseEvent mouseEvent) {
-        String name = tourDetailViewModel.getName().get();
-        String tourDescription = tourDetailViewModel.getTourDescription().get();
-        String from = tourDetailViewModel.getFrom().get();
-        String to = tourDetailViewModel.getTo().get();
-        String transportType = tourDetailViewModel.getTransportType().get();
-
-
         try {
-            tourDetailViewModel.updateTour(name, tourDescription, from, to, transportType, () -> {
+            tourDetailViewModel.updateTour( () -> {
                 PopupUtility.createErrorPopup("Update Tour", "Error while updating tour.");
             });
         } catch (IllegalTransportTypeException e) {

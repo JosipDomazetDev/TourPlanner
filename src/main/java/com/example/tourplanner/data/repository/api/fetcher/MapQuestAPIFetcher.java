@@ -2,7 +2,6 @@ package com.example.tourplanner.data.repository.api.fetcher;
 
 import com.example.tourplanner.data.model.Tour;
 
-import com.example.tourplanner.utils.ImageNameGenerator;
 import javafx.concurrent.Task;
 import org.apache.http.client.utils.URIBuilder;
 
@@ -46,7 +45,7 @@ public class MapQuestAPIFetcher extends Task<Void> implements MapAPIFetcher {
             tour.setTourDistance((int) Math.round(mapQuestResponse.distance()));
             tour.setEstimatedTime((int) Math.round(timeInMinutes));
 
-            String imagePath = fetchRouteImage(mapQuestResponse);
+            String imagePath = fetchRouteImage(mapQuestResponse, tour.getImageId() + tour.getMapType(), tour.getMapType());
             tour.setRouteInformation(imagePath);
         } catch (URISyntaxException | IOException e) {
             onFailure.run();
@@ -57,12 +56,23 @@ public class MapQuestAPIFetcher extends Task<Void> implements MapAPIFetcher {
         return null;
     }
 
+    public static String mapVerboseRouteType(String verboseString) {
+        return switch (verboseString.toLowerCase()) {
+            case "fastest" -> "fastest";
+            case "shortest" -> "shortest";
+            case "walk" -> "pedestrian";
+            case "bicycle" -> "bicycle";
+            default -> null;
+        };
+    }
+
+
     public MapQuestResponse fetchRoute(String from, String to, String routeType) throws URISyntaxException, IOException {
         URI uri = new URIBuilder("https://www.mapquestapi.com/directions/v2/route")
                 .addParameter("key", apiKey)
                 .addParameter("from", from)
                 .addParameter("to", to)
-                .addParameter("routeType", routeType)
+                .addParameter("routeType", mapVerboseRouteType(routeType))
                 .build();
 
         HttpURLConnection connection = (HttpURLConnection) uri.toURL().openConnection();
@@ -95,7 +105,18 @@ public class MapQuestAPIFetcher extends Task<Void> implements MapAPIFetcher {
         }
     }
 
-    public String fetchRouteImage(MapQuestResponse mapQuestResponse) throws URISyntaxException, IOException {
+    public static String mapVerboseMapType(String verboseString) {
+        return switch (verboseString.toLowerCase()) {
+            case "map" -> "map";
+            case "hybrid" -> "hyb";
+            case "satellite" -> "sat";
+            case "light" -> "light";
+            case "dark" -> "dark";
+            default -> null;
+        };
+    }
+
+    public String fetchRouteImage(MapQuestResponse mapQuestResponse, String imageName, String mapType) throws URISyntaxException, IOException {
         if (mapQuestResponse.sessionId() != null) {
             String staticMapUrl = "https://www.mapquestapi.com/staticmap/v5/map";
             URI staticMapUri = new URIBuilder(staticMapUrl)
@@ -103,7 +124,8 @@ public class MapQuestAPIFetcher extends Task<Void> implements MapAPIFetcher {
                     .addParameter("session", mapQuestResponse.sessionId())
                     .addParameter("boundingBox", mapQuestResponse.boundingBoxUL_Latitude() + "," + mapQuestResponse.boundingBoxUL_Longitude() + "," + mapQuestResponse.boundingBoxLR_Latitude() + "," + mapQuestResponse.boundingBoxLR_Longitude())
                     .addParameter("size", "500,400")
-                    .addParameter("type", "map")
+                    .addParameter("format", "jpg90")
+                    .addParameter("type", mapVerboseMapType(mapType))
                     .build();
             HttpURLConnection staticMapConnection = (HttpURLConnection) staticMapUri.toURL().openConnection();
             staticMapConnection.setRequestMethod("GET");
@@ -115,20 +137,18 @@ public class MapQuestAPIFetcher extends Task<Void> implements MapAPIFetcher {
             }
 
             try (InputStream staticMapStream = staticMapConnection.getInputStream()) {
-                return createImageFile(staticMapStream);
+                return createImageFile(staticMapStream, imageName);
             }
         }
         return null;
     }
 
-    private static String createImageFile(InputStream staticMapStream) throws IOException {
-        File directory = new File("./images/" + ImageNameGenerator.generateImageName() + ".jpg");
+    private static String createImageFile(InputStream staticMapStream, String imageName) throws IOException {
+        File directory = new File("./images/" + imageName + ".jpg");
+        directory.mkdirs();
+        logger.info("Created image {}", directory.getPath());
 
-        if (directory.mkdirs()) {
-            logger.info("Created image {}", directory.getPath());
-
-            Files.copy(staticMapStream, Paths.get(directory.getPath()), StandardCopyOption.REPLACE_EXISTING);
-        }
+        Files.copy(staticMapStream, Paths.get(directory.getPath()), StandardCopyOption.REPLACE_EXISTING);
 
         return directory.getPath();
     }

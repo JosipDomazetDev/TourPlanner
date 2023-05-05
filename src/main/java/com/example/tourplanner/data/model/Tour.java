@@ -1,6 +1,7 @@
 package com.example.tourplanner.data.model;
 
 import com.example.tourplanner.data.exception.IllegalTransportTypeException;
+import com.example.tourplanner.utils.ImageNameGenerator;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,6 +33,8 @@ public class Tour {
     Integer estimatedTime;
     // Image
     String routeInformation = "";
+    String imageId = "";
+    String mapType = "";
 
 
     private Integer popularity;
@@ -48,8 +51,15 @@ public class Tour {
     public Tour() {
     }
 
-    public Tour(String name, String description, Double tourDistance, String from, String to, String transportType, int estimatedTime, String routeInformation, int popularity, int childFriendliness) throws IllegalTransportTypeException {
-        this(name, description, from, to, transportType);
+    public String getImageId() {
+        if (this.imageId == null || this.imageId.isEmpty()) {
+            this.imageId = ImageNameGenerator.generateImageName();
+        }
+        return imageId;
+    }
+
+    public Tour(String name, String description, Double tourDistance, String from, String to, String transportType, String mapType, int estimatedTime, String routeInformation, int popularity, int childFriendliness) throws IllegalTransportTypeException {
+        this(name, description, from, to, transportType, mapType);
         this.tourDistance = tourDistance;
         this.estimatedTime = estimatedTime;
         this.routeInformation = routeInformation;
@@ -57,7 +67,7 @@ public class Tour {
         this.childFriendliness = childFriendliness;
     }
 
-    public Tour(String name, String description, String from, String to, String transportType) throws IllegalTransportTypeException {
+    public Tour(String name, String description, String from, String to, String transportType, String mapType) throws IllegalTransportTypeException {
         if (!checkIfTransportTypeIsValid(transportType)) {
             throw new IllegalTransportTypeException();
         }
@@ -67,6 +77,7 @@ public class Tour {
         this.from = from;
         this.to = to;
         this.transportType = transportType;
+        this.mapType = mapType;
     }
 
     @PrePersist
@@ -124,6 +135,7 @@ public class Tour {
                 ", from='" + from + '\'' +
                 ", to='" + to + '\'' +
                 ", transportType='" + transportType + '\'' +
+                ", transportType='" + mapType + '\'' +
                 ", tourDistance=" + tourDistance +
                 ", estimatedTime=" + estimatedTime +
                 ", routeInformation='" + routeInformation + '\'' +
@@ -138,6 +150,7 @@ public class Tour {
                 from + " " +
                 to + " " +
                 transportType + " " +
+                mapType + " " +
                 tourDistance + " " +
                 estimatedTime + " " +
                 childFriendliness + "% " +
@@ -146,7 +159,7 @@ public class Tour {
     }
 
 
-    public static final String[] validTransportTypes = {"fastest", "shortest", "pedestrian", "bicycle"};
+    public static final String[] validTransportTypes = {"walk", "shortest", "pedestrian", "bicycle"};
 
     private static boolean checkIfTransportTypeIsValid(String transportType) {
         return Arrays.asList(validTransportTypes).contains(transportType.toLowerCase());
@@ -159,5 +172,4 @@ public class Tour {
 
         this.transportType = transportType;
     }
-
 }

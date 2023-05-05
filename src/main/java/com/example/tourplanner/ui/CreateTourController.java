@@ -35,6 +35,9 @@ public class CreateTourController implements Initializable {
     private ChoiceBox<String> transportType;
 
     @FXML
+    private ChoiceBox<String> mapType;
+
+    @FXML
     private Label errorLabel;
 
     @FXML
@@ -61,6 +64,7 @@ public class CreateTourController implements Initializable {
         String from = this.from.getText();
         String to = this.to.getText();
         String transportType = this.transportType.getValue();
+        String mapType = this.mapType.getValue();
 
         if (name.isEmpty() || description.isEmpty() || from.isEmpty() || to.isEmpty() || transportType.isEmpty()) {
             showError("Please fill out all fields!");
@@ -68,7 +72,7 @@ public class CreateTourController implements Initializable {
         }
 
         try {
-            toursViewModel.addNewTour(name, description, from, to, transportType, () -> {
+            toursViewModel.addNewTour(name, description, from, to, transportType,mapType, () -> {
                 Stage window = (Stage) (tourName.getScene().getWindow());
                 window.close();
             });

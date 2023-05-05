@@ -56,9 +56,9 @@ public class ToursViewModel {
         return new SimpleObjectProperty<>(getTours());
     }
 
-    public void addNewTour(String name, String description, String from, String to, String transportType, Runnable onApiCompletion) throws IllegalTransportTypeException {
+    public void addNewTour(String name, String description, String from, String to, String transportType, String mapType, Runnable onApiCompletion) throws IllegalTransportTypeException {
         setLoading();
-        Tour tour = new Tour(name, description, from, to, transportType);
+        Tour tour = new Tour(name, description, from, to, transportType, mapType);
 
         mapRepository.fetchApi(tour, () -> setError("Error while fetching data from MapQuest API."), () -> {
             setSuccess();

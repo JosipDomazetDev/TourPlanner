@@ -30,6 +30,7 @@ public class JSONFileRepository implements FileRepository<Tour> {
             tourNode.put("from", tour.getFrom());
             tourNode.put("to", tour.getTo());
             tourNode.put("transportType", tour.getTransportType());
+            tourNode.put("mapType", tour.getMapType());
             tourNode.put("estimatedTime", tour.getEstimatedTime());
             tourNode.put("routeInformation", tour.getRouteInformation());
             tourNode.put("popularity", tour.getPopularity());
@@ -65,6 +66,7 @@ public class JSONFileRepository implements FileRepository<Tour> {
                     tourNode.get("from").asText(),
                     tourNode.get("to").asText(),
                     tourNode.get("transportType").asText(),
+                    tourNode.get("mapType").asText(),
                     tourNode.get("estimatedTime").asInt(),
                     tourNode.get("routeInformation").asText(),
                     tourNode.get("popularity").asInt(),
