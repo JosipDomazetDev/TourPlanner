@@ -68,7 +68,7 @@ public class Tour {
     }
 
     public Tour(String name, String description, String from, String to, String transportType, String mapType) throws IllegalTransportTypeException {
-        if (!checkIfTransportTypeIsValid(transportType)) {
+        if (checkIfTransportTypeIsValid(transportType)) {
             throw new IllegalTransportTypeException();
         }
 
@@ -162,14 +162,22 @@ public class Tour {
     public static final String[] validTransportTypes = {"walk", "shortest", "pedestrian", "bicycle"};
 
     private static boolean checkIfTransportTypeIsValid(String transportType) {
-        return Arrays.asList(validTransportTypes).contains(transportType.toLowerCase());
+        return !Arrays.asList(validTransportTypes).contains(transportType.toLowerCase());
     }
 
     public void setTransportType(String transportType) throws IllegalTransportTypeException {
-        if (!checkIfTransportTypeIsValid(transportType)) {
+        if (checkIfTransportTypeIsValid(transportType)) {
             throw new IllegalTransportTypeException();
         }
 
         this.transportType = transportType;
+    }
+
+    public String getImageFilename(String fileType) {
+        return getImageFilename(mapType, fileType);
+    }
+
+    public String getImageFilename(String mapType, String fileType) {
+        return getImageId() + mapType + "." + fileType;
     }
 }

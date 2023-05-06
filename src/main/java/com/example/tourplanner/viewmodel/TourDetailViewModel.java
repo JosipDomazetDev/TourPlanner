@@ -13,6 +13,7 @@ import lombok.Setter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.File;
 import java.util.function.Consumer;
 
 @Getter
@@ -126,5 +127,15 @@ public class TourDetailViewModel {
 
         tourRepository.delete(selectedTour);
         NullSafeRunner.accept(onTourDeleted, selectedTour);
+    }
+
+    public void setTemporaryImageView(String mapType) {
+        // Set the routeInformation even before the new map was fetched (because the map might have been already fetched in the past)
+        String routeInformation = selectedTour.getRouteInformation();
+        String directoryPath = routeInformation.substring(0, routeInformation.lastIndexOf(File.separator));
+        String fileType = routeInformation.substring(routeInformation.lastIndexOf(".") + 1);
+
+        String tempRouteInformation = (directoryPath + File.separator + selectedTour.getImageFilename(mapType, fileType));
+        imageProperty.set(new Image("file:" + tempRouteInformation));
     }
 }

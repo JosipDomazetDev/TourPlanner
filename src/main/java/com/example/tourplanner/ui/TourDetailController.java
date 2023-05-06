@@ -106,12 +106,16 @@ public class TourDetailController implements Initializable {
             // Show the preview window
             previewStage.show();
         });
+
+        mapType.valueProperty().addListener((observable, oldValue, newValue) -> {
+            tourDetailViewModel.setTemporaryImageView(newValue);
+        });
     }
 
 
     public void onUpdateDetail(MouseEvent mouseEvent) {
         try {
-            tourDetailViewModel.updateTour( () -> {
+            tourDetailViewModel.updateTour(() -> {
                 PopupUtility.createErrorPopup("Update Tour", "Error while updating tour.");
             });
         } catch (IllegalTransportTypeException e) {

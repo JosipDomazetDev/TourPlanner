@@ -45,7 +45,7 @@ public class MapQuestAPIFetcher extends Task<Void> implements MapAPIFetcher {
             tour.setTourDistance((int) Math.round(mapQuestResponse.distance()));
             tour.setEstimatedTime((int) Math.round(timeInMinutes));
 
-            String imagePath = fetchRouteImage(mapQuestResponse, tour.getImageId() + tour.getMapType(), tour.getMapType());
+            String imagePath = fetchRouteImage(mapQuestResponse, tour.getImageFilename("jpg"), tour.getMapType());
             tour.setRouteInformation(imagePath);
         } catch (URISyntaxException | IOException e) {
             onFailure.run();
@@ -144,7 +144,7 @@ public class MapQuestAPIFetcher extends Task<Void> implements MapAPIFetcher {
     }
 
     private static String createImageFile(InputStream staticMapStream, String imageName) throws IOException {
-        File directory = new File("./images/" + imageName + ".jpg");
+        File directory = new File("./images/" + imageName);
         directory.mkdirs();
         logger.info("Created image {}", directory.getPath());
 
