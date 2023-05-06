@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "tour_log")
@@ -71,5 +72,17 @@ public class TourLog {
                 difficulty + " " +
                 totalTime + " " +
                 rating;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TourLog tourLog)) return false;
+        return difficulty == tourLog.difficulty && Double.compare(tourLog.totalTime, totalTime) == 0 && rating == tourLog.rating && Objects.equals(id, tourLog.id) && Objects.equals(dateTime, tourLog.dateTime) && Objects.equals(comment, tourLog.comment);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, dateTime, comment, difficulty, totalTime, rating, tour);
     }
 }

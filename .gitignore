@@ -6,6 +6,7 @@ target/
 ### Custom ###
 images
 config.properties
+test.json
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
