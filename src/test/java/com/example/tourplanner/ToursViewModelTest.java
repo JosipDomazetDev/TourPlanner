@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -165,5 +166,16 @@ public class ToursViewModelTest {
         assertFalse(viewModel.getIsLoading().getValue());
         assertFalse(viewModel.getIsError().getValue());
         assertEquals("", viewModel.getErrorMsg().getValue());
+    }
+
+    @Test
+    public void testRefresh() {
+        ToursViewModel spyViewModel = spy(viewModel);
+
+        spyViewModel.selectFirstTourOrNothing();
+        spyViewModel.refresh();
+
+        verify(spyViewModel).setSelectedTour(null);
+        assertEquals(0, spyViewModel.getTours().size());
     }
 }
