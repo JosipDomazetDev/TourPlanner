@@ -88,14 +88,14 @@ public class Tour {
         calculateChildFriendliness();
     }
 
-    public void calculatePopularity() {
+    private void calculatePopularity() {
         int i = 10;
 
         int ret = Math.round((float) tourLogs.size() / i * 100);
         this.popularity = Math.min(100, ret);
     }
 
-    public void calculateChildFriendliness() {
+    private void calculateChildFriendliness() {
         double totalDifficulty = 0;
         double totalTime = 0;
 

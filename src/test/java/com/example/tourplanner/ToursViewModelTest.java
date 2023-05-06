@@ -2,8 +2,10 @@ package com.example.tourplanner;
 
 import com.example.tourplanner.data.exception.IllegalTransportTypeException;
 import com.example.tourplanner.data.model.Tour;
+import com.example.tourplanner.data.model.TourLog;
 import com.example.tourplanner.data.repository.api.MapRepository;
 import com.example.tourplanner.data.repository.data.DataRepository;
+import com.example.tourplanner.viewmodel.TourLogViewModel;
 import com.example.tourplanner.viewmodel.ToursViewModel;
 import javafx.collections.ObservableList;
 import org.junit.jupiter.api.*;
@@ -11,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,7 +31,8 @@ public class ToursViewModelTest {
 
     private ToursViewModel viewModel;
 
-    @BeforeAll
+
+    @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
         doAnswer(invocation -> {
@@ -84,6 +88,37 @@ public class ToursViewModelTest {
         toursObsv = viewModel.getTours();
         assertEquals(1, toursObsv.size());
         assertEquals(tour1, toursObsv.get(0));
+    }
+
+    @Test
+    void testPerformSearchWithTourLog() throws IllegalTransportTypeException {
+        // given
+        Tour tour1 = new Tour("Gramat-Himberg", "Test Description", "Gramatneusiedl", "Himberg", "fastest", "sattelite");
+        Tour tour2 = new Tour("Gramat-Wien", "Test Description", "Gramatneusiedl", "Wien", "bicycle", "sattelite");
+        TourLog tourLog = new TourLog(new Date(), "log comment", 1, 1.0, 1, tour1);
+        TourLog tourLog2 = new TourLog(new Date(), "log", 1, 1.0, 1, tour2);
+        TourLog tourLog3 = new TourLog(new Date(), "log", 1, 1.0, 1, tour2);
+        ArrayList<Tour> tours = new ArrayList<>();
+        tours.addAll(List.of(tour1, tour2));
+
+        when(tourRepository.load()).thenReturn(tours);
+
+        // when
+        viewModel.performSearch("log comment");
+
+        // then
+        ObservableList<Tour> toursObsv = viewModel.getTours();
+        assertEquals(1, toursObsv.size());
+        assertEquals(tour1, toursObsv.get(0));
+
+        // when
+        viewModel.performSearch("log");
+
+        // then
+        toursObsv = viewModel.getTours();
+        assertEquals(2, toursObsv.size());
+        assertEquals(tour1, toursObsv.get(0));
+        assertEquals(tour2, toursObsv.get(1));
     }
 
     @Test
