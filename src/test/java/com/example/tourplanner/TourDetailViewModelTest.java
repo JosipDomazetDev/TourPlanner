@@ -33,11 +33,14 @@ public class TourDetailViewModelTest {
 
     @BeforeAll
     public static void beforeClass() {
-        Platform.startup(() -> {
-        });
         // Initializes the JavaFX Toolkit before any tests are run
         // This is necessary to avoid "java.lang.IllegalStateException: Toolkit not initialized"
         // errors when the tests are run from the command line
+        try {
+            Platform.startup(() -> {});
+        } catch (IllegalStateException e) {
+            // Ignore the exception if the platform was already started
+        }
     }
 
 
@@ -86,7 +89,6 @@ public class TourDetailViewModelTest {
     public void deleteTour() throws IllegalTransportTypeException {
         Tour selectedTour = new Tour("Test Tour", "Test Description", "Test From", "Test To", "fastest", "hybrid");
         tourDetailViewModel.setSelectedTour(selectedTour);
-
 
         Consumer<Tour> onTourDeletedMock = mock(Consumer.class);
         tourDetailViewModel.setOnTourDeleted(onTourDeletedMock);
