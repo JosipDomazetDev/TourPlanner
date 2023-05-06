@@ -9,6 +9,7 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Getter
@@ -145,7 +146,7 @@ public class Tour {
 
     // write a method toSearchString that generates a searching string for me that ocntains all fields
     public String toSearchString() {
-        return name + " " +
+        String ret = name + " " +
                 tourDescription + " " +
                 from + " " +
                 to + " " +
@@ -156,10 +157,12 @@ public class Tour {
                 childFriendliness + "% " +
                 popularity + "% " +
                 tourLogs.stream().map(TourLog::toSearchString).collect(Collectors.joining()).toLowerCase();
+
+        return ret.toLowerCase();
     }
 
 
-    public static final String[] validTransportTypes = {"walk", "shortest", "pedestrian", "bicycle"};
+    public static final String[] validTransportTypes = {"fastest", "shortest", "walk", "bicycle"};
 
     private static boolean checkIfTransportTypeIsValid(String transportType) {
         return !Arrays.asList(validTransportTypes).contains(transportType.toLowerCase());
@@ -179,5 +182,17 @@ public class Tour {
 
     public String getImageFilename(String mapType, String fileType) {
         return getImageId() + mapType + "." + fileType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Tour tour)) return false;
+        return Double.compare(tour.tourDistance, tourDistance) == 0 && Objects.equals(id, tour.id) && Objects.equals(name, tour.name) && Objects.equals(tourDescription, tour.tourDescription) && Objects.equals(from, tour.from) && Objects.equals(to, tour.to) && Objects.equals(transportType, tour.transportType) && Objects.equals(estimatedTime, tour.estimatedTime) && Objects.equals(routeInformation, tour.routeInformation) && Objects.equals(imageId, tour.imageId) && Objects.equals(mapType, tour.mapType) && Objects.equals(popularity, tour.popularity) && Objects.equals(childFriendliness, tour.childFriendliness) && Objects.equals(tourLogs, tour.tourLogs);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, tourDescription, from, to, transportType, tourDistance, estimatedTime, routeInformation, imageId, mapType, popularity, childFriendliness, tourLogs);
     }
 }
