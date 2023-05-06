@@ -33,15 +33,15 @@ public class TourLogViewModelTest {
 
     @Test
     void testSetSelectedTour() {
-        // Given
+        // Arrange
         Tour newSelectedTour = new Tour("Tour 2");
         TourLog newTourLog = new TourLog(new Date(), "Comment", 5, 2, 3, newSelectedTour);
 
-        // When
+        // Act
         tourLogViewModel.setSelectedTour(null);
         tourLogViewModel.setSelectedTour(newSelectedTour);
 
-        // Then
+        // Assert
         ObservableList<TourLog> tourLogs = tourLogViewModel.getTourLogs();
         assertEquals(1, tourLogs.size());
         assertEquals(newTourLog, tourLogs.get(0));
@@ -49,12 +49,14 @@ public class TourLogViewModelTest {
 
     @Test
     void testAddNewTourLog() {
-        // When
+        // Arrange
         tourLogViewModel.setSelectedTour(new Tour("Tour 2"));
+
+        // Act
         tourLogViewModel.addNewTourLog();
         tourLogViewModel.addNewTourLog();
 
-        // Then
+        // Assert
         ObservableList<TourLog> tourLogs = tourLogViewModel.getTourLogs();
         assertEquals(2, tourLogs.size());
 
@@ -64,14 +66,15 @@ public class TourLogViewModelTest {
 
     @Test
     void testDeleteTourLog() {
+        // Arrange
         tourLogViewModel.setSelectedTour(new Tour("Tour 2"));
         tourLogViewModel.addNewTourLog();
         TourLog tourLog = tourLogViewModel.getTourLogs().get(0);
 
-        // When
+        // Act
         tourLogViewModel.deleteTourLog(tourLog);
 
-        // Then
+        // Assert
         ObservableList<TourLog> tourLogs = tourLogViewModel.getTourLogs();
         assertEquals(0, tourLogs.size());
 
@@ -80,7 +83,7 @@ public class TourLogViewModelTest {
 
     @Test
     void testUpdateTourLog() throws ParseException, IllegalTransportTypeException {
-        // Given
+        // Arrange
         String newComment = "New Comment";
         int newRating = 4;
         int newDifficulty = 4;
@@ -103,34 +106,33 @@ public class TourLogViewModelTest {
         tourLogViewModel.addNewTourLog();
         TourLog tourLog = tourLogViewModel.getTourLogs().get(0);
 
-        // When
+        // Act
         tourLogViewModel.setComment(tourLog, newComment);
         tourLogViewModel.setRating(tourLog, newRating);
         tourLogViewModel.setDifficulty(tourLog, newDifficulty);
         tourLogViewModel.setDateTime(tourLog, newDate);
         tourLogViewModel.setTotalTime(tourLog, newTotalTime);
+        // Calculated attributes
+        tourLog.getTour().calculateDerivedFields();
 
-        // Then
+        // Assert
         assertEquals(newTotalTime, tourLog.getTotalTime());
         assertEquals(newComment, tourLog.getComment());
         assertEquals(newRating, tourLog.getRating());
         assertEquals(newDifficulty, tourLog.getDifficulty());
         assertEquals(newDate, tourLog.getDateTime());
-
         verify(tourLogDataRepository, times(5)).update(tourLog);
 
-        // Calculated attributes
-        tourLog.getTour().calculateDerivedFields();
         assertEquals(37, tourLog.getTour().getChildFriendliness());
         assertEquals(10, tourLog.getTour().getPopularity());
     }
 
     @Test
     void testClearViewModel() {
-        // When
+        // Act
         tourLogViewModel.clearViewModel();
 
-        // Then
+        // Assert
         ObservableList<TourLog> tourLogs = tourLogViewModel.getTourLogs();
         assertEquals(0, tourLogs.size());
     }

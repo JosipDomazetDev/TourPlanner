@@ -47,16 +47,16 @@ public class ToursViewModelTest {
 
     @Test
     void testAddNewTour() throws IllegalTransportTypeException {
-        // given
+        // Arrange
         Tour tour = new Tour("Test Tour", "Test Description", "Test From", "Test To", "fastest", "stat");
 
-        // when
+        // Act
         viewModel.addNewTour(tour.getName(), tour.getTourDescription(), tour.getFrom(), tour.getTo(),
                 tour.getTransportType(), tour.getMapType(), () -> {});
         viewModel.addNewTour(tour.getName(), tour.getTourDescription(), tour.getFrom(), tour.getTo(),
                 tour.getTransportType(), tour.getMapType(),  () -> {});
 
-        // then
+        // Assert
         verify(mapRepository, times(2)).fetchApi(any(Tour.class), any(Runnable.class), any(Runnable.class));
         verify(tourRepository, times(2)).save(any(Tour.class));
         ObservableList<Tour> tours = viewModel.getTours();
@@ -66,7 +66,7 @@ public class ToursViewModelTest {
 
     @Test
     void testPerformSearch() throws IllegalTransportTypeException {
-        // given
+        // Arrange
         Tour tour1 = new Tour("Gramat-Himberg", "Test Description", "Gramatneusiedl", "Himberg", "fastest", "sattelite");
         Tour tour2 = new Tour("Gramat-Wien", "Test Description", "Gramatneusiedl", "Wien", "bicycle", "sattelite");
         ArrayList<Tour> tours = new ArrayList<>();
@@ -74,26 +74,26 @@ public class ToursViewModelTest {
 
         when(tourRepository.load()).thenReturn(tours);
 
-        // when
+        // Act
         viewModel.performSearch("Wien");
 
-        // then
-        ObservableList<Tour> toursObsv = viewModel.getTours();
-        assertEquals(1, toursObsv.size());
-        assertEquals(tour2, toursObsv.get(0));
+        // Assert
+        ObservableList<Tour> toursObservableList = viewModel.getTours();
+        assertEquals(1, toursObservableList.size());
+        assertEquals(tour2, toursObservableList.get(0));
 
-        // when
+        // Act
         viewModel.performSearch("himberg");
 
-        // then
-        toursObsv = viewModel.getTours();
-        assertEquals(1, toursObsv.size());
-        assertEquals(tour1, toursObsv.get(0));
+        // Assert
+        toursObservableList = viewModel.getTours();
+        assertEquals(1, toursObservableList.size());
+        assertEquals(tour1, toursObservableList.get(0));
     }
 
     @Test
     void testPerformSearchWithTourLog() throws IllegalTransportTypeException {
-        // given
+        // Arrange
         Tour tour1 = new Tour("Gramat-Himberg", "Test Description", "Gramatneusiedl", "Himberg", "fastest", "sattelite");
         Tour tour2 = new Tour("Gramat-Wien", "Test Description", "Gramatneusiedl", "Wien", "bicycle", "sattelite");
         TourLog tourLog = new TourLog(new Date(), "log comment", 1, 1.0, 1, tour1);
@@ -104,41 +104,39 @@ public class ToursViewModelTest {
 
         when(tourRepository.load()).thenReturn(tours);
 
-        // when
+        // Act
         viewModel.performSearch("log comment");
 
-        // then
-        ObservableList<Tour> toursObsv = viewModel.getTours();
-        assertEquals(1, toursObsv.size());
-        assertEquals(tour1, toursObsv.get(0));
+        // Assert
+        ObservableList<Tour> toursObservableList = viewModel.getTours();
+        assertEquals(1, toursObservableList.size());
+        assertEquals(tour1, toursObservableList.get(0));
 
-        // when
+        // Act
         viewModel.performSearch("log");
 
-        // then
-        toursObsv = viewModel.getTours();
-        assertEquals(2, toursObsv.size());
-        assertEquals(tour1, toursObsv.get(0));
-        assertEquals(tour2, toursObsv.get(1));
+        // Assert
+        toursObservableList = viewModel.getTours();
+        assertEquals(2, toursObservableList.size());
+        assertEquals(tour1, toursObservableList.get(0));
+        assertEquals(tour2, toursObservableList.get(1));
     }
 
     @Test
     void testDeleteTourFromList() throws IllegalTransportTypeException {
-        // given
+        // Arrange
         ToursViewModel spyViewModel = spy(viewModel);
-
         Tour tour1 = new Tour("Gramat-Himberg", "Test Description", "Gramatneusiedl", "Himberg", "fastest", "sattelite");
         Tour tour2 = new Tour("Gramat-Wien", "Test Description", "Gramatneusiedl", "Wien", "bicycle", "sattelite");
         spyViewModel.getTours().addAll(tour1, tour2);
-        int oldSize = spyViewModel.getTours().size();
 
-        // when
+        // Act
         spyViewModel.deleteTourFromList(tour1);
 
-        // then
+        // Assert
         ObservableList<Tour> tours = spyViewModel.getTours();
-        assertEquals(oldSize - 1, tours.size());
-        assertEquals(tour2, tours.get(tours.size() - 1));
+        assertEquals(1, tours.size());
+        assertEquals(tour2, tours.get(0));
 
         verify(spyViewModel).selectFirstTourOrNothing();
         verify(spyViewModel).setSelectedTour(any(Tour.class));
@@ -146,7 +144,10 @@ public class ToursViewModelTest {
 
     @Test
     public void testSetError() {
+        // Act
         viewModel.setError("An error occurred");
+
+        // Assert
         assertFalse(viewModel.getIsLoading().getValue());
         assertTrue(viewModel.getIsError().getValue());
         assertEquals("An error occurred", viewModel.getErrorMsg().getValue());
@@ -154,7 +155,10 @@ public class ToursViewModelTest {
 
     @Test
     public void testSetLoading() {
+        // Act
         viewModel.setLoading();
+
+        // Assert
         assertTrue(viewModel.getIsLoading().getValue());
         assertFalse(viewModel.getIsError().getValue());
         assertEquals("", viewModel.getErrorMsg().getValue());
@@ -162,7 +166,10 @@ public class ToursViewModelTest {
 
     @Test
     public void testSetSuccess() {
+        // Act
         viewModel.setSuccess();
+
+        // Assert
         assertFalse(viewModel.getIsLoading().getValue());
         assertFalse(viewModel.getIsError().getValue());
         assertEquals("", viewModel.getErrorMsg().getValue());
@@ -170,11 +177,14 @@ public class ToursViewModelTest {
 
     @Test
     public void testRefresh() {
+        // Arrange
         ToursViewModel spyViewModel = spy(viewModel);
 
+        // Act
         spyViewModel.selectFirstTourOrNothing();
         spyViewModel.refresh();
 
+        // Assert
         verify(spyViewModel).setSelectedTour(null);
         assertEquals(0, spyViewModel.getTours().size());
     }

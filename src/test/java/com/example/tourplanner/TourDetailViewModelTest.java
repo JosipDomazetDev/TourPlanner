@@ -44,7 +44,7 @@ public class TourDetailViewModelTest {
     }
 
 
-    @BeforeAll
+    @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
         doAnswer(invocation -> {
@@ -60,13 +60,12 @@ public class TourDetailViewModelTest {
     public void testUpdateTour() throws IllegalTransportTypeException {
         Tour selectedTour = new Tour("Test Tour", "Test Description", "Test From", "Test To", "fastest", "hybrid");
 
-        // Given
+        // Arrange
         tourDetailViewModel.setSelectedTour(null);
-        tourDetailViewModel = new TourDetailViewModel(tourRepository, mapRepository);
         tourDetailViewModel.setSelectedTour(selectedTour);
         Runnable onFailure = mock(Runnable.class);
 
-        // When
+        // Act
         tourDetailViewModel.getName().setValue("testNewName");
         tourDetailViewModel.getTourDescription().setValue("testNewTourDescription");
         tourDetailViewModel.getFrom().setValue("testNewFrom");
@@ -76,7 +75,7 @@ public class TourDetailViewModelTest {
 
         tourDetailViewModel.updateTour(onFailure);
 
-        // Then
+        // Assert
         verify(mapRepository).fetchApi(any(Tour.class), any(), any());
         assertEquals("testNewTo", tourDetailViewModel.getTo().get());
         assertEquals("testNewFrom", tourDetailViewModel.getFrom().get());
@@ -87,27 +86,33 @@ public class TourDetailViewModelTest {
 
     @Test
     public void deleteTour() throws IllegalTransportTypeException {
+        // Arrange
         Tour selectedTour = new Tour("Test Tour", "Test Description", "Test From", "Test To", "fastest", "hybrid");
         tourDetailViewModel.setSelectedTour(selectedTour);
-
         Consumer<Tour> onTourDeletedMock = mock(Consumer.class);
         tourDetailViewModel.setOnTourDeleted(onTourDeletedMock);
 
+        // Act
         tourDetailViewModel.deleteTour();
 
+        // Assert
         verify(tourRepository).delete(selectedTour);
         verify(onTourDeletedMock).accept(selectedTour);
     }
 
     @Test
     public void setTemporaryImageView() throws IllegalTransportTypeException {
+        // Arrange
         Tour selectedTour = new Tour("Test Tour", "Test Description", "Test From", "Test To", "fastest", "hybrid");
         tourDetailViewModel.setSelectedTour(selectedTour);
         selectedTour.setRouteInformation(
                 ".\\images\\" + selectedTour.getImageId() + "hybrid.jpg"
         );
+
+        // Act
         tourDetailViewModel.setTemporaryImageView("satellite");
 
+        // Assert
         assertEquals("file:./images/" + selectedTour.getImageId() + "satellite.jpg", tourDetailViewModel.getImageProperty().get().getUrl());
     }
 }
