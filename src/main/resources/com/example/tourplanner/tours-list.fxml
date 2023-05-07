@@ -14,7 +14,7 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.tourplanner.ui.ToursController">
-    <VBox prefWidth="250.0" BorderPane.alignment="CENTER">
+    <VBox prefWidth="250.0" AnchorPane.leftAnchor="8.0" BorderPane.alignment="CENTER">
         <children>
             <TextField fx:id="searchTextField" promptText="Search">
                 <VBox.margin>
@@ -23,14 +23,9 @@
             </TextField>
             <HBox prefWidth="200.0">
                 <children>
-                    <Text fill="#0e94c9" strokeType="OUTSIDE" strokeWidth="0.0" text="Tours" textAlignment="CENTER"
-                          textOrigin="CENTER">
-                        <font>
-                            <Font name="Arial Bold" size="19.0"/>
-                        </font>
-                    </Text>
+                    <Text text="Tours" textAlignment="CENTER" textOrigin="CENTER" styleClass="custom-header"/>
                     <Region HBox.hgrow="ALWAYS"/>
-                    <Button onMouseClicked="#onAddTour" text="+"/>
+                    <Button onMouseClicked="#onAddTour" styleClass="success, button, bold" text="+"/>
                 </children>
             </HBox>
             <ListView fx:id="toursListView" onMouseClicked="#onTourClick" prefHeight="200.0" prefWidth="200.0">
@@ -40,7 +35,8 @@
             </ListView>
             <HBox>
                 <children>
-                    <Button maxWidth="Infinity"  onMouseClicked="#printTourReport"  mnemonicParsing="false" text="Print TourReport" HBox.hgrow="ALWAYS">
+                    <Button maxWidth="Infinity" mnemonicParsing="false" onMouseClicked="#printTourReport"
+                            text="Print TourReport" HBox.hgrow="ALWAYS">
                         <padding>
                             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                         </padding>
@@ -48,7 +44,8 @@
                             <Insets bottom="4.0" left="4.0" right="4.0" top="4.0"/>
                         </HBox.margin>
                     </Button>
-                    <Button maxWidth="Infinity" onMouseClicked="#printSummaryReport" mnemonicParsing="false" text="Print SummaryReport" HBox.hgrow="ALWAYS">
+                    <Button maxWidth="Infinity" mnemonicParsing="false" onMouseClicked="#printSummaryReport"
+                            text="Print SummaryReport" HBox.hgrow="ALWAYS">
                         <padding>
                             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                         </padding>

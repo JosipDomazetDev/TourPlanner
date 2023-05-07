@@ -1,13 +1,19 @@
-.bold{
+.bold {
     -fx-font-weight: bold;
 }
 
-.pt-8{
+.pt-8 {
     -fx-padding: 8 0 0 0;
 }
 
-.labelCustom{
+.labelCustom {
     -fx-font-weight: bold;
     /* how do i do padding bottom 4 pixel*/
     -fx-padding: 0 0 4 0;
+}
+
+.custom-header {
+    -fx-text-fill: red !important;
+    -fx-font-size: 18px !important;
+    -fx-padding: 12px !important;
 }

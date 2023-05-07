@@ -38,7 +38,7 @@
                         </VBox>
 
                         <VBox fx:id="detailVbox">
-                            <ScrollPane fitToHeight="true" fitToWidth="true" HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="450">
+                            <ScrollPane fitToHeight="true" fitToWidth="true" HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="400">
                                 <HBox HBox.hgrow="ALWAYS" maxWidth="Infinity">
                                     <VBox HBox.hgrow="ALWAYS" maxWidth="Infinity">
                                         <HBox HBox.hgrow="ALWAYS" maxWidth="Infinity">
@@ -143,11 +143,6 @@
                                 </HBox>
                             </ScrollPane>
 
-                            <Separator prefWidth="200.0">
-                                <VBox.margin>
-                                    <Insets top="20.0"/>
-                                </VBox.margin>
-                            </Separator>
                             <fx:include source="tour-logs.fxml"/>
                         </VBox>
                     </children>

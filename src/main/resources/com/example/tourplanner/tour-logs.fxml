@@ -12,19 +12,12 @@
     <children>
         <HBox>
             <children>
-                <Text fill="#0e94c9" strokeType="OUTSIDE" strokeWidth="0.0" text="Tour Logs" textOrigin="CENTER"
-                      HBox.hgrow="ALWAYS">
-                    <font>
-                        <Font name="Arial Bold" size="19.0"/>
-                    </font>
-                    <HBox.margin>
-                        <Insets right="8.0"/>
-                    </HBox.margin>
-                </Text>
+                <Text text="Tour Logs" styleClass="custom-header"
+                      HBox.hgrow="ALWAYS"/>
                 <Region HBox.hgrow="ALWAYS"/>
                 <HBox>
                     <children>
-                        <Button mnemonicParsing="false" onMouseClicked="#onCreateTourLogClick" text="+"/>
+                        <Button mnemonicParsing="false" onMouseClicked="#onCreateTourLogClick" styleClass="success, button, bold" text="+"/>
                     </children>
                 </HBox>
             </children>

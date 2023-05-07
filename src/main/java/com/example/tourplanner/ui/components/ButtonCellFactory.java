@@ -19,8 +19,10 @@ public class ButtonCellFactory implements Callback<TableColumn<TourLog, Void>, T
     public TableCell<TourLog, Void> call(final TableColumn<TourLog, Void> param) {
         return new TableCell<>() {
             private final Button btn = new Button("-");
-
             {
+                btn.getStyleClass().add("danger");
+                btn.getStyleClass().add("button");
+                btn.getStyleClass().add("bold");
                 btn.setOnAction(event -> {
                     TourLog data = getTableRow().getItem();
                     if (data != null) {
