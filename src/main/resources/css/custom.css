@@ -1,0 +1,13 @@
+.bold{
+    -fx-font-weight: bold;
+}
+
+.pt-8{
+    -fx-padding: 8 0 0 0;
+}
+
+.labelCustom{
+    -fx-font-weight: bold;
+    /* how do i do padding bottom 4 pixel*/
+    -fx-padding: 0 0 4 0;
+}

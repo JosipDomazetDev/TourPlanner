@@ -38,13 +38,14 @@
                         </VBox>
 
                         <VBox fx:id="detailVbox">
-                            <ScrollPane fitToHeight="true" fitToWidth="true" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+                            <ScrollPane fitToHeight="true" fitToWidth="true" HBox.hgrow="ALWAYS" maxWidth="Infinity" maxHeight="450">
                                 <HBox HBox.hgrow="ALWAYS" maxWidth="Infinity">
                                     <VBox HBox.hgrow="ALWAYS" maxWidth="Infinity">
                                         <HBox HBox.hgrow="ALWAYS" maxWidth="Infinity">
                                             <children>
-                                                <Button fx:id="updateDetailButton" onMouseClicked="#onUpdateDetail"
-                                                        styleClass="btn-primary, success, button"
+                                                <Button fx:id="updateDetailButton" prefWidth="150"
+                                                        onMouseClicked="#onUpdateDetail"
+                                                        styleClass="success, button, bold"
                                                         text="Update">
                                                     <padding>
                                                         <Insets bottom="12.0" left="12.0" right="12.0" top="12.0"/>
@@ -53,8 +54,10 @@
                                                         <Insets right="8.0"/>
                                                     </HBox.margin>
                                                 </Button>
-                                                <Button fx:id="deleteDetailButton" onMouseClicked="#onDeleteDetail"
-                                                        styleClass="danger, button"
+                                                <Region HBox.hgrow="ALWAYS"/>
+                                                <Button fx:id="deleteDetailButton" prefWidth="150"
+                                                        onMouseClicked="#onDeleteDetail"
+                                                        styleClass="danger, button, bold"
                                                         text="Delete">
                                                     <padding>
                                                         <Insets bottom="12.0" left="12.0" right="12.0" top="12.0"/>
@@ -69,53 +72,53 @@
                                             </VBox.margin>
                                         </HBox>
 
-                                        <VBox HBox.hgrow="ALWAYS">
-                                            <Label text="Name:"/>
+                                        <VBox HBox.hgrow="ALWAYS" styleClass="pt-8">
+                                            <Label text="Name:" styleClass="labelCustom"/>
                                             <TextField fx:id="nameTourDetailTextField"/>
                                         </VBox>
 
-                                        <VBox>
-                                            <Label text="Tour Description:"/>
+                                        <VBox styleClass="pt-8">
+                                            <Label text="Tour Description:"  styleClass="labelCustom"/>
                                             <TextField fx:id="tourDescriptionTourDetailTextField"/>
                                         </VBox>
 
-                                        <VBox>
-                                            <Label text="From:"/>
+                                        <VBox styleClass="pt-8">
+                                            <Label text="From:"  styleClass="labelCustom"/>
                                             <TextField fx:id="fromTourDetailTextField"/>
                                         </VBox>
 
-                                        <VBox>
-                                            <Label text="To:"/>
+                                        <VBox styleClass="pt-8">
+                                            <Label text="To:"  styleClass="labelCustom"/>
                                             <TextField fx:id="toTourDetailTextField"/>
                                         </VBox>
 
-                                        <VBox>
-                                            <Label text="Transport Type:"/>
+                                        <VBox styleClass="pt-8">
+                                            <Label text="Transport Type:" styleClass="labelCustom"/>
                                             <fx:include source="transport-selection.fxml" fx:id="transportType"/>
                                         </VBox>
 
-                                        <VBox>
-                                            <Label text="Map Type:"/>
+                                        <VBox styleClass="pt-8">
+                                            <Label text="Map Type:" styleClass="labelCustom"/>
                                             <fx:include source="maptype-selection.fxml" fx:id="mapType"/>
                                         </VBox>
 
-                                        <VBox>
-                                            <Label text="Tour Distance:"/>
+                                        <VBox styleClass="pt-8">
+                                            <Label text="Tour Distance:" styleClass="labelCustom"/>
                                             <Label fx:id="tourDistanceTourDetailTextField" disable="true"/>
                                         </VBox>
 
-                                        <VBox>
-                                            <Label text="Estimated Time:"/>
+                                        <VBox styleClass="pt-8">
+                                            <Label text="Estimated Time:" styleClass="labelCustom"/>
                                             <Label fx:id="estimatedTimeTourDetailTextField" disable="true"/>
                                         </VBox>
 
-                                        <VBox>
-                                            <Label text="Popularity:"/>
+                                        <VBox styleClass="pt-8">
+                                            <Label text="Popularity:" styleClass="labelCustom"/>
                                             <Label fx:id="popularityTourDetailTextField" disable="true"/>
                                         </VBox>
 
-                                        <VBox>
-                                            <Label text="Child friendliness:"/>
+                                        <VBox styleClass="pt-8">
+                                            <Label text="Child friendliness:" styleClass="labelCustom"/>
                                             <Label fx:id="childFriendlinessTourDetailTextField" disable="true"/>
                                         </VBox>
                                         <HBox.margin>
@@ -129,7 +132,7 @@
                                         <children>
                                             <ImageView fx:id="imageView" fitWidth="400" fitHeight="333">
                                                 <clip>
-                                                    <Rectangle arcWidth="30" arcHeight="30"  width="400" height="333"/>
+                                                    <Rectangle arcWidth="30" arcHeight="30" width="400" height="333"/>
                                                 </clip>
                                             </ImageView>
                                         </children>
