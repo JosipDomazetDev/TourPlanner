@@ -130,6 +130,8 @@ public class TourDetailViewModel {
     }
 
     public void setTemporaryImageView(String mapType) {
+        if (selectedTour == null) return;
+
         // Set the routeInformation even before the new map was fetched (because the map might have been already fetched in the past)
         String routeInformation = selectedTour.getRouteInformation();
         String directoryPath = routeInformation.substring(0, routeInformation.lastIndexOf(File.separator));

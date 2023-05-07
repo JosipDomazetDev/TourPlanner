@@ -123,7 +123,7 @@ public class MapQuestAPIFetcher extends Task<Void> implements MapAPIFetcher {
                     .addParameter("key", apiKey)
                     .addParameter("session", mapQuestResponse.sessionId())
                     .addParameter("boundingBox", mapQuestResponse.boundingBoxUL_Latitude() + "," + mapQuestResponse.boundingBoxUL_Longitude() + "," + mapQuestResponse.boundingBoxLR_Latitude() + "," + mapQuestResponse.boundingBoxLR_Longitude())
-                    .addParameter("size", "500,400")
+                    .addParameter("size", "600,500")
                     .addParameter("format", "jpg90")
                     .addParameter("type", mapVerboseMapType(mapType))
                     .build();

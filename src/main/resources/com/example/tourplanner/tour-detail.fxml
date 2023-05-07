@@ -18,6 +18,9 @@
 <?import javafx.scene.text.Text?>
 
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.shape.Box?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.shape.Rectangle?>
 <VBox prefHeight="500" prefWidth="500" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/19"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tourplanner.ui.TourDetailController">
 
@@ -35,12 +38,13 @@
                         </VBox>
 
                         <VBox fx:id="detailVbox">
-                            <ScrollPane>
-                                <HBox>
-                                    <VBox>
-                                        <HBox>
+                            <ScrollPane fitToHeight="true" fitToWidth="true" HBox.hgrow="ALWAYS" maxWidth="Infinity">
+                                <HBox HBox.hgrow="ALWAYS" maxWidth="Infinity">
+                                    <VBox HBox.hgrow="ALWAYS" maxWidth="Infinity">
+                                        <HBox HBox.hgrow="ALWAYS" maxWidth="Infinity">
                                             <children>
                                                 <Button fx:id="updateDetailButton" onMouseClicked="#onUpdateDetail"
+                                                        styleClass="btn-primary, success, button"
                                                         text="Update">
                                                     <padding>
                                                         <Insets bottom="12.0" left="12.0" right="12.0" top="12.0"/>
@@ -50,6 +54,7 @@
                                                     </HBox.margin>
                                                 </Button>
                                                 <Button fx:id="deleteDetailButton" onMouseClicked="#onDeleteDetail"
+                                                        styleClass="danger, button"
                                                         text="Delete">
                                                     <padding>
                                                         <Insets bottom="12.0" left="12.0" right="12.0" top="12.0"/>
@@ -64,7 +69,7 @@
                                             </VBox.margin>
                                         </HBox>
 
-                                        <VBox>
+                                        <VBox HBox.hgrow="ALWAYS">
                                             <Label text="Name:"/>
                                             <TextField fx:id="nameTourDetailTextField"/>
                                         </VBox>
@@ -120,16 +125,16 @@
                                             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
                                         </padding>
                                     </VBox>
-                                    <VBox alignment="CENTER_RIGHT" HBox.hgrow="NEVER">
+                                    <VBox alignment="TOP_RIGHT" HBox.hgrow="NEVER">
                                         <children>
-                                            <ImageView fx:id="imageView">
-                                                <VBox.margin>
-                                                    <Insets top="8.0"/>
-                                                </VBox.margin>
+                                            <ImageView fx:id="imageView" fitWidth="400" fitHeight="333">
+                                                <clip>
+                                                    <Rectangle arcWidth="30" arcHeight="30"  width="400" height="333"/>
+                                                </clip>
                                             </ImageView>
                                         </children>
                                         <HBox.margin>
-                                            <Insets left="24.0" right="24.0"/>
+                                            <Insets left="24.0" right="8" top="8"/>
                                         </HBox.margin>
                                     </VBox>
                                 </HBox>

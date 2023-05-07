@@ -70,6 +70,8 @@ public class ToursController implements Initializable {
             Parent root = FXMLDependencyInjection.load("create-tour.fxml", Locale.ENGLISH);
             Scene scene = new Scene(root);
             stage.setTitle("Create Tour");
+            scene.getStylesheets().add(getClass().getResource("/css/bootsstrap.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("/css/custom.css").toExternalForm());
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {

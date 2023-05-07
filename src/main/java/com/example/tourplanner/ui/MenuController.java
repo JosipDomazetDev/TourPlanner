@@ -3,22 +3,18 @@ package com.example.tourplanner.ui;
 import com.example.tourplanner.utils.FilePicker;
 import com.example.tourplanner.utils.PopupUtility;
 import com.example.tourplanner.viewmodel.MenuViewModel;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Stack;
 
 public class MenuController implements Initializable {
     private final MenuViewModel menuViewModel;
     @FXML
-    Label tourplannerHeader;
+    VBox menu;
 
     public MenuController(MenuViewModel menuViewModel) {
         this.menuViewModel = menuViewModel;
@@ -30,7 +26,7 @@ public class MenuController implements Initializable {
 
 
     private Stage getStage() {
-        return (Stage) tourplannerHeader.getScene().getWindow();
+        return (Stage) menu.getScene().getWindow();
     }
 
     @FXML

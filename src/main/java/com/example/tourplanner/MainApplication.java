@@ -12,12 +12,14 @@ import java.util.Locale;
 public class MainApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root =  FXMLDependencyInjection.load("main-view.fxml", Locale.ENGLISH);
+        Parent root = FXMLDependencyInjection.load("main-view.fxml", Locale.ENGLISH);
         Scene scene = new Scene(root, 1000, 700);
 
         System.setProperty("log4j.configurationFile", "./log4j2.xml");
+        scene.getStylesheets().add(getClass().getResource("/css/bootsstrap.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/css/custom.css").toExternalForm());
 
-        stage.setTitle("Hello!");
+        stage.setTitle("TourPlanner");
         stage.setScene(scene);
         stage.show();
     }

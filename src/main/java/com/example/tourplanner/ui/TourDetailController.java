@@ -13,6 +13,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -88,6 +90,7 @@ public class TourDetailController implements Initializable {
 
     private void initializeImageView() {
         imageView.imageProperty().bindBidirectional(tourDetailViewModel.getImageProperty());
+
         imageView.setOnMouseClicked(event -> {
             Stage previewStage = new Stage();
             previewStage.setTitle("Image Preview");
@@ -95,7 +98,7 @@ public class TourDetailController implements Initializable {
             ImageView previewImageView = new ImageView();
             previewImageView.setImage(imageView.getImage());
 
-            previewImageView.setFitWidth(750);
+            previewImageView.setFitWidth(720);
             previewImageView.setFitHeight(600);
 
             VBox previewBox = new VBox(previewImageView);
@@ -103,6 +106,7 @@ public class TourDetailController implements Initializable {
 
             Scene previewScene = new Scene(previewBox);
             previewStage.setScene(previewScene);
+            previewStage.setTitle(imageView.getImage().getUrl());
 
             // Show the preview window
             previewStage.show();
