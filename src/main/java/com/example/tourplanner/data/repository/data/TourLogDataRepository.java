@@ -44,6 +44,6 @@ public class TourLogDataRepository implements DataRepository<TourLog> {
     @Override
     public ArrayList<TourLog> load() {
         logger.info("Loaded tourLogs");
-        return new ArrayList<>(entityManager.createQuery("SELECT t FROM TourLog t ORDER BY t.id", TourLog.class).getResultList());
+        return new ArrayList<>(entityManager.createQuery("SELECT t FROM TourLog t ORDER BY t.dateTime DESC", TourLog.class).getResultList());
     }
 }

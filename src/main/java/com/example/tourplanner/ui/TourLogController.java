@@ -73,17 +73,20 @@ public class TourLogController  implements Initializable {
         columnDateTime.setCellFactory(TextFieldTableCell.forTableColumn(new CustomDateStringConverter("dd.MM.yyyy HH:mm")));
         columnDateTime.setOnEditCommit(e -> {
             tourLogViewModel.setDateTime(e.getRowValue(), e.getNewValue());
+            tourLogViewModel.refresh();
         });
 
         columnComment.setCellFactory(TextFieldTableCell.forTableColumn());
         columnComment.setOnEditCommit(e -> {
             tourLogViewModel.setComment(e.getRowValue(), e.getNewValue());
+            tourLogViewModel.refresh();
         });
 
 
         columnTotalTime.setCellFactory(TextFieldTableCell.forTableColumn(new CustomDoubleStringConverter()));
         columnTotalTime.setOnEditCommit(e -> {
             tourLogViewModel.setTotalTime(e.getRowValue(), e.getNewValue());
+            tourLogViewModel.refresh();
         });
 
         int lowerBound = 1;
@@ -91,11 +94,13 @@ public class TourLogController  implements Initializable {
         columnDifficulty.setCellFactory(TextFieldTableCell.forTableColumn((new CustomIntegerStringConverter(lowerBound, upperBound))));
         columnDifficulty.setOnEditCommit(e -> {
             tourLogViewModel.setDifficulty(e.getRowValue(), e.getNewValue());
+            tourLogViewModel.refresh();
         });
 
         columnRating.setCellFactory(TextFieldTableCell.forTableColumn(new CustomIntegerStringConverter(lowerBound, upperBound)));
         columnRating.setOnEditCommit(e -> {
             tourLogViewModel.setRating(e.getRowValue(), e.getNewValue());
+            tourLogViewModel.refresh();
         });
 
         logTable.setEditable(true);

@@ -43,6 +43,7 @@ public class Tour {
     private Integer childFriendliness;
 
     @OneToMany(mappedBy = "tour", cascade = CascadeType.ALL)
+    @OrderBy("dateTime DESC")
     private List<TourLog> tourLogs = new ArrayList<>();
 
     public Tour(String name) {
