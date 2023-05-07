@@ -10,7 +10,10 @@ public class TourCell extends ListCell<Tour> {
         if (empty || tour == null) {
             setText(null);
         } else {
-            setText(tour.getName());
+            String name = tour.getName();
+            name = name.replace("->", "→");
+            name = name.replace("<-", "←");
+            setText(name);
         }
     }
 }
