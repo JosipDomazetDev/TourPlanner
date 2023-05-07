@@ -1,16 +1,18 @@
 # Intro
 
 This is a project for the course "Software Engineering" at my university.
-Tourplanner is a JavaFx application that allows users to plan their trips and share them with others.
+Tourplanner is a JavaFx application that allows users to plan their trips (e.g. bicycle tours) and share them with others.
 It makes use of modern architectural patterns and technologies.
 
 It is constructed in an MVVM pattern and uses Hibernate to persist user data to a PostgreSQL database. It communicates
-with the (MapQuest REST API)[https://www.mapquest.com/] to retrieve map data and the actual map image. As for the
+with the [MapQuest REST API](https://www.mapquest.com/]) to retrieve map data and the actual map image. As for the
 styling of UI components a bootstrap port for JavaFx is used.
 
-<img src="docs/app.png" width=50% height=50%>
+<img src="docs/app.png" width=80% height=80%>
 
 # Setup
+
+The project contains a docker-compose file that starts a PostgreSQL database.
 
 ```bash
 # Start the container
@@ -20,11 +22,13 @@ docker-compose up -d
 docker exec <CONTAINER-ID> createdb -U josip tourplanner
 ```
 
-Create a `config.properties` file in the root directory and add the following variables:
+Create a `config.properties` file in the root directory and add your MapQuest api key:
 
 ```bash
 api_key=YOUR_API_KEY
 ```
+
+Now you can launch the application in your IDE.
 
 # Protocol
 
@@ -32,7 +36,7 @@ api_key=YOUR_API_KEY
 
 The concrete pattern I used is the MVVM pattern.
 
-<img src="docs/MVVMPattern.png" width=50% height=50%>
+<img src="docs/MVVMPattern.png" width=80% height=80%>
 
 The View is the UI Layer (contained within the [ui folder](src/main/java/com/example/tourplanner/ui)), the ViewModel is
 the BL (contained within the [viewmodel folder](src/main/java/com/example/tourplanner/viewmodel)), and the Model is the
