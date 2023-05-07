@@ -11,8 +11,11 @@ public class TourCell extends ListCell<Tour> {
             setText(null);
         } else {
             String name = tour.getName();
-            name = name.replace("->", "→");
-            name = name.replace("<-", "←");
+            if (name != null) {
+                name = name.replace("->", "→");
+                name = name.replace("<-", "←");
+            }
+
             setText(name);
         }
     }
