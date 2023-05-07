@@ -62,7 +62,7 @@ public class TourLogController  implements Initializable {
         rat.setTooltip(new Tooltip("scale from 1 to 5 (1 = worst, 5 = best)"));
         columnRating.setGraphic(rat);
 
-        TableColumn<TourLog, Void> buttonColumn = new TableColumn<>("Delete");
+        TableColumn<TourLog, Void> buttonColumn = new TableColumn<>("Action");
         buttonColumn.setCellFactory(new ButtonCellFactory(tourLogViewModel::deleteTourLog));
         logTable.getColumns().add(buttonColumn);
 

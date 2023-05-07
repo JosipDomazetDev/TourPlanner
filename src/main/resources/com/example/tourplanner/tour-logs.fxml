@@ -17,7 +17,7 @@
                 <Region HBox.hgrow="ALWAYS"/>
                 <HBox>
                     <children>
-                        <Button mnemonicParsing="false" onMouseClicked="#onCreateTourLogClick" styleClass="success, button, bold" text="+"/>
+                        <Button mnemonicParsing="false" onMouseClicked="#onCreateTourLogClick" styleClass="success, button, small-button" text="Add"/>
                     </children>
                 </HBox>
             </children>

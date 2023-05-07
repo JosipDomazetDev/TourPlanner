@@ -18,11 +18,11 @@ public class ButtonCellFactory implements Callback<TableColumn<TourLog, Void>, T
     @Override
     public TableCell<TourLog, Void> call(final TableColumn<TourLog, Void> param) {
         return new TableCell<>() {
-            private final Button btn = new Button("-");
+            private final Button btn = new Button("Delete");
             {
                 btn.getStyleClass().add("danger");
                 btn.getStyleClass().add("button");
-                btn.getStyleClass().add("bold");
+                btn.getStyleClass().add("small-button");
                 btn.setOnAction(event -> {
                     TourLog data = getTableRow().getItem();
                     if (data != null) {

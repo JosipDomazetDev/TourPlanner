@@ -8,7 +8,6 @@
 
 .labelCustom {
     -fx-font-weight: bold;
-    /* how do i do padding bottom 4 pixel*/
     -fx-padding: 0 0 4 0;
 }
 
@@ -16,4 +15,28 @@
     -fx-text-fill: red !important;
     -fx-font-size: 18px !important;
     -fx-padding: 12px !important;
+}
+
+.small-button {
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-border-width: 1;
+}
+
+.success.small-button {
+    -fx-background-color: none;
+    -fx-text-fill: #5cb85c;
+}
+
+.danger.small-button {
+    -fx-background-color: none;
+    -fx-text-fill: #d9534f;
+}
+
+.small-button:hover {
+    -fx-text-fill: #ffffff!important;
+}
+
+.table-column {
+    -fx-alignment: CENTER;
 }

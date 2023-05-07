@@ -25,7 +25,7 @@
                 <children>
                     <Text text="Tours" textAlignment="CENTER" textOrigin="CENTER" styleClass="custom-header"/>
                     <Region HBox.hgrow="ALWAYS"/>
-                    <Button onMouseClicked="#onAddTour" styleClass="success, button, bold" text="+"/>
+                    <Button onMouseClicked="#onAddTour" styleClass="success, button, small-button" text="Add"/>
                 </children>
             </HBox>
             <ListView fx:id="toursListView" onMouseClicked="#onTourClick" prefHeight="200.0" prefWidth="200.0">

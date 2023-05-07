@@ -4,12 +4,14 @@ import com.example.tourplanner.ui.di.FXMLDependencyInjection;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.Locale;
 
 public class MainApplication extends Application {
+
     @Override
     public void start(Stage stage) throws IOException {
         Parent root = FXMLDependencyInjection.load("main-view.fxml", Locale.ENGLISH);
