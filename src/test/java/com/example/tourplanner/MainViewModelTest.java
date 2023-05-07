@@ -11,6 +11,7 @@ import com.example.tourplanner.data.repository.fs.FileRepository;
 import com.example.tourplanner.viewmodel.*;
 import javafx.application.Platform;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -22,6 +23,7 @@ import static org.mockito.Mockito.*;
  */
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@ExtendWith(TestSetup.class)
 public class MainViewModelTest {
 
 

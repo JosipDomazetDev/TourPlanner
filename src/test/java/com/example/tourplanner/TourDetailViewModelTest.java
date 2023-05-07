@@ -8,6 +8,7 @@ import com.example.tourplanner.data.repository.data.DataRepository;
 import com.example.tourplanner.viewmodel.TourDetailViewModel;
 import javafx.application.Platform;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -18,6 +19,7 @@ import static org.mockito.Mockito.*;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@ExtendWith(TestSetup.class)
 public class TourDetailViewModelTest {
     @Mock
     private DataRepository<Tour> tourRepository;

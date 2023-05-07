@@ -6,8 +6,8 @@ import com.example.tourplanner.data.model.TourLog;
 import com.example.tourplanner.data.repository.data.DataRepository;
 import com.example.tourplanner.viewmodel.TourLogViewModel;
 import javafx.collections.ObservableList;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -18,6 +18,9 @@ import java.util.Date;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@ExtendWith(TestSetup.class)
 public class TourLogViewModelTest {
 
     private TourLogViewModel tourLogViewModel;
