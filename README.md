@@ -1,7 +1,8 @@
 # Intro
 
 This is a project for the course "Software Engineering" at my university.
-Tourplanner is a JavaFx application that allows users to plan their trips (e.g. bicycle tours) and share them with others.
+Tourplanner is a JavaFx application that allows users to plan their trips (e.g. bicycle tours) and share them with
+others.
 It makes use of modern architectural patterns and technologies.
 
 It is constructed in an MVVM pattern and uses Hibernate to persist user data to a PostgreSQL database. It communicates
@@ -22,10 +23,19 @@ docker-compose up -d
 docker exec <CONTAINER-ID> createdb -U josip tourplanner
 ```
 
-Create a `config.properties` file in the root directory and add your MapQuest api key:
+Create a `config.properties` file in the root directory and add your MapQuest api key. If you are using a different
+database than the one provided in the docker-compose file you need to adapt those settings as well:
 
 ```bash
 api_key=YOUR_API_KEY
+driver=org.postgresql.Driver
+url=jdbc:postgresql://localhost:5001/tourplanner
+user=josip
+password=josip
+dialect=org.hibernate.dialect.PostgreSQLDialect
+auto=update
+show_sql=false
+format_sql=false
 ```
 
 Now you can launch the application in your IDE.

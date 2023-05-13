@@ -7,14 +7,7 @@
         <class>com.example.tourplanner.data.model.Tour</class>
         <class>com.example.tourplanner.data.model.TourLog</class>
         <properties>
-            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5001/tourplanner"/>
-            <property name="javax.persistence.jdbc.user" value="josip"/>
-            <property name="javax.persistence.jdbc.password" value="josip"/>
-            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/>
-            <property name="hibernate.hbm2ddl.auto" value="update"/>
-<!--            <property name="hibernate.show_sql" value="true"/>-->
-<!--            <property name="hibernate.format_sql" value="true"/>-->
+            <!--      config.properties contains configuration     -->
         </properties>
     </persistence-unit>
 </persistence>

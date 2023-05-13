@@ -13,16 +13,18 @@ public class NullSafeRunner {
     public static void run(Runnable runnable) {
         if (runnable == null) {
             logger.warn("Runnable is null, nothing happened");
-        } else {
-            runnable.run();
+            return;
         }
+
+        runnable.run();
     }
 
     public static void accept(Consumer<Tour> runnable, Tour selectedTour) {
         if (runnable == null) {
             logger.warn("Consumer is null, nothing happened");
-        } else {
-            runnable.accept(selectedTour);
+            return;
         }
+
+        runnable.accept(selectedTour);
     }
 }
