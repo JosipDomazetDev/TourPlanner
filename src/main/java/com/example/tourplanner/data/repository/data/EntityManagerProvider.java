@@ -3,6 +3,7 @@ package com.example.tourplanner.data.repository.data;
 import com.example.tourplanner.configuration.ConfigurationReader;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Persistence;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -33,5 +34,20 @@ public class EntityManagerProvider {
         }
 
         return entityManager;
+    }
+
+    public static void executeWithTransaction(EntityManager entityManager, Runnable operation) {
+        EntityTransaction transaction = null;
+        try {
+            transaction = entityManager.getTransaction();
+            transaction.begin();
+            operation.run();
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null && transaction.isActive()) {
+                logger.error("Database error occurred. Rolling back last transaction!");
+                transaction.rollback();
+            }
+        }
     }
 }
