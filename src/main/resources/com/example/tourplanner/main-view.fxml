@@ -22,7 +22,7 @@
     </left>
 
     <center>
-        <fx:include source="tour-detail.fxml"/>
+        <fx:include source="tour-big-detail.fxml"/>
     </center>
 
 </BorderPane>

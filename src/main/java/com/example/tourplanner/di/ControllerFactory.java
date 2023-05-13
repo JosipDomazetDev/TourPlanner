@@ -58,8 +58,12 @@ public final class ControllerFactory {
             return new CreateTourController(toursViewModel);
         }
 
-        if (controllerClass == TourDetailController.class) {
-            return new TourDetailController(tourDetailViewModel);
+        if (controllerClass == TourBigDetailController.class) {
+            return new TourBigDetailController(tourDetailViewModel);
+        }
+
+        if (controllerClass == TourSmallDetailController.class) {
+            return new TourSmallDetailController(tourDetailViewModel);
         }
 
         if (controllerClass == TourLogController.class) {

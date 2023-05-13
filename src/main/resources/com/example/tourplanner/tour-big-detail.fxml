@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.*?>
+
+<VBox prefHeight="500" prefWidth="500" BorderPane.alignment="CENTER" xmlns="http://javafx.com/javafx/19"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.tourplanner.ui.TourBigDetailController">
+
+    <children>
+        <SplitPane orientation="VERTICAL">
+            <items>
+                <VBox>
+                    <children>
+                        <VBox fx:id="nothingSelectedVbox" alignment="CENTER">
+                            <Label text="Nothing selected yet!" textFill="#757575">
+                                <padding>
+                                    <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                                </padding>
+                            </Label>
+                        </VBox>
+
+                        <VBox fx:id="detailVbox">
+                            <fx:include source="tour-small-detail.fxml"/>
+
+                            <fx:include source="tour-logs.fxml"/>
+                        </VBox>
+                    </children>
+                </VBox>
+            </items>
+        </SplitPane>
+    </children>
+</VBox>

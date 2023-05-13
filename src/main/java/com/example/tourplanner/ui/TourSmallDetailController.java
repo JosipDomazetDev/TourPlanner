@@ -1,27 +1,26 @@
 package com.example.tourplanner.ui;
 
+
 import com.example.tourplanner.data.exception.IllegalTransportTypeException;
 import com.example.tourplanner.data.model.Tour;
 import com.example.tourplanner.utils.PopupUtility;
 import com.example.tourplanner.viewmodel.TourDetailViewModel;
-import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.image.Image;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class TourDetailController implements Initializable {
+public class TourSmallDetailController implements Initializable {
     private final TourDetailViewModel tourDetailViewModel;
 
     @FXML
@@ -58,13 +57,7 @@ public class TourDetailController implements Initializable {
     @FXML
     private ImageView imageView;
 
-    @FXML
-    private VBox detailVbox;
-
-    @FXML
-    private VBox nothingSelectedVbox;
-
-    public TourDetailController(TourDetailViewModel tourDetailViewModel) {
+    public TourSmallDetailController(TourDetailViewModel tourDetailViewModel) {
         this.tourDetailViewModel = tourDetailViewModel;
     }
 
@@ -82,10 +75,6 @@ public class TourDetailController implements Initializable {
         estimatedTimeTourDetailTextField.textProperty().bind(tourDetailViewModel.getEstimatedTime());
         popularityTourDetailTextField.textProperty().bind(tourDetailViewModel.getPopularity());
         childFriendlinessTourDetailTextField.textProperty().bind(tourDetailViewModel.getChildFriendliness());
-
-        detailVbox.visibleProperty().bindBidirectional(tourDetailViewModel.getIsVisible());
-        nothingSelectedVbox.visibleProperty().bind(Bindings.not(tourDetailViewModel.getIsVisible()));
-        nothingSelectedVbox.managedProperty().bind(Bindings.not(tourDetailViewModel.getIsVisible()));
     }
 
     private void initializeImageView() {
