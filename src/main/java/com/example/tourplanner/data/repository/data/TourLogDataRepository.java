@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class TourLogDataRepository implements DataRepository<TourLog> {
     private final EntityManager entityManager = EntityManagerProvider.getInstance();
-    private static final Logger logger = LogManager.getLogger(TourLogDataRepository.class.getSimpleName());
+    private static final Logger logger = LogManager.getLogger(TourLogDataRepository.class);
 
     public TourLogDataRepository() {
     }

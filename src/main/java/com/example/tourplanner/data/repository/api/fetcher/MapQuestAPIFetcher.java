@@ -23,7 +23,7 @@ public class MapQuestAPIFetcher extends Task<Void> implements MapAPIFetcher {
     private final Tour tour;
     private final ObjectMapper objectMapper;
     private Runnable onFailure;
-    private static final Logger logger = LogManager.getLogger(MapQuestAPIFetcher.class.getSimpleName());
+    private static final Logger logger = LogManager.getLogger(MapQuestAPIFetcher.class);
 
     public MapQuestAPIFetcher(Tour tour, String apiKey) {
         this.tour = tour;
@@ -155,16 +155,12 @@ public class MapQuestAPIFetcher extends Task<Void> implements MapAPIFetcher {
 
     @Override
     public void setOnSuccess(Runnable runnable) {
-        this.setOnSucceeded(workerStateEvent -> {
-            runnable.run();
-        });
+        this.setOnSucceeded(workerStateEvent -> runnable.run());
     }
 
     @Override
     public void setOnFailure(Runnable runnable) {
         this.onFailure = runnable;
-        this.setOnFailed(workerStateEvent -> {
-            runnable.run();
-        });
+        this.setOnFailed(workerStateEvent -> runnable.run());
     }
 }

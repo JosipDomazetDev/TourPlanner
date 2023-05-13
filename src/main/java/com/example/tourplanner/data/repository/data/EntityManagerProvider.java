@@ -11,7 +11,7 @@ import java.util.Properties;
 
 public class EntityManagerProvider {
     private static EntityManager entityManager;
-    private static final Logger logger = LogManager.getLogger(EntityManagerProvider.class.getSimpleName());
+    private static final Logger logger = LogManager.getLogger(EntityManagerProvider.class);
 
     public static synchronized EntityManager getInstance() {
         if (entityManager == null) {

@@ -18,7 +18,7 @@ import java.util.function.Consumer;
 
 @Getter
 public class TourDetailViewModel {
-    private static final Logger logger = LogManager.getLogger(TourDetailViewModel.class.getSimpleName());
+    private static final Logger logger = LogManager.getLogger(TourDetailViewModel.class);
     private final DataRepository<Tour> tourRepository;
     private final MapRepository<Tour> mapRepository;
 

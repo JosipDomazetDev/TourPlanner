@@ -4,13 +4,12 @@ import com.example.tourplanner.data.model.Tour;
 import jakarta.persistence.EntityManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Session;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TourDataRepository implements MassDataRepository<Tour> {
-    private static final Logger logger = LogManager.getLogger(TourDataRepository.class.getSimpleName());
+    private static final Logger logger = LogManager.getLogger(TourDataRepository.class);
     private final EntityManager entityManager = EntityManagerProvider.getInstance();
 
     @Override

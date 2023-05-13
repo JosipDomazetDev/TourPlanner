@@ -1,14 +1,13 @@
 package com.example.tourplanner.utils;
 
 import com.example.tourplanner.data.model.Tour;
-import com.example.tourplanner.viewmodel.TourDetailViewModel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.function.Consumer;
 
 public class NullSafeRunner {
-    private static final Logger logger = LogManager.getLogger(NullSafeRunner.class.getSimpleName());
+    private static final Logger logger = LogManager.getLogger(NullSafeRunner.class);
 
     public static void run(Runnable runnable) {
         if (runnable == null) {

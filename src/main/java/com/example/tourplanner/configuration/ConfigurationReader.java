@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class ConfigurationReader {
-    private static final Logger logger = LogManager.getLogger(ConfigurationReader.class.getSimpleName());
+    private static final Logger logger = LogManager.getLogger(ConfigurationReader.class);
     private static final String CONFIG_FILE_PATH = "config.properties";
     private static final String API_KEY_PROPERTY = "api_key";
     private static final String DRIVER_KEY_PROPERTY = "driver";

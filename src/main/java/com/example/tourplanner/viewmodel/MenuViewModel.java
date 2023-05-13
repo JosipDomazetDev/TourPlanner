@@ -16,7 +16,7 @@ import java.util.function.Consumer;
 
 @Getter
 public class MenuViewModel {
-    private static final Logger logger = LogManager.getLogger(MenuViewModel.class.getSimpleName());
+    private static final Logger logger = LogManager.getLogger(MenuViewModel.class);
     private final MassDataRepository<Tour> tourRepository;
     private final FileRepository<Tour> fileRepository;
     @Setter

@@ -18,7 +18,7 @@ import java.util.function.Consumer;
 public class TourLogViewModel {
 
     ObservableList<TourLog> tourLogs = FXCollections.observableArrayList();
-    private static final Logger logger = LogManager.getLogger(TourLogViewModel.class.getSimpleName());
+    private static final Logger logger = LogManager.getLogger(TourLogViewModel.class);
     private final DataRepository<TourLog> tourLogRepository;
     private Tour selectedTour;
     @Setter
