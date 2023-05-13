@@ -2,7 +2,7 @@ package com.example.tourplanner.ui;
 
 import com.example.tourplanner.data.model.Tour;
 import com.example.tourplanner.ui.components.TourCell;
-import com.example.tourplanner.ui.di.FXMLDependencyInjection;
+import com.example.tourplanner.di.FXMLDependencyInjection;
 import com.example.tourplanner.viewmodel.ToursViewModel;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;

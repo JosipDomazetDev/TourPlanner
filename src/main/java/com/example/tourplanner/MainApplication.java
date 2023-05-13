@@ -1,10 +1,9 @@
 package com.example.tourplanner;
 
-import com.example.tourplanner.ui.di.FXMLDependencyInjection;
+import com.example.tourplanner.di.FXMLDependencyInjection;
 import javafx.application.Application;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.io.IOException;

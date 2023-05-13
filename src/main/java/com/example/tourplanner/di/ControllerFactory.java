@@ -1,4 +1,4 @@
-package com.example.tourplanner.ui.di;
+package com.example.tourplanner.di;
 
 import com.example.tourplanner.data.model.Tour;
 import com.example.tourplanner.data.model.TourLog;

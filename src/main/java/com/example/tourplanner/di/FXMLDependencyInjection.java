@@ -1,4 +1,4 @@
-package com.example.tourplanner.ui.di;
+package com.example.tourplanner.di;
 
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
