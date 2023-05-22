@@ -7,6 +7,9 @@ module com.example.tourplanner {
     requires org.apache.httpcomponents.httpclient;
     requires com.fasterxml.jackson.databind;
     requires org.apache.logging.log4j;
+    requires kernel;
+    requires layout;
+    requires io;
 
     exports com.example.tourplanner;
     exports com.example.tourplanner.data.model;
