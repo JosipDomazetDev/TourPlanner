@@ -14,6 +14,7 @@ import lombok.Setter;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 @Getter
@@ -120,5 +121,9 @@ public class ToursViewModel {
 
     public void printTourReport(Tour selectedItem) throws IOException {
         reportRepository.printTourReport(selectedItem);
+    }
+
+    public void printSummaryReport(List<Tour> tours) throws IOException {
+        reportRepository.printSummaryReport(tours);
     }
 }

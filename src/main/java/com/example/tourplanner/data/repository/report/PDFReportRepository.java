@@ -5,9 +5,11 @@ import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.AreaBreak;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.List;
 import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.properties.AreaBreakType;
 import com.itextpdf.layout.properties.TextAlignment;
 
 import java.io.FileNotFoundException;
@@ -43,7 +45,7 @@ public class PDFReportRepository implements ReportRepository {
 
         List list = new List()
                 .setSymbolIndent(20)
-                .setListSymbol("\u2022");
+                .setListSymbol("•");
         list.add("Name: " + selectedTourName)
                 .add("Description: " + selectedTourDescription)
                 .add("From: " + selectedTourFrom)
@@ -69,6 +71,50 @@ public class PDFReportRepository implements ReportRepository {
         document.close();
         System.out.println("PDF generated successfully");
 
+    }
+
+    @Override
+    public void printSummaryReport(java.util.List<Tour> tours) throws FileNotFoundException {
+        PdfWriter writer = new PdfWriter(new FileOutputStream("SummaryTourReport.pdf"));
+        PdfDocument pdfDoc = new PdfDocument(writer);
+        Document document = new Document(pdfDoc);
+
+        int tourNumber = 1;
+
+        for (Tour tour : tours) {
+            Paragraph title = new Paragraph("Tour " + tourNumber + " Report\n\n")
+                    .setTextAlignment(TextAlignment.CENTER)
+                    .setFontSize(20)
+                    .setBold();
+            document.add(title);
+
+            List list = new List()
+                    .setSymbolIndent(20)
+                    .setListSymbol("•");
+            list.add("Name: " + tour.getName())
+                    .add("Description: " + tour.getTourDescription())
+                    .add("From: " + tour.getFrom())
+                    .add("To: " + tour.getTo())
+                    .add("TransportType: " + tour.getTransportType())
+                    .add("Distance: " + tour.getTourDistance() + "km");
+            int TourEstimatedTime = tour.getEstimatedTime();
+            if (TourEstimatedTime >= 60) {
+                int min = TourEstimatedTime % 60;
+                int hour = TourEstimatedTime / 60;
+                list.add("Estimated time : " + hour + "h " + min + "min");
+            } else {
+                list.add("Estimated time : " + TourEstimatedTime + "min");
+            }
+
+            list.add("Child Friendliness: " + tour.getChildFriendliness() + "%\n\n");
+            document.add(list);
+
+            document.add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+            tourNumber++;
+
+        }
+        document.close();
+        System.out.println("PDF generated successfully");
     }
 
 }
