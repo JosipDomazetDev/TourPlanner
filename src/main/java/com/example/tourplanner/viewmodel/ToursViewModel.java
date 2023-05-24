@@ -4,6 +4,7 @@ import com.example.tourplanner.data.exception.IllegalTransportTypeException;
 import com.example.tourplanner.data.model.Tour;
 import com.example.tourplanner.data.repository.api.MapRepository;
 import com.example.tourplanner.data.repository.data.DataRepository;
+import com.example.tourplanner.data.repository.report.ReportRepository;
 import com.example.tourplanner.utils.NullSafeRunner;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -11,6 +12,7 @@ import javafx.collections.ObservableList;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
@@ -20,6 +22,7 @@ public class ToursViewModel {
     private final ObservableList<Tour> tours = FXCollections.observableArrayList();
     private final DataRepository<Tour> tourRepository;
     private final MapRepository<Tour> mapRepository;
+    private final ReportRepository reportRepository;
 
     private final StringProperty errorMsg = new SimpleStringProperty();
     private final BooleanProperty isError = new SimpleBooleanProperty();
@@ -28,9 +31,10 @@ public class ToursViewModel {
     @Setter
     private Consumer<Tour> onTourSelected;
 
-    public ToursViewModel(DataRepository<Tour> tourRepository, MapRepository<Tour> mapQuestAPIRepository) {
+    public ToursViewModel(DataRepository<Tour> tourRepository, MapRepository<Tour> mapQuestAPIRepository, ReportRepository reportRepository) {
         this.tourRepository = tourRepository;
         this.mapRepository = mapQuestAPIRepository;
+        this.reportRepository = reportRepository;
         load();
     }
 
@@ -112,5 +116,9 @@ public class ToursViewModel {
 
     public void setSelectedTour(Tour selectedTour) {
         NullSafeRunner.accept(onTourSelected, selectedTour);
+    }
+
+    public void printTourReport(Tour selectedItem) throws IOException {
+        reportRepository.printTourReport(selectedItem);
     }
 }

@@ -21,6 +21,11 @@ module com.example.tourplanner {
     exports com.example.tourplanner.data.repository.data;
     exports com.example.tourplanner.data.repository.api.fetcher;
     exports com.example.tourplanner.data.exception;
+    exports com.example.tourplanner.di;
+    exports com.example.tourplanner.data.repository.fs;
+    exports com.example.tourplanner.data.repository.report;
+
+
 
     opens com.example.tourplanner.ui to javafx.fxml;
     opens com.example.tourplanner.data.model;
@@ -28,7 +33,5 @@ module com.example.tourplanner {
     opens com.example.tourplanner.ui.components to javafx.fxml;
     opens com.example.tourplanner.ui.components.converter to javafx.fxml;
     opens com.example.tourplanner.data.exception;
-    exports com.example.tourplanner.di;
     opens com.example.tourplanner.di to javafx.fxml;
-    exports com.example.tourplanner.data.repository.fs;
 }
