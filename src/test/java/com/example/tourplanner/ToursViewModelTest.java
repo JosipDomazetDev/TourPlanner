@@ -6,7 +6,6 @@ import com.example.tourplanner.data.model.TourLog;
 import com.example.tourplanner.data.repository.api.MapRepository;
 import com.example.tourplanner.data.repository.data.DataRepository;
 import com.example.tourplanner.data.repository.report.ReportRepository;
-import com.example.tourplanner.viewmodel.TourLogViewModel;
 import com.example.tourplanner.viewmodel.ToursViewModel;
 import javafx.collections.ObservableList;
 import org.junit.jupiter.api.*;
@@ -19,7 +18,6 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 

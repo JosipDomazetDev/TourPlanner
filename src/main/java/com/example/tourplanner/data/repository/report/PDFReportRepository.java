@@ -12,14 +12,17 @@ import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.properties.AreaBreakType;
 import com.itextpdf.layout.properties.TextAlignment;
 
-import java.io.FileNotFoundException;
+import java.awt.*;
+import java.io.File;
 import java.io.FileOutputStream;
-import java.net.MalformedURLException;
+import java.io.IOException;
+
+
 
 public class PDFReportRepository implements ReportRepository {
 
     @Override
-    public void printTourReport(Tour selectedItem) throws FileNotFoundException, MalformedURLException {
+    public void printTourReport(Tour selectedItem) throws IOException {
         if (selectedItem == null) return;
 
         double selectedTourDistance = selectedItem.getTourDistance();
@@ -31,9 +34,11 @@ public class PDFReportRepository implements ReportRepository {
         String selectedTourName = selectedItem.getName();
         String selectedTourTransportType = selectedItem.getTransportType();
         String selectedTourRouteInformation = selectedItem.getRouteInformation();
+        int selectedTourPopularity = selectedItem.getPopularity();
+        int speed;
 
-
-        PdfWriter writer = new PdfWriter(new FileOutputStream("TourReport.pdf"));
+        String filename = "TourReport.pdf";
+        PdfWriter writer = new PdfWriter(new FileOutputStream(filename));
         PdfDocument pdfDoc = new PdfDocument(writer);
         Document document = new Document(pdfDoc);
 
@@ -59,36 +64,98 @@ public class PDFReportRepository implements ReportRepository {
         }else{
             list.add("Estimated time : " + selectedTourEstimatedTime + "min");
         }
+        speed = (int) (selectedTourDistance/selectedTourEstimatedTime*60);
+        list.add("Speed: " + speed + "km/h")
+            .add("Child Friendliness: " + selectedTourChildFriendliness + "%")
+            .add("Popularity: " + selectedTourPopularity + "%\n\n");
 
-        list.add("Child Friendliness: " + selectedTourChildFriendliness + "%\n\n");
         document.add(list);
         Image map = new Image(ImageDataFactory.create(selectedTourRouteInformation));
         map.scaleToFit(500,500);
         document.add(map);
-
-
-
         document.close();
+
+        File file = new File(filename);
+        if(!Desktop.isDesktopSupported())
+        {
+            System.out.println("Desktop is not supported");
+            return;
+        }
+        Desktop desktop = Desktop.getDesktop();
+        if(file.exists())
+            desktop.open(file);
+
         System.out.println("PDF generated successfully");
 
     }
 
     @Override
-    public void printSummaryReport(java.util.List<Tour> tours) throws FileNotFoundException {
-        PdfWriter writer = new PdfWriter(new FileOutputStream("SummaryTourReport.pdf"));
+    public void printSummaryReport(java.util.List<Tour> tours) throws IOException {
+        if(tours == null){
+            return;
+        }
+        String filename = "SummaryTourReport.pdf";
+        PdfWriter writer = new PdfWriter(new FileOutputStream(filename));
         PdfDocument pdfDoc = new PdfDocument(writer);
         Document document = new Document(pdfDoc);
+
+        Paragraph title = new Paragraph("Summary Report\n\n")
+                .setTextAlignment(TextAlignment.CENTER)
+                .setFontSize(20)
+                .setBold();
+        document.add(title);
+
+        List list = new List()
+                .setSymbolIndent(20)
+                .setListSymbol("•");
+
+        int totalTime = 0;
+        float totalDistance = 0;
+        int totalChildFriendliness = 0;
+        int amountOfTours = tours.size();
+        int totalPopularity = 0;
+
+        for(Tour tour : tours){
+            totalTime += tour.getEstimatedTime();
+            totalDistance += tour.getTourDistance();
+            totalChildFriendliness += tour.getChildFriendliness();
+            totalPopularity += tour.getPopularity();
+        }
+        int speed = (int) (totalDistance/totalTime*60);
+
+        list.add("Amount of tours: " + amountOfTours)
+                .add("Total travel distance: " + totalDistance + "km")
+                .add("Average travel distance: " + (int) totalDistance/ amountOfTours + "km");
+        if (totalTime < 60) {
+            list.add("Total travel time: " + totalTime + "min")
+                    .add("Average travel time: " + totalTime/ amountOfTours + "min");
+        } else{
+            list.add("Total travel time: " + totalTime/60 + "h " + totalTime%60 + "min");
+            if (totalTime/tours.size() < 60){
+                list.add("Average travel time: " + totalTime/ amountOfTours + "min");
+            }else{
+                list.add("Average travel time: " + totalTime/ amountOfTours/60 + "h " + totalTime/ amountOfTours%60 + "min");
+            }
+        }
+        list.add("Average Speed: " + speed +"km/h")
+            .add("Average Child friendliness: " + totalChildFriendliness/ amountOfTours + "%")
+            .add("Average Popularity: " + totalPopularity/ amountOfTours + "%");
+
+        document.add(list);
+
 
         int tourNumber = 1;
 
         for (Tour tour : tours) {
-            Paragraph title = new Paragraph("Tour " + tourNumber + " Report\n\n")
+            document.add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+
+            title = new Paragraph("Tour " + tourNumber + " Report\n\n")
                     .setTextAlignment(TextAlignment.CENTER)
                     .setFontSize(20)
                     .setBold();
             document.add(title);
 
-            List list = new List()
+            list = new List()
                     .setSymbolIndent(20)
                     .setListSymbol("•");
             list.add("Name: " + tour.getName())
@@ -105,15 +172,30 @@ public class PDFReportRepository implements ReportRepository {
             } else {
                 list.add("Estimated time : " + TourEstimatedTime + "min");
             }
-
-            list.add("Child Friendliness: " + tour.getChildFriendliness() + "%\n\n");
+            speed = (int) (tour.getTourDistance()/tour.getEstimatedTime()*60);
+            list.add("Speed: " + speed + "km/h")
+                .add("Child Friendliness: " + tour.getChildFriendliness() + "%")
+                .add("Popularity: " + tour.getPopularity() + "%\n\n");
             document.add(list);
 
-            document.add(new AreaBreak(AreaBreakType.NEXT_PAGE));
+
+
+
             tourNumber++;
 
         }
         document.close();
+
+        File file = new File(filename);
+        if(!Desktop.isDesktopSupported())
+        {
+            System.out.println("Desktop is not supported");
+            return;
+        }
+        Desktop desktop = Desktop.getDesktop();
+        if(file.exists())
+            desktop.open(file);
+
         System.out.println("PDF generated successfully");
     }
 

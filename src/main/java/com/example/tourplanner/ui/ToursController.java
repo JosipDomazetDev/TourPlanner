@@ -27,6 +27,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 
@@ -50,12 +51,11 @@ public class ToursController implements Initializable {
         toursListView.itemsProperty().bindBidirectional(toursViewModel.getProperty());
         toursListView.setCellFactory(listView -> new TourCell());
 
-        if (toursListView.getItems().isEmpty()) {
-            // Empty
-        } else {
+        if (!toursListView.getItems().isEmpty()) {
             toursListView.getSelectionModel().select(0);
             toursViewModel.setSelectedTour(toursListView.getSelectionModel().getSelectedItem());
         }
+
 
         toursViewModel.getTours().addListener((ListChangeListener<Tour>) c -> {
             // Refresh the ListView when the list changes
@@ -80,8 +80,8 @@ public class ToursController implements Initializable {
             Parent root = FXMLDependencyInjection.load("create-tour.fxml", Locale.ENGLISH);
             Scene scene = new Scene(root);
             stage.setTitle("Create Tour");
-            scene.getStylesheets().add(getClass().getResource("/css/bootsstrap.css").toExternalForm());
-            scene.getStylesheets().add(getClass().getResource("/css/custom.css").toExternalForm());
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/bootsstrap.css")).toExternalForm());
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/css/custom.css")).toExternalForm());
             stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
@@ -90,50 +90,14 @@ public class ToursController implements Initializable {
     }
 
 
-    // TODO CADE HIER FÜR DICH
+
     public void printSummaryReport(MouseEvent mouseEvent) throws FileNotFoundException {
-        PdfWriter writer = new PdfWriter(new FileOutputStream("SummaryTourReport.pdf"));
-        PdfDocument pdfDoc = new PdfDocument(writer);
-        Document document = new Document(pdfDoc);
 
-        int tourNumber = 1;
-
-        for (Tour tour : toursViewModel.getTours()) {
-            Paragraph title = new Paragraph("Tour " + tourNumber + " Report\n\n")
-                    .setTextAlignment(TextAlignment.CENTER)
-                    .setFontSize(20)
-                    .setBold();
-            document.add(title);
-
-            List list = new List()
-                    .setSymbolIndent(20)
-                    .setListSymbol("•");
-            list.add("Name: " + tour.getName())
-                    .add("Description: " + tour.getTourDescription())
-                    .add("From: " + tour.getFrom())
-                    .add("To: " + tour.getTo())
-                    .add("TransportType: " + tour.getTransportType())
-                    .add("Distance: " + tour.getTourDistance() + "km");
-            int TourEstimatedTime = tour.getEstimatedTime();
-            if (TourEstimatedTime >= 60) {
-                int min = TourEstimatedTime % 60;
-                int hour = TourEstimatedTime / 60;
-                list.add("Estimated time : " + hour + "h " + min + "min");
-            } else {
-                list.add("Estimated time : " + TourEstimatedTime + "min");
-            }
-
-            list.add("Child Friendliness: " + tour.getChildFriendliness() + "%\n\n");
-            document.add(list);
-
-            document.add(new AreaBreak(AreaBreakType.NEXT_PAGE));
-            tourNumber++;
+        try{
+            toursViewModel.printSummaryReport(toursViewModel.getTours());
+        } catch (IOException e) {
 
         }
-        document.close();
-        System.out.println("PDF generated successfully");
-
-        // KA OBS BESSER IST ES IM CONTROLLER ODER VIEWMODEL ZU MACHEN
     }
 
     public void printTourReport(MouseEvent mouseEvent) {
@@ -147,7 +111,5 @@ public class ToursController implements Initializable {
 
         //System.out.println(selectedTour);
 
-
-        // KA OBS BESSER IST ES IM CONTROLLER ODER VIEWMODEL ZU MACHEN
     }
 }

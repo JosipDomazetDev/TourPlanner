@@ -10,6 +10,7 @@ module com.example.tourplanner {
     requires kernel;
     requires layout;
     requires io;
+    requires java.desktop;
 
     exports com.example.tourplanner;
     exports com.example.tourplanner.data.model;
