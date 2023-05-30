@@ -10,6 +10,8 @@ import com.example.tourplanner.data.repository.data.TourDataRepository;
 import com.example.tourplanner.data.repository.data.TourLogDataRepository;
 import com.example.tourplanner.data.repository.fs.FileRepository;
 import com.example.tourplanner.data.repository.fs.JSONFileRepository;
+import com.example.tourplanner.data.repository.report.PDFReportRepository;
+import com.example.tourplanner.data.repository.report.ReportRepository;
 import com.example.tourplanner.ui.*;
 import com.example.tourplanner.viewmodel.*;
 
@@ -35,8 +37,9 @@ public final class ControllerFactory {
         DataRepository<TourLog> tourLogRepository = new TourLogDataRepository();
         MapRepository<Tour> mapRepository = new MapQuestAPIRepository();
         FileRepository<Tour> fileRepository = new JSONFileRepository();
+        ReportRepository pdfReportRepository = new PDFReportRepository();
 
-        this.toursViewModel = new ToursViewModel(tourRepository, mapRepository);
+        this.toursViewModel = new ToursViewModel(tourRepository, mapRepository, pdfReportRepository);
         this.tourDetailViewModel = new TourDetailViewModel(tourRepository, mapRepository);
         this.tourLogViewModel = new TourLogViewModel(tourLogRepository);
         this.menuViewModel = new MenuViewModel(tourRepository, fileRepository);

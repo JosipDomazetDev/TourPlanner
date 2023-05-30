@@ -5,7 +5,7 @@ import com.example.tourplanner.data.model.Tour;
 import com.example.tourplanner.data.model.TourLog;
 import com.example.tourplanner.data.repository.api.MapRepository;
 import com.example.tourplanner.data.repository.data.DataRepository;
-import com.example.tourplanner.viewmodel.TourLogViewModel;
+import com.example.tourplanner.data.repository.report.ReportRepository;
 import com.example.tourplanner.viewmodel.ToursViewModel;
 import javafx.collections.ObservableList;
 import org.junit.jupiter.api.*;
@@ -18,7 +18,6 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -31,6 +30,8 @@ public class ToursViewModelTest {
     private DataRepository<Tour> tourRepository;
     @Mock
     private MapRepository<Tour> mapRepository;
+    @Mock
+    private ReportRepository reportRepository;
 
     private ToursViewModel viewModel;
 
@@ -44,7 +45,7 @@ public class ToursViewModelTest {
             return null;
         }).when(mapRepository).fetchApi(any(Tour.class), any(Runnable.class), any(Runnable.class));
 
-        viewModel = new ToursViewModel(tourRepository, mapRepository);
+        viewModel = new ToursViewModel(tourRepository, mapRepository, reportRepository);
     }
 
     @Test

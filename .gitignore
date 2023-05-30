@@ -7,6 +7,8 @@ target/
 images
 config.properties
 test.json
+SummaryTourReport.pdf
+TourReport.pdf
 
 ### IntelliJ IDEA ###
 .idea/modules.xml

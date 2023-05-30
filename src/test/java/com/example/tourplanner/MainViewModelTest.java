@@ -8,6 +8,7 @@ import com.example.tourplanner.data.repository.api.MapRepository;
 import com.example.tourplanner.data.repository.data.DataRepository;
 import com.example.tourplanner.data.repository.data.MassDataRepository;
 import com.example.tourplanner.data.repository.fs.FileRepository;
+import com.example.tourplanner.data.repository.report.ReportRepository;
 import com.example.tourplanner.viewmodel.*;
 import javafx.application.Platform;
 import org.junit.jupiter.api.*;
@@ -35,6 +36,8 @@ public class MainViewModelTest {
     private MapRepository<Tour> mapRepository;
     @Mock
     private FileRepository<Tour> fileRepository;
+    @Mock
+    private ReportRepository reportRepository;
 
     private ToursViewModel toursViewModel;
     private MenuViewModel menuViewModel;
@@ -64,7 +67,7 @@ public class MainViewModelTest {
             return null;
         }).when(mapRepository).fetchApi(any(Tour.class), any(Runnable.class), any(Runnable.class));
 
-        this.toursViewModel = Mockito.spy(new ToursViewModel(tourRepository, mapRepository));
+        this.toursViewModel = Mockito.spy(new ToursViewModel(tourRepository, mapRepository, reportRepository));
         this.tourDetailViewModel = Mockito.spy(new TourDetailViewModel(tourRepository, mapRepository));
         this.tourLogViewModel = Mockito.spy(new TourLogViewModel(tourLogRepository));
         this.menuViewModel = Mockito.spy(new MenuViewModel(tourRepository, fileRepository));

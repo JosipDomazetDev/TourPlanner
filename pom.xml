@@ -115,6 +115,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- Pdf generation-->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itext7-core</artifactId>
+            <version>8.0.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
