@@ -72,18 +72,24 @@ respective repository.
 
 ### Use case
 
-TODO Cade
+<img src="docs/Wireframe.png" width=80% height=80%>
+
+
+Users can see their past tours in the app with their information, meaning the name they gave their tour, the description they gave it, from where to where the tour went, the transport type of the tour, the type of map chosen for the tour, the distance of the tour, the duration of the tour, the child friendliness of the tour and the popularity of the tour. Furthermore users can create, update and delete tours, or export and import tours. Creating a tour gives the user the travel route, distance and duration as well as the itinerary on a map depending on the user inputs. The users also have the possibility of creating a report of a single one of their tours, or a summary report of all of their tours which will create and open a pdf containing all the relevant information. Finaly, users can also create logs for each individual tour which consist of a timestamp, a comment, a duration, a difficulty and rating column. The user can modify any of these columns except for the timestamp at their will and if the value doesnt correspond to the column(letter instead of number for rating), the default value is kept. The user can also delete the created logs.
+
+<img src="docs/Usecase_diagram.png" width=80% height=80%>
 
 ### UX
 
-TODO Cade:
 
-• document your application features using an UML use case diagram
 • document your UI-flow using wireframes
-• document the application architecture using UML:
-o class diagram
-o sequence diagram for full-text search
-• explain why these unit tests are chosen and why the tested code is critical
+
+o class diagram 
+Sequence diagram for full-text search:
+
+<img src="docs/Sequence_diagram.png" width=80% height=80%>
+
+We have implemented 2 unit tests for the JSONFileRepository to test the import of tours from a file and the export of tours to a file. We also have implemented 5 unit tests for the MainViewModel to test the selection of tours, the update of tours, the deletion of tours, the refreshing of tours and the loading of tours. An additional 4 unit tests were implemented for the MenuViewModel, 1 for the successful import, 1 for an unsuccessful import, 1 for a successful export and one for an unsuccessful export. We implemented another 3 for the TourDetailViewModel to test the update and deletion of a tour as well as a map image within this model. We created a further 5 unit tests for the TourLogViewModel to test the selection of a tour, the deletion, update and creation of tour logs and the clearing of this view model.
 
 ### Lessons learned
 
