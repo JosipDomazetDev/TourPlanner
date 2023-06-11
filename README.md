@@ -102,7 +102,7 @@ An additional 4 unit tests were implemented for the `MenuViewModel`, 1 for the s
 We implemented another 3 for the `TourDetailViewModel` to test the update and deletion of a tour as well as a map image within this model. 
 We created a further 5 unit tests for the `TourLogViewModel` to test the selection of a tour, the deletion, update and creation of tour logs and the clearing of this view model.
 
-Note that a class diagram is included in the [docs](src/main/java/com/example/tourplanner/docs) folder. 
+Note that a class diagram is included in the [docs](/docs) folder. 
 
 ### Lessons learned
 
