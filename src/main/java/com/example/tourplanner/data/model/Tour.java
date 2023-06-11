@@ -145,7 +145,7 @@ public class Tour {
                 '}';
     }
 
-    // write a method toSearchString that generates a searching string for me that ocntains all fields
+    // write a method toSearchString that generates a searching string for me that contains all fields
     public String toSearchString() {
         String ret = name + " " +
                 tourDescription + " " +

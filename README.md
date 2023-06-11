@@ -78,14 +78,15 @@ Users can see their past tours in the app with their information, meaning the na
 
 ### UX
 
-TODO Cade:
 
-• document your application features using an UML use case diagram
 • document your UI-flow using wireframes
-• document the application architecture using UML:
-o class diagram
-o sequence diagram for full-text search
-• explain why these unit tests are chosen and why the tested code is critical
+
+o class diagram 
+Sequence diagram for full-text search:
+
+<img src="docs/Sequence_diagram.png" width=80% height=80%>
+
+We have implemented 2 unit tests for the JSONFileRepository to test the import of tours from a file and the export of tours to a file. We also have implemented 5 unit tests for the MainViewModel to test the selection of tours, the update of tours, the deletion of tours, the refreshing of tours and the loading of tours. An additional 4 unit tests were implemented for the MenuViewModel, 1 for the successful import, 1 for an unsuccessful import, 1 for a successful export and one for an unsuccessful export. We implemented another 3 for the TourDetailViewModel to test the update and deletion of a tour as well as a map image within this model. We created a further 5 unit tests for the TourLogViewModel to test the selection of a tour, the deletion, update and creation of tour logs and the clearing of this view model.
 
 ### Lessons learned
 
