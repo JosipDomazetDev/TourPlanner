@@ -24,7 +24,8 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 @ExtendWith(TestSetup.class)
 public class JSONFileRepositoryTest {
     private JSONFileRepository fileRepository;
-    private final String filePath = "./test.json";
+    // This file is not required to exist since it will be created by the tests
+    private final static String filePath = "./test.json";
 
     @BeforeEach
     public void setUp() {
@@ -70,5 +71,10 @@ public class JSONFileRepositoryTest {
         assertEquals(expectedTours.size(), importedTours.size());
         assertEquals(expectedTours, importedTours);
         assertNotEquals(new SimpleDateFormat("dd.MM.yyyy").parse("01.01.1970"), importedTours.get(0).getTourLogs().get(0).getDateTime());
+    }
+
+    @AfterAll
+    static void cleanup() throws IOException {
+        Files.deleteIfExists(Paths.get(filePath));
     }
 }

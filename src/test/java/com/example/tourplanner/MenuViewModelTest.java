@@ -74,7 +74,7 @@ public class MenuViewModelTest {
 
         String filePath = "test.txt";
         doAnswer(invocationOnMock -> {
-            throw new IOException("Export failed!");
+            throw new IOException("Export failed because we wanted it to fail!");
         }).when(fileRepository).exportToFile(eq(tours), eq(filePath));
 
 
