@@ -72,6 +72,9 @@ respective repository.
 
 ### Use case
 
+<img src="docs/Wireframe.png" width=80% height=80%>
+
+
 Users can see their past tours in the app with their information, meaning the name they gave their tour, the description they gave it, from where to where the tour went, the transport type of the tour, the type of map chosen for the tour, the distance of the tour, the duration of the tour, the child friendliness of the tour and the popularity of the tour. Furthermore users can create, update and delete tours, or export and import tours. Creating a tour gives the user the travel route, distance and duration as well as the itinerary on a map depending on the user inputs. The users also have the possibility of creating a report of a single one of their tours, or a summary report of all of their tours which will create and open a pdf containing all the relevant information. Finaly, users can also create logs for each individual tour which consist of a timestamp, a comment, a duration, a difficulty and rating column. The user can modify any of these columns except for the timestamp at their will and if the value doesnt correspond to the column(letter instead of number for rating), the default value is kept. The user can also delete the created logs.
 
 <img src="docs/Usecase_diagram.png" width=80% height=80%>
