@@ -68,7 +68,7 @@ respective repository.
 * Database engine used: PostgreSQL
 * Logging framework used: log4j
 * CSS framework used: BootstrapFX (the port is a bit outdated, but it looks decent enough)
-* Report-generation library used: <>
+* Report-generation library used: itext7
 
 ### Use case
 
